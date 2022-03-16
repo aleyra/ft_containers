@@ -51,7 +51,7 @@ $(PATH_OBJ)/%.o : $(PATH_SRC)/%.cpp  $(INCS)
 
 clean:
 		@ $(RM) -rf $(PATH_OBJ)
-		echo "$(_INFO) Deleted files and directory"
+		@ echo "$(_INFO) Deleted files and directory"
 
 fclean: clean
 		@ $(RM) -rf $(NAME)
