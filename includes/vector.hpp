@@ -8,14 +8,6 @@ namespace ft{
 	template <typename T, class Alloc = std::allocator<T> >
 	class vector{
 		public:
-			vector(){}
-			vector(const vector & src){}
-			virtual ~vector(){}
-
-			vector &	operator=(const vector & src){
-				return (*this);
-			}
-		
 			//member attributs // typedef everywhere to make reading-friendly
 			typedef T										value_type;
 			typedef Alloc									allocator_type;
@@ -28,6 +20,17 @@ namespace ft{
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
+			//member functions : canonical form
+			vector(){}
+			vector(const vector & src){}
+			virtual ~vector(){}
+
+			vector &	operator=(const vector & src){
+				return (*this);
+			}
+
+			//member functions: others
+			
 		protected:
 
 		private:

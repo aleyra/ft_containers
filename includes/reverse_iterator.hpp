@@ -30,19 +30,67 @@ namespace ft{
 			}
 
 			//member functions: others
-			/* explicit */ reverse_iterator(iterator_type it){}
-			iterator_type		base() const{}//return reverse de reverse_iterator donc juste Iter ?
-			reference			operator*() const{return (this->reference);}
+			/* explicit */ reverse_iterator(iterator_type it){}//?
+			iterator_type		base() const{}//return reverse de reverse_iterator donc juste Iter ? cmt ?
+			
+			reference			operator*() const{return (this->reference);}//?
+			
 			reverse_iterator	operator+(difference_type n) const{}//?
+			
 			reverse_iterator &	operator++(){}//?
 			reverse_iterator	operator++(int){}//?
 			
+			reverse_iterator &	operator+=(difference_type n){}//?
+
+			reverse_iterator	operator-(difference_type n) const{}//?
+
+			reverse_iterator &	operator--(){}//?
+			reverse_iterator	operator--(int){}//?
+
+			reverse_iterator &	operator-=(difference_type n){}//?
+
+			pointer				operator->() const{}//?
+
+			reference			operator[](difference_type n) const{}//?
 
 		protected:
 
 		private:
 
 	};
+
+	//non-member functions overloads
+	template <class Iter>
+	bool	operator==(const reverse_iterator<Iter>& lhs,
+						const reverse_iterator<Iter>& rhs){}//?
+	
+	template <class Iter>
+	bool	operator!=(const reverse_iterator<Iter>& lhs,
+						const reverse_iterator<Iter>& rhs){}//?
+
+	template <class Iter>
+	bool	operator<(const reverse_iterator<Iter>& lhs,
+						const reverse_iterator<Iter>& rhs){}//?
+
+	template <class Iter>
+	bool	operator<=(const reverse_iterator<Iter>& lhs,
+						const reverse_iterator<Iter>& rhs){}//?
+
+	template <class Iter>
+	bool	operator>(const reverse_iterator<Iter>& lhs,
+						const reverse_iterator<Iter>& rhs){}//?
+
+	template <class Iter>
+	bool	operator>=(const reverse_iterator<Iter>& lhs,
+						const reverse_iterator<Iter>& rhs){}//?
+
+	template <class Iter>
+	reverse_iterator<Iter> operator+(typename reverse_iterator<Iter>::difference_type n,
+             							const reverse_iterator<Iter> & rev_it){}//?
+
+	template <class Iter>
+	typename reverse_iterator<Iter>::difference_type operator-(const reverse_iterator<Iter> & lhs,
+    															const reverse_iterator<Iter> & rhs){}//?
 }
 
 #endif
