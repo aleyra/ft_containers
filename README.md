@@ -1,9 +1,4 @@
- <ul>
-  <li>Coffee</li>
-  <li>Tea</li>
-  <li>Milk</li>
-</ul> 
-<ol>
+<ul>
 	<li>iterator_traits :<ul>
 			<li>https://en.cppreference.com/w/cpp/iterator/iterator_traits</li>
 		</ul>
@@ -21,4 +16,4 @@
 			<li>https://www.cplusplus.com/reference/algorithm/equal/?kw=equal</li>
 		</ul>
 	</li>
-</ol>
+</ul>
