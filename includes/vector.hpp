@@ -21,6 +21,11 @@ namespace ft{
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 			typedef	iterator_traits<iterator>::difference_type	difference_type;
 			typedef std::size_t									size_type;
+		private:
+			allocator_type	_alloct;//?
+			size_type		_capacity;//poids
+			pointer			_data;//le tab ?
+			size_type		_size;//nb d'elem
 
 			//member functions : canonical form
 		private:
@@ -29,9 +34,7 @@ namespace ft{
 			vector(const vector & src){}
 			virtual ~vector(){}
 
-			vector &	operator=(const vector & src){
-				return (*this);
-			}
+			vector &	operator=(const vector & src){return (*this);}
 
 			//member functions
 			explicit	vector(const allocator_type & alloc = allocator_type()){}
@@ -41,8 +44,8 @@ namespace ft{
 			vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type()){}//? need enableif
 
 			//member functions: iterators
-			iterator		begin(){}//?
-			const_iterator	begin(){}//?
+			iterator		begin(){return iterator(this, 0);}
+			const_iterator	begin(){return const_iterator(this, 0);}
 
 			iterator		end(){}//?
 			const_iterator	end(){}//?
