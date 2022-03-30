@@ -16,4 +16,11 @@
 			<li>https://www.cplusplus.com/reference/algorithm/equal/?kw=equal</li>
 		</ul>
 	</li>
+	<li>
+		is_integral :<ul>
+			<li>https://en.cppreference.com/w/cpp/types/integral_constant</li>
+			<li>https://www.cplusplus.com/reference/type_traits/integral_constant/</li>
+			<li>https://www.cplusplus.com/reference/type_traits/is_integral/</li>
+		</ul>
+	</li>
 </ul>
