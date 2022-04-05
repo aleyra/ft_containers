@@ -29,41 +29,49 @@ namespace ft{
 
 			//member functions : canonical form
 		private:
-			vector(){}
+			vector():_alloct(), _capacity(0), _data(_alloct.allocate(_capacity)), _size(0){}
 		public:	
-			vector(const vector & src){}
+			vector(const vector & src){*this = src}
 			virtual ~vector(){}
 
-			vector &	operator=(const vector & src){return (*this);}
+			vector &	operator=(const vector & src):_alloct(src._alloct),
+				_capacity(src._capacity), _data(_alloct.allocate(_capacity), _size(src._size)){
+				for(i = 0; i < this->_size ; i++){
+					this->_alloct.construct(&this->_data[i],src._data[i]);
+				}
+				return (*this);
+			}
 
 			//member functions
-			explicit	vector(const allocator_type & alloc = allocator_type()){}
-			explicit	vector(size_type n, const value_type & val = value_type(),
-								const allocator_type & alloc = allocator_type()){}//?
+			explicit	vector(const allocator_type & alloc = allocator_type()):_alloct(alloc), _capacity(0), _data(_alloct.allocate(_capacity)), _size(0){}
+			explicit	vector(size_type n, const value_type & val = value_type(), const allocator_type & alloc = allocator_type()):_alloct(alloc),
+				_capacity(n), _data(_alloct.allocate(_capacity), _size(n)){
+				for(i = 0; i < this->_size ; i++){this->_alloct.construct(&this->_data[i], val);}
+			}//_capacity ?
 			template <class InputIterator>
 			vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type()){}//? need enableif
 
 			//member functions: iterators
-			iterator		begin(){return iterator(this, 0);}
-			const_iterator	begin(){return const_iterator(this, 0);}
+			iterator		begin(){return iterator(this, 0);}//?
+			const_iterator	begin(){return const_iterator(this, 0);}//?
 
 			iterator		end(){}//?
 			const_iterator	end(){}//?
 
-			reverse_iterator		rbegin(){}//?
-			const_reverse_iterator	rbegin(){}//?
+			reverse_iterator		rbegin(){return reverse_iterator(this, 0);}//?
+			const_reverse_iterator	rbegin(){return const_reverse_iterator(this, 0);}//?
 
 			reverse_iterator		rend(){}//?
 			const_reverse_iterator	rend(){}//?
 
 			//member functions: capacity
-			size_type	size(){}//?
+			size_type	size(){return this->_size;}
 
 			size_type	max_size(){}//?
 
 			void		resize(size_type n, value_type val = value_type()){}//?
 
-			size_type	capacity() const{}//?
+			size_type	capacity() const{return this->_capacity;}
 
 			bool		empty() const{}//?
 

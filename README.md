@@ -23,4 +23,14 @@
 			<li>https://www.cplusplus.com/reference/type_traits/is_integral/</li>
 		</ul>
 	</li>
+	<li>vector :<ul>
+			<li>https://www.cplusplus.com/reference/vector/vector/</li>
+			<li>https://en.cppreference.com/w/cpp/container/vector</li>
+		</ul>
+	</li>
+	<li>pair :<ul>
+			<li>https://www.cplusplus.com/reference/utility/pair/?kw=pair</li>
+			<li>https://en.cppreference.com/w/cpp/utility/pair</li>
+		</ul>
+	</li>
 </ul>
