@@ -17,10 +17,10 @@ namespace ft{
 		//Member functions
 		pair(){}//?
 		template <class U, class V>
-		pair(const pair<U,V> & src){}//?
-		pair(const first_type & a, const second_type & b){}//?
+		pair(const pair<U,V> & src)first(src.first), second(src.second){}//?
+		pair(const first_type & a, const second_type & b):first(a), second(b){}
 
-		pair & operator=(const pair & src){}//?
+		pair & operator=(const pair & src):first(src.first), second(src.second){return *this;}
 	};
 	//Non-member functions
 	template <class T1, class T2>
