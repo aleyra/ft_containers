@@ -33,4 +33,8 @@
 			<li>https://en.cppreference.com/w/cpp/utility/pair</li>
 		</ul>
 	</li>
+	<li>make_pair :<ul>
+			<li>https://www.cplusplus.com/reference/utility/make_pair/</li>
+		</ul>
+	</li>
 </ul>
