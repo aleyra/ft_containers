@@ -52,17 +52,17 @@ namespace ft{
 			vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type()){}//? need enableif
 
 			//member functions: iterators
-			iterator		begin(){return iterator(this, 0);}//?
-			const_iterator	begin(){return const_iterator(this, 0);}//?
+			iterator		begin(){iterator	it(begin()); return (it);}//?
+			const_iterator	begin(){const_iterator	cit(begin()); return (cit);}//?
 
-			iterator		end(){}//?
-			const_iterator	end(){}//?
+			iterator		end(){iterator	it(end()); return (it);}//?
+			const_iterator	end(){const_iterator	cit(end()); return (cit);}//?
 
-			reverse_iterator		rbegin(){return reverse_iterator(this, 0);}//?
-			const_reverse_iterator	rbegin(){return const_reverse_iterator(this, 0);}//?
+			reverse_iterator		rbegin(){reverse_iterator rit(begin()); return (rit);}//?
+			const_reverse_iterator	rbegin(){const_reverse_iterator crit(begin()); return (crit);}//?
 
-			reverse_iterator		rend(){}//?
-			const_reverse_iterator	rend(){}//?
+			reverse_iterator		rend(){reverse_iterator rit(end()); return (rit);}//?
+			const_reverse_iterator	rend(){const_reverse_iterator crit(end()); return (crit);}//?
 
 			//member functions: capacity
 			size_type	size(){return this->_size;}
