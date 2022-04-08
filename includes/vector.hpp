@@ -102,7 +102,7 @@ namespace ft{
 			iterator	insert(iterator position, const value_type & val){}//?
 			void		insert(iterator position, size_type n, const value_type & val){}//?
 			template <class InputIterator>
-			void		insert(iterator position, InputIterator firstm InputIterator last){}//?need enableif
+			void		insert(iterator position, InputIterator first, InputIterator last){}//?need enableif
 
 			iterator	erase(iterator position){}//?
 			iterator	erase(iterator first, iterator last){}//?
