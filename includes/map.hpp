@@ -14,7 +14,7 @@ namespace ft{
 		typedef ft::pair<const key_type, mapped_type>	value_type;
 		typedef Compare									key_compare;
 		template <class Key, class T, class Comparem call Alloc>
-		class map<Key, T, Comparem Alloc>::value_compare:public std::binary_function<value_type, value_type, bool>{
+		class map<Key, T, Compare, Alloc>::value_compare:public std::binary_function<value_type, value_type, bool>{
 			friend class map;
 			protected:
 				Compare	comp;
@@ -26,7 +26,7 @@ namespace ft{
   				bool				operator()(const value_type& x, const value_type& y) const{return comp(x.first, y.first);}
 		};
 		// template <class Key, class T, class Comparem call Alloc>
-		// typedef	map<Key, T, Comparem Alloc>::value_compare	value_compare;//?
+		// typedef	map<Key, T, Compare, Alloc>::value_compare	value_compare;//?
 		typedef Alloc											allocator_type;
 		typedef allocator_type::reference						reference;
 		typedef allocator_type::const_reference					const_reference;
