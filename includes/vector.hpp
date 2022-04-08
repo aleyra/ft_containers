@@ -32,7 +32,7 @@ namespace ft{
 			vector():_alloct(), _capacity(0), _data(_alloct.allocate(_capacity)), _size(0){}
 		public:	
 			vector(const vector & src){*this = src}
-			virtual ~vector(){}
+			virtual ~vector(){this->clear()}
 
 			vector &	operator=(const vector & src):_alloct(src._alloct),
 				_capacity(src._capacity), _data(_alloct.allocate(_capacity), _size(src._size)){
