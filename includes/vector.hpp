@@ -19,7 +19,7 @@ namespace ft{
 			typedef const_pointer								const_iterator;
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
-			typedef	iterator_traits<iterator>::difference_type	difference_type;
+			typedef	ft::iterator_traits<iterator>::difference_type	difference_type;
 			typedef std::size_t									size_type;
 		private:
 			allocator_type	_alloct;//?
