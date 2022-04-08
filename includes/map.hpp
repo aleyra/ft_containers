@@ -8,11 +8,7 @@
 namespace ft{
 	template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > >
 	class map{
-		//member attributs
-		typedef Key										key_type;
-		typedef T										mapped_type;
-		typedef ft::pair<const key_type, mapped_type>	value_type;
-		typedef Compare									key_compare;
+		public:
 		template <class Key, class T, class Comparem call Alloc>
 		class map<Key, T, Compare, Alloc>::value_compare:public std::binary_function<value_type, value_type, bool>{
 			friend class map;
@@ -27,6 +23,12 @@ namespace ft{
 		};
 		// template <class Key, class T, class Comparem call Alloc>
 		// typedef	map<Key, T, Compare, Alloc>::value_compare	value_compare;//?
+
+		//member attributs
+		typedef Key										key_type;
+		typedef T										mapped_type;
+		typedef ft::pair<const key_type, mapped_type>	value_type;
+		typedef Compare									key_compare;
 		typedef Alloc											allocator_type;
 		typedef allocator_type::reference						reference;
 		typedef allocator_type::const_reference					const_reference;
@@ -42,7 +44,7 @@ namespace ft{
 		//member functions : canonical form
 		map(){}//?
 		map(const map & src){}//?
-		virtual ~map(){}//?
+		virtual ~map(){this->clear()}//?
 		map & operator=(const map & src){}//?
 
 		//member functions
@@ -71,7 +73,7 @@ namespace ft{
 		size_type	max_size() const{}//?
 
 		//member functions: element access
-		mapped_type &	operator[](const key_type & k){}//?
+		mapped_type &	operator[](const key_type & k){/* return (*((this->insert(make_pair(k,mapped_type()))).first)).second; */}//?
 
 		//member functions: modifiers
 		pair<iterator, bool>	insert(conost value_type & val){}//?
@@ -90,7 +92,7 @@ namespace ft{
 		//member functions: observers
 		key_compare	key_comp() const{}//?
 
-		value_compare	value_comp() const{}//?
+		value_compare	value_comp() const{}//?//????????????????
 
 		//member functions: operations
 		iterator		find(const key_type & k){}//?
@@ -109,7 +111,32 @@ namespace ft{
 
 		//member functions: allocator
 		allocator_type	get_allocator() const{}//?
+
+		protected:
+
+		private:
 	};
+	//Non-members functions:
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator==(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs){}//?
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs){return (!(rhs == lhs));}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs){}//?
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs){return ((rhs == lhs) || (rhs < lhs));}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs){return (!(rhs <= lhs));}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs){return (!(rhs < lhs));}
+
+	template <class Key, class T, class Compare, class Alloc>
+  	void swap(map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y){}//?
 }
 
 #endif
