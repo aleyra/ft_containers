@@ -24,8 +24,8 @@ namespace ft{
 			typedef std::size_t									size_type;
 		private:
 			allocator_type	_alloct;//?
-			size_type		_capacity;//poids
-			pointer			_data;//le tab ?
+			size_type		_capacity;//>= nb d'elem
+			pointer			_data;//le tab
 			size_type		_size;//nb d'elem
 
 			//member functions : canonical form
