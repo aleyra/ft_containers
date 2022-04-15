@@ -30,7 +30,7 @@ namespace ft{
 
 			//member functions : canonical form
 		private:
-			vector():_alloct(), _capacity(0), _data(_alloct.allocate(_capacity)), _size(0){}
+			// vector():_alloct(), _capacity(0), _data(_alloct.allocate(_capacity)), _size(0){}
 		public:	
 			vector(const vector & src){*this = src;}
 			virtual ~vector(){this->clear();}
@@ -64,16 +64,16 @@ namespace ft{
 
 			//member functions: iterators
 			iterator		begin(){iterator it(this->_data); return (it);}
-			const_iterator	begin(){const_iterator	cit(this->_data); return (cit);}
+			const_iterator	begin() const {const_iterator	cit(this->_data); return (cit);}
 
 			iterator		end(){iterator	it(this->_data); return (it + this->_size);}
-			const_iterator	end(){const_iterator	cit(end()); return (cit + this->_size);}
+			const_iterator	end() const {const_iterator	cit(end()); return (cit + this->_size);}
 
 			reverse_iterator		rbegin(){reverse_iterator rit(end()); return (++rit);}
-			const_reverse_iterator	rbegin(){const_reverse_iterator crit(end()); return (++crit);}
+			const_reverse_iterator	rbegin() const {const_reverse_iterator crit(end()); return (++crit);}
 
 			reverse_iterator		rend(){reverse_iterator rit(begin()); return (++rit);}
-			const_reverse_iterator	rend(){const_reverse_iterator crit(begin()); return (++crit);}
+			const_reverse_iterator	rend() const {const_reverse_iterator crit(begin()); return (++crit);}
 
 			//member functions: capacity
 			size_type	size(){return this->_size;}
@@ -101,14 +101,20 @@ namespace ft{
 			void		reserve(size_type n){
 				if (this->_capacity >= n)
 					return ;
-				vector tmp = this;
-				this->clear();
-				this->_alloct = tmp._alloct;
+				value_type	*tmp;
+
+				tmp = this->_data;
+				if (this->_size != 0)
+					for (size_type i = this->_size - 1 ; i >= 0; i--)
+						this->_alloct.destroy(&(this->_data[i]));
+				if (this->_data != NULL){
+					this->_alloct.deallocate(this->_data, this->_size);
+					this->_data = NULL;
+				}
 				this->_capacity = n;
-				this->_size = tmp._size;
-				this->_data(this->_alloct.allocate(this->_capacity));
+				this->_data = this->_alloct.allocate(this->_capacity);
 				for (size_type i = 0; i < this->_size; i++)
-					this->_alloct.construct(&this->_data[i], tmp->_data[i]);
+					this->_alloct.construct(&this->_data[i], tmp[i]);
 			}
 
 			//member functions: element access
@@ -156,14 +162,20 @@ namespace ft{
 
 			void	push_back(const value_type & val){
 				if (this->_size + 1 > this->_capacity){
-					vector tmp = this;
-					this->clear();
-					this->_alloct = tmp._alloct;
-					this->_capacity = tmp._capacity + 10;
-					this->_size = tmp._size;
-					this->_data(this->_alloct.allocate(this->_capacity));
+					value_type	*tmp;
+
+					tmp = this->_data;
+					if (this->_size != 0)
+						for (size_type i = this->_size - 1 ; i >= 0; i--)
+							this->_alloct.destroy(&(this->_data[i]));
+					if (this->_data != NULL){
+						this->_alloct.deallocate(this->_data, this->_size);
+						this->_data = NULL;
+					}
+					this->_capacity += 10;
+					this->_data = this->_alloct.allocate(this->_capacity);
 					for (size_type i = 0; i < this->_size; i++)
-						this->_alloct.construct(&this->_data[i], tmp->_data[i]);
+						this->_alloct.construct(&this->_data[i], tmp[i]);
 				}
 				this->_alloct.construct(&this->_data[this->_size], val);
 				this->_size++;
@@ -178,14 +190,20 @@ namespace ft{
 
 			iterator	insert(iterator position, const value_type & val){
 				if (this->_size + 1 > this->_capacity){
-					vector tmp = this;
-					this->clear();
-					this->_alloct = tmp._alloct;
-					this->_capacity = tmp._capacity + 10;
-					this->_size = tmp._size;
-					this->_data(this->_alloct.allocate(this->_capacity));
+					value_type	*tmp;
+
+					tmp = this->_data;
+					if (this->_size != 0)
+						for (size_type i = this->_size - 1 ; i >= 0; i--)
+							this->_alloct.destroy(&(this->_data[i]));
+					if (this->_data != NULL){
+						this->_alloct.deallocate(this->_data, this->_size);
+						this->_data = NULL;
+					}
+					this->_capacity += 10;
+					this->_data = this->_alloct.allocate(this->_capacity);
 					for (size_type i = 0; i < this->_size; i++)
-						this->_alloct.construct(&this->_data[i], tmp->_data[i]);
+						this->_alloct.construct(&this->_data[i], tmp[i]);
 				}
 				this->_size++;
 				size_type start = position - this->begin();
