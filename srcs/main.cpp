@@ -55,6 +55,8 @@ int main(int argc, char** argv) {
 	const int seed = atoi(argv[1]);
 	srand(seed);
 
+	std::cout << "seed = " << seed << std::endl;
+
 	ft::vector<std::string> vector_str;
 	ft::vector<int> vector_int;
 	// ft::stack<int> stack_int;
@@ -62,10 +64,15 @@ int main(int argc, char** argv) {
 	// ft::stack<Buffer, std::deque<Buffer> > stack_deq_buffer;
 	// ft::map<int, int> map_int;
 
+	std::cout << "constructors called\n";
+
 	for (int i = 0; i < COUNT; i++)
 	{
 		vector_buffer.push_back(Buffer());
+		std::cout<< "push back called\n";
 	}
+
+	std::cout << "vector_buffer filed\n";
 
 	for (int i = 0; i < COUNT; i++)
 	{
