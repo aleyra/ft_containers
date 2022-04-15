@@ -87,7 +87,7 @@ namespace ft{
 
 		void	swap(map & x){}//?
 
-		void	clear()//?
+		void	clear(){}//?
 
 		//member functions: observers
 		key_compare	key_comp() const{}//?
