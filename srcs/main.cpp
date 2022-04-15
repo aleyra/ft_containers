@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
 		const int idx = rand() % COUNT;
 		vector_buffer[idx].idx = 5;
 	}
-	ft::vector<Buffer>().swap(vector_buffer);
+	// ft::vector<Buffer>().swap(vector_buffer);// a revoir
 
 	try
 	{
