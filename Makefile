@@ -1,6 +1,6 @@
 .PHONY: all clean fclean re bonus
 # Name of file
-NAME		=	minishell
+NAME		=	containers
 
 # Name directory
 PATH_INC	=	includes
@@ -11,8 +11,9 @@ PATH_LOG	=	logs
 
 # List of sources
 SRCS_TESTER		=	test_vector.cpp
+SRCS_RACINE		= 	main.cpp
 SRCS			=	$(addprefix $(PATH_SRC)/tester/, $(SRCS_TESTER)) \
-					$(addprefix $(PATH_SRC)/, )  main.cpp #add files à la racine
+					$(addprefix $(PATH_SRC)/, $(SRCS_RACINE))  #add files à la racine
 
 OBJS		=	$(addprefix $(PATH_OBJ)/, $(notdir $(SRCS:.c=.o)))
 ALL_INCS	=	enable_if.hpp equal.hpp is_integral.hpp iterators_traits.hpp make_pair.hpp map.hpp my_tests.hpp pair.hpp reverse_iterator.hpp vector.hpp
@@ -21,7 +22,7 @@ INCS		=	$(addprefix $(PATH_INC)/, $(ALL_INCS))
 # Commands of compilation
 COMP		=	c++
 COMP_FLAG	=	-Wall -Wextra -Werror 
-COMP_ADD	=	-I$(PATH_INC)
+COMP_ADD	=	-I $(PATH_INC)
 
 # Others Command
 RM			=	/bin/rm
@@ -42,16 +43,16 @@ init:
 
 bonus :	all
 
-$(NAME): 	$(OBJS)
-			$(CC) $(COMP_FLAG) $(OBJS) -o $(NAME)
+$(NAME): 	
+		$(CC) $(COMP_FLAG) $(COMP_ADD) $(SRCS) -o $(NAME)
 
-$(PATH_OBJ)/%.o : $(PATH_SRC)/*/%.cpp  $(INCS)
-	@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
-	@ echo "$(_INFO) Compilation of $*"
+# $(PATH_OBJ)/%.o : $(PATH_SRC)/*/%.cpp  $(INCS)
+# 	@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
+# 	@ echo "$(_INFO) Compilation of $*"
 
-$(PATH_OBJ)/%.o : $(PATH_SRC)/%.cpp  $(INCS)
-	@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
-	@ echo "$(_INFO) Compilation of $*"
+# $(PATH_OBJ)/%.o : $(PATH_SRC)/%.cpp  $(INCS)
+# 	@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
+# 	@ echo "$(_INFO) Compilation of $*"
 
 clean:
 	@ $(RM) -rf $(PATH_OBJ)
