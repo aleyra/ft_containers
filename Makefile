@@ -1,30 +1,26 @@
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
 # Name of file
-NAME		=	containers
+NAME		=	minishell
 
 # Name directory
 PATH_INC	=	includes
 PATH_SRC	=	srcs
 PATH_OBJ	=	objs
+PATH_LOG	=	logs
 
-#List of sources
-SRCS_TEST	=	test_vector.cpp
-SRCS		=	$(addprefix $(PATH_SRC)/tester/, $(SRCS_TEST)) \
-				$(addprefix $(PATH_SRC)/, ) main.cpp
 
-OBJS		=	$(addprefix $(PATH_OBJ)/, $(SRCS:.cpp=.o))
+# List of sources
+SRCS_TESTER		=	test_vector.cpp
+SRCS			=	$(addprefix $(PATH_SRC)/tester/, $(SRCS_TESTER)) \
+					$(addprefix $(PATH_SRC)/, )  main.cpp #add files à la racine
 
-INCS_CONT	=	map.hpp vector.hpp
-INCS_OTHER	=	enable_if.hpp iterators_traits.hpp pair.hpp equal.hpp \
-				make_pair.hpp reverse_iterator.hpp is_integral.hpp
-MY_INC		=	my_tests.hpp
-INCS		=	$(addprefix $(PATH_INC), $(INCS_CONT)) \
-				$(addprefix $(PATH_INC), $(INCS_OTHER)) \
-				$(addprefix $(PATH_INC), $(MY_INC))
+OBJS		=	$(addprefix $(PATH_OBJ)/, $(notdir $(SRCS:.c=.o)))
+ALL_INCS	=	enable_if.hpp equal.hpp is_integral.hpp iterators_traits.hpp make_pair.hpp map.hpp my_tests.hpp pair.hpp reverse_iterator.hpp vector.hpp
+INCS		=	$(addprefix $(PATH_INC)/, $(ALL_INCS))
 
 # Commands of compilation
 COMP		=	c++
-COMP_FLAG	=	-Wall -Werror -Wextra -std=c++98
+COMP_FLAG	=	-Wall -Wextra -Werror 
 COMP_ADD	=	-I$(PATH_INC)
 
 # Others Command
@@ -39,28 +35,29 @@ _SUCCESS	=	[$(_GREEN)SUCCESS$(_RESET)]
 
 # Functions
 all:	init $(NAME)
-		@ echo "$(_SUCCESS) Compilation done"
+	@ echo "$(_SUCCESS) Compilation done"
 
 init:
-		$(shell mkdir -p $(PATH_OBJ))
+	 $(shell mkdir -p $(PATH_OBJ))
 
-bonus : all
+bonus :	all
 
-$(NAME):	$(OBJS)
-				$(COMP) $(COMP_FLAG) $(OBJS) -o $(NAME)
+$(NAME): 	$(OBJS)
+			$(CC) $(COMP_FLAG) $(OBJS) -o $(NAME)
 
 $(PATH_OBJ)/%.o : $(PATH_SRC)/*/%.cpp  $(INCS)
-		@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
-		@ echo "$(_INFO) Compilation of $*"
+	@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
+	@ echo "$(_INFO) Compilation of $*"
+
 $(PATH_OBJ)/%.o : $(PATH_SRC)/%.cpp  $(INCS)
-		@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
-		@ echo "$(_INFO) Compilation of $*"
+	@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
+	@ echo "$(_INFO) Compilation of $*"
 
 clean:
-		@ $(RM) -rf $(PATH_OBJ)
-		@ echo "$(_INFO) Deleted files and directory"
+	@ $(RM) -rf $(PATH_OBJ)
+	echo "$(_INFO) Deleted files and directory"
 
 fclean: clean
-		@ $(RM) -rf $(NAME)
+	@ $(RM) -rf $(NAME)
 
 re: fclean all
