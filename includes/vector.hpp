@@ -49,7 +49,7 @@ namespace ft{
 			//member functions
 			explicit	vector(const allocator_type & alloc = allocator_type()):_alloct(alloc), _capacity(0), _data(_alloct.allocate(_capacity)), _size(0){}
 			explicit	vector(size_type n, const value_type & val = value_type(), const allocator_type & alloc = allocator_type()):_alloct(alloc),
-				_capacity(n), _data(_alloct.allocate(_capacity), _size(n)){
+				_capacity(n), _data(_alloct.allocate(_capacity)), _size(n){
 				for(size_type i = 0; i < this->_size ; i++){this->_alloct.construct(&this->_data[i], val);}
 			}
 			template <class InputIterator>
@@ -166,7 +166,7 @@ namespace ft{
 
 					tmp = this->_data;
 					if (this->_size != 0)
-						for (size_type i = this->_size - 1 ; i >= 0; i--)
+						for (size_type i = 0 ; i > this->_size; i++)
 							this->_alloct.destroy(&(this->_data[i]));
 					if (this->_data != NULL){
 						this->_alloct.deallocate(this->_data, this->_size);
@@ -244,7 +244,7 @@ namespace ft{
 
 			void	clear(){
 				if (this->_size != 0)
-					for (size_type i = this->_size - 1 ; i >= 0; i--)
+					for (size_type i = 0 ; i > this->_size; i++)
 						this->_alloct.destroy(&(this->_data[i]));
 				if (this->_data != NULL){
 					this->_alloct.deallocate(this->_data, this->_size);

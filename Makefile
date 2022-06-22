@@ -8,15 +8,19 @@ PATH_SRC	=	srcs
 PATH_OBJ	=	objs
 
 #List of sources
-SRCS		=	$(addprefix $(PATH_SRC)/, ) main.cpp 
+SRCS_TEST	=	test_vector.cpp
+SRCS		=	$(addprefix $(PATH_SRC)/tester/, $(SRCS_TEST)) \
+				$(addprefix $(PATH_SRC)/, ) main.cpp
 
 OBJS		=	$(addprefix $(PATH_OBJ)/, $(SRCS:.cpp=.o))
 
 INCS_CONT	=	map.hpp vector.hpp
 INCS_OTHER	=	enable_if.hpp iterators_traits.hpp pair.hpp equal.hpp \
 				make_pair.hpp reverse_iterator.hpp is_integral.hpp
-INCS		=	$(addprefix $(PATH_INC), $(SRCS_CONT)) \
-				$(addprefix $(PATH_INC), $(SRCS_OTHER))
+MY_INC		=	my_tests.hpp
+INCS		=	$(addprefix $(PATH_INC), $(INCS_CONT)) \
+				$(addprefix $(PATH_INC), $(INCS_OTHER)) \
+				$(addprefix $(PATH_INC), $(MY_INC))
 
 # Commands of compilation
 COMP		=	c++
@@ -45,6 +49,9 @@ bonus : all
 $(NAME):	$(OBJS)
 				$(COMP) $(COMP_FLAG) $(OBJS) -o $(NAME)
 
+$(PATH_OBJ)/%.o : $(PATH_SRC)/*/%.cpp  $(INCS)
+		@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
+		@ echo "$(_INFO) Compilation of $*"
 $(PATH_OBJ)/%.o : $(PATH_SRC)/%.cpp  $(INCS)
 		@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
 		@ echo "$(_INFO) Compilation of $*"
