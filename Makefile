@@ -15,14 +15,14 @@ SRCS_RACINE		=	main.cpp
 SRCS			=	$(addprefix $(PATH_SRC)/tester/, $(SRCS_TESTER)) \
 					$(addprefix $(PATH_SRC)/, $(SRCS_RACINE))
 
-OBJS		=	$(addprefix $(PATH_OBJ)/, $(notdir $(SRCS:.c=.o)))
+OBJS		=	$(addprefix $(PATH_OBJ)/, $(notdir $(SRCS:.cpp=.o)))
 ALL_INCS	=	enable_if.hpp equal.hpp is_integral.hpp iterators_traits.hpp make_pair.hpp map.hpp my_tests.hpp pair.hpp reverse_iterator.hpp vector.hpp
 INCS		=	$(addprefix $(PATH_INC)/, $(ALL_INCS))
 
 # Commands of compilation
 COMP		=	c++
 COMP_FLAG	=	-Wall -Wextra -Werror 
-COMP_ADD	=	-I$(PATH_INC)
+COMP_ADD	=	-I $(PATH_INC)
 
 # Others Command
 RM			=	/bin/rm
@@ -46,19 +46,19 @@ all:	$(NAME)
 
 bonus :	all
 
-# $(NAME): 	$(OBJS)
-# 			$(CC) $(COMP_FLAG) $(SRCS) $(NAME)
+$(NAME): 	$(OBJS)
+			$(COMP) $(COMP_FLAG) $(OBJS) -o $(NAME)
 
-$(NAME): 	
-		$(CC) $(COMP_FLAG) $(COMP_ADD) $(SRCS) -o $(NAME)
+# $(NAME): 	
+# 		$(COMP) $(COMP_FLAG) $(COMP_ADD) $(SRCS) -o $(NAME)
 
-# $(PATH_OBJ)/%.o : $(PATH_SRC)/*/%.cpp  $(INCS)
-# 	@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
-# 	@ echo "$(_INFO) Compilation of $*"
+$(PATH_OBJ)/%.o : $(PATH_SRC)/*/%.cpp  $(INCS)
+	 $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
+	@ echo "$(_INFO) Compilation of $*"
 
-# $(PATH_OBJ)/%.o : $(PATH_SRC)/%.cpp  $(INCS)
-# 	@ $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
-# 	@ echo "$(_INFO) Compilation of $*"
+$(PATH_OBJ)/%.o : $(PATH_SRC)/%.cpp  $(INCS)
+	 $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
+	@ echo "$(_INFO) Compilation of $*"
 
 # clean:
 # 	@ $(RM) -rf $(PATH_OBJ)
@@ -68,7 +68,7 @@ $(NAME):
 # 	@ $(RM) -rf $(NAME)
 
 clean:
-	echo "$(_INFO) Deleted files and directory"
+	@ echo "$(_INFO) Deleted files and directory"
 
 fclean: clean
 	@ $(RM) -rf $(NAME)
