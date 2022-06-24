@@ -53,9 +53,8 @@ namespace ft{
 				for(size_type i = 0; i < this->_size ; i++){this->_alloct.construct(&this->_data[i], val);}
 			}
 			template <class InputIterator>
-			vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type()):_alloct(alloc), _capacity((size_type)(last - first) + 10),
-				_data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){/*vector(typename enable_if<!is_integral<InputIterator>::value, InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type()):_alloct(alloc), _capacity((size_type)(last - first) + 10),
-				_data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){*/
+			vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>):_alloct(alloc), _capacity((size_type)(last - first) + 10),
+				_data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){
 				for (size_type i = 0; i < this->_size; i++){
 					this->_alloct.construct(&this->_data[i], *first);
 					first++;
@@ -140,7 +139,7 @@ namespace ft{
 
 			//member functions: modifiers
 			template<class InputIterator>
-			void	assign(InputIterator first, InputIterator last){/*void	assign(typename enable_if<!is_integral<InputIterator>::value, InputIterator first, InputIterator last){*/
+			void	assign(InputIterator first, InputIterator last){/*void	assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator first, InputIterator last){*/
 				size_type n = (size_type)(last - first);
 				if (n > this->_capacity)
 					this->reserve(n);
@@ -218,7 +217,7 @@ namespace ft{
 					this->insert(position, val);
 			}
 			template <class InputIterator>
-			void		insert(iterator position, InputIterator first, InputIterator last){/*insert(typename enable_if<!is_integral<InputIterator>::value, iterator position, InputIterator first, InputIterator last){*/
+			void		insert(iterator position, InputIterator first, InputIterator last){/*insert(typename ft::enable_if<!ft::is_integral<InputIterator>::value, iterator position, InputIterator first, InputIterator last){*/
 				for (size_type i = 0; i < (size_type)(last - first); i++)
 					this->insert(position, *(last--));
 			}

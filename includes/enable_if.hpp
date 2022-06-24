@@ -9,6 +9,12 @@ namespace ft{
 	struct enable_if<true, T>{
 		typedef T type;
 	};
+	//version de Mhaman
+	// template <bool B>
+	// struct enable_if {};
+
+	// template <>
+	// struct enable_if<true> { typedef int type; };
 }
 
 #endif
