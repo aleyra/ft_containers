@@ -3,6 +3,8 @@
 
 # include <iostream>
 # include "reverse_iterator.hpp"
+# include "enable_if.hpp"
+# include "is_integral.hpp"
 # include <algorithm>
 
 namespace ft{
@@ -53,7 +55,7 @@ namespace ft{
 				for(size_type i = 0; i < this->_size ; i++){this->_alloct.construct(&this->_data[i], val);}
 			}
 			template <class InputIterator>
-			vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>):_alloct(alloc), _capacity((size_type)(last - first) + 10),
+			vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_alloct(alloc), _capacity((size_type)(last - first) + 10),
 				_data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){
 				for (size_type i = 0; i < this->_size; i++){
 					this->_alloct.construct(&this->_data[i], *first);
@@ -79,14 +81,19 @@ namespace ft{
 
 			size_type	max_size(){return this->_alloct.max_size();}
 
-			void		resize(size_type n, value_type val = value_type()){
-				value_type	*tmp;
-
-				tmp = this->_alloct.allocate(n);
-				for (size_type i = 0; i < this->_size && i < n; i++)
-					this->_alloct.construct(&tmp[i], this->_data[i]);
-				for (size_type i = this->_size; i < n; i++)
-					this->_alloct.construct(&tmp[i], val);
+			void		resize(size_type n, value_type val = value_type()){//la capacité sera de taille différente
+				if (n < this->capacity() * 2 && n > this->capacity())
+					this->reserve(this->capacity() * 2);
+				else if (n > this->capacity())
+					this->reserve(n);
+				while (this->_size > n){
+					this->_alloct.destroy(&(this->_data[this->_size - 1]));
+					this->_size--;
+				}
+				while (n > this->_size){
+					this->_alloct.construct(&this->_data[this->_size], val);
+					this->_size++;
+				}
 			}
 
 			size_type	capacity() const{return this->_capacity;}
@@ -100,11 +107,11 @@ namespace ft{
 			void		reserve(size_type n){
 				if (this->_capacity >= n)
 					return ;
-				value_type	*tmp;
-
-				tmp = this->_data;
+				value_type	tmp[this->_size];
+				for (size_type i = 0; i < this->_size; i++)
+					tmp[i] = this->_data[i];
 				if (this->_size != 0)
-					for (size_type i = this->_size - 1 ; i >= 0; i--)
+					for (size_type i = 0; i < this->_size; i++)
 						this->_alloct.destroy(&(this->_data[i]));
 				if (this->_data != NULL){
 					this->_alloct.deallocate(this->_data, this->_size);
@@ -134,8 +141,13 @@ namespace ft{
 			reference		front(){return (*this->_data);}
 			const_reference	front() const{return (*this->_data);}
 
-			reference		back(){return (*this->_data[this->_size - 1]);}
-			const_reference	back() const{return (*this->_data[this->_size - 1]);}
+			reference		back(){return (*(this->_data + this->_size - 1));}
+			const_reference	back() const{return (*(this->_data + this->_size - 1));}
+
+			value_type			*data(){return (this->_data);};
+			value_type const	*data() const{return (this->_data);};
+
+			
 
 			//member functions: modifiers
 			template<class InputIterator>
@@ -259,6 +271,14 @@ namespace ft{
 		protected:
 
 		private:
+			void	display(){
+				for (size_type i = 0; i < this->_size; i++){
+					std::cout << this->_data[i];
+					if (i != this->_size - 1)
+					std::cout << " - ";
+				}
+				std::cout << std::endl;
+			}
 
 	};
 	//non-member functions overloads
