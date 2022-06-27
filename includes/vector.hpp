@@ -284,14 +284,14 @@ namespace ft{
 		protected:
 
 		private:
-			void	display(){
-				for (size_type i = 0; i < this->_size; i++){
-					std::cout << this->_data[i];
-					if (i != this->_size - 1)
-					std::cout << " - ";
-				}
-				std::cout << std::endl;
-			}
+			// void	display(){
+			// 	for (size_type i = 0; i < this->_size; i++){
+			// 		std::cout << this->_data[i];
+			// 		if (i != this->_size - 1)
+			// 		std::cout << " - ";
+			// 	}
+			// 	std::cout << std::endl;
+			// }
 
 	};
 	//non-member functions overloads
