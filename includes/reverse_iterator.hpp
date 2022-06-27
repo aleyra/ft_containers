@@ -24,7 +24,7 @@ namespace ft{
 			//member functions : canonical form
 			reverse_iterator(){}
 			template <class Iter2>
-			reverse_iterator(const reverse_iterator<Iter2> & src) :current(src.base()){}//a check
+			reverse_iterator(const reverse_iterator<Iter2> & src) :current(src.base()){}
 			virtual ~reverse_iterator(){}
 
 			template <class Iter2>
