@@ -162,6 +162,10 @@ void test_vector(){
 		display_int(v2);
 		std::cout << "v3 = ";
 		display_int(v3);
+		v4 = v2;
+		v4.push_back(12);
+		std::cout << "v4 = ";
+		display_int(v4);
 
 		std::cout << "\t\ttest de == :\n";
 		std::cout << "v2 et v2 : " << (v2 == v2) << "\tv2 et v3 : " << (v2 == v3) << std::endl;
@@ -185,10 +189,15 @@ void test_vector(){
 		std::cout << "v2 et v2 : " << (v2 >= v2) << "\tv2 et v3 : " << (v2 >= v3) << std::endl;
 		std::cout << "v3 et v2 : " << (v3 >= v2) << std::endl;
 
+		std::cout << "\t\ttest de ft::equal avec v2 et v4 :\n";
+		std::cout << (ft::equal(v2.begin(), v2.end(), v4.begin())) << std::endl;
+		
 		swap(v2, v3);
 		std::cout << "v2 = ";
 		display_int(v2);
 		std::cout << "v3 = ";
 		display_int(v3);
+
+		
 	}
 }
