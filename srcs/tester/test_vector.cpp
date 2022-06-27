@@ -17,7 +17,7 @@ void	display_int(ft::vector<int> v){
 
 void test_vector(){
 		//constructors, iterators and begin, end fct
-	ft::vector<int> v1();
+	ft::vector<int> v1;
 	ft::vector<int> v2(5, 12);
 	int tab[]={1,2,3,4,5};
 	ft::vector<int> v3(tab, tab + 5);
@@ -133,6 +133,21 @@ void test_vector(){
 	// 	v3.insert(v3.begin() + 3, tab, tab + 4);
 	// 	std::cout << "v3 = ";
 	// 	display_int(v3);
+	// 	std::cout << std::endl;
+	// }
+
+	// {std::cout << "\ttest de get_allocator\n";
+	// 	int * p;
+	// 	unsigned int i;
+	// 	p = v1.get_allocator().allocate(5);
+	// 	for (i=0; i<5; i++)
+	// 		v1.get_allocator().construct(&p[i],i);
+	// 	for (i=0; i<5; i++)
+	// 		std::cout << ' ' << p[i];
+	// 	std::cout << '\n';
+	// 	for (i=0; i<5; i++)
+	// 		v1.get_allocator().destroy(&p[i]);
+	// 	v1.get_allocator().deallocate(p,5);
 	// 	std::cout << std::endl;
 	// }
 }
