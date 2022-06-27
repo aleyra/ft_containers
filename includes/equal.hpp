@@ -10,7 +10,7 @@ namespace ft{
 			++first1;
 			++first2;
 		}
-		return true
+		return true;
 	}
 
 	template <class InputIterator1, class InputIterator2, class BinaryPredicate>
@@ -21,7 +21,7 @@ namespace ft{
 			++first1;
 			++first2;
 		}
-		return true
+		return true;
 	}
 }
 
