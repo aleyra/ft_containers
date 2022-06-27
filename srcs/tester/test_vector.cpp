@@ -23,42 +23,117 @@ void test_vector(){
 	ft::vector<int> v3(tab, tab + 5);
 	ft::vector<int> v4(v2);
 	ft::vector<int> v5(100);
-
+{
 	// {std::cout << "\ttest de iterator, reverse_iterator, begin, end, rbegin et rend\n";
-	// display_int(v2);
-	// display_int(v3);
-	// display_int(v4);
-	// for (ft::vector<int>::reverse_iterator it = v3.rbegin(); it != v3.rend(); it++)
-	// 	std::cout << *it << " - ";
-	// std::cout << std::endl;}
+	// 	std::cout << "v2 = ";
+	// 	display_int(v2);
+	// 	std::cout << "v3 = ";
+	// 	display_int(v3);
+	// 	std::cout << "v4 = ";
+	// 	display_int(v4);
+	// 	std::cout << "v3 à l'envers = ";
+	// 	for (ft::vector<int>::reverse_iterator it = v3.rbegin(); it != v3.rend(); it++)
+	// 		std::cout << *it << " - ";
+	// 	std::cout << std::endl;
+	// }
 
-	std::cout << "size = " << v2.size() << std::endl;
+	// std::cout << "size = " << v2.size() << std::endl;
 	
-	std::cout << "max_size = " << v2.max_size() << std::endl;
+	// std::cout << "max_size = " << v2.max_size() << std::endl;
 	
-	std::cout << "capacite = " << v2.capacity() << std::endl;
-	std::cout << "capacite de v5 = " << v5.capacity() << std::endl;
+	// std::cout << "capacite = " << v2.capacity() << std::endl;
+	// std::cout << "capacite de v5 = " << v5.capacity() << std::endl;
 
-	// {std::cout << "\ttest de resize et reserve\n";
-	// v2.resize(4);
-	// display_int(v2);
-	// v2.resize(6, 10);
-	// display_int(v2);
-	// v2.resize(9);
-	// display_int(v2);}
+	// {std::cout << "\ttest de resize et reserve\n";//change v2
+	// 	v2.resize(4);
+	// 	display_int(v2);
+	// 	v2.resize(6, 10);
+	// 	display_int(v2);
+	// 	v2.resize(9);
+	// 	display_int(v2);
+	// }
 	
-	// {std::cout << "\tclear et empty\n";
-	// display_int(v4);
-	// std::cout << "empty = " << v4.empty() << std::endl;
-	// v4.clear();
-	// std::cout << "empty = " << v4.empty() << std::endl;}
+	// {std::cout << "\tclear et empty\n";//vide v4
+	// 	display_int(v4);
+	// 	std::cout << "empty = " << v4.empty() << std::endl;
+	// 	v4.clear();
+	// 	std::cout << "empty = " << v4.empty() << std::endl;
+	// }
 	
-	// {std::cout << "\ttest des fonctions \"element access\"\n";
-	// display_int(v3);
-	// std::cout << "v3[2] = " << v3[2] << "\tv3.at(2) = " << v3.at(2) << std::endl;
-	// std::cout << "v3.front() = " << v3.front() << "\tv3.back() = " << v3.back() << std::endl;
-	// int *data = v3.data();
-	// std::cout << "data[2] = " << data[2] << std::endl;}
+	// {std::cout << "\ttest des fonctions \"element access\"\n";//pas de modif
+	// 	display_int(v3);
+	// 	std::cout << "v3[2] = " << v3[2] << "\tv3.at(2) = " << v3.at(2) << std::endl;
+	// 	std::cout << "v3.front() = " << v3.front() << "\tv3.back() = " << v3.back() << std::endl;
+	// 	int *data = v3.data();
+	// 	std::cout << "data[2] = " << data[2] << std::endl;
+	// }
 
-	
+	// {std::cout << "\ttest de assign et erase\n";//modif v2
+	// 	ft::vector<int> v6(v3);
+	// 	std::cout << "v6 = ";
+	// 	display_int(v6);
+	// 	std::cout << "v6.begin() + 1 = " << *(v6.begin() + 1);	
+	// 	std::cout << "\tv6.erase(v6.begin() + 1) = " << *(v6.erase(v6.begin() + 1)) << std::endl;
+	// 	std::cout << "v6 = ";
+	// 	display_int(v6);
+	// 	v6 = v3;
+	// 	std::cout << "v6 reset = ";
+	// 	display_int(v6);
+	// 	std::cout << "v6.begin() + 1 = " << *(v6.begin() + 1);	
+	// 	std::cout << "\tv6.erase(v2.begin() + 1, v6.begin() + 3) = " << *(v6.erase(v6.begin() + 1, v6.begin() + 3)) << std::endl;
+	// 	// std::cout << "v6 = ";
+	// 	display_int(v6);
+	// 	std::cout << "v2 = ";
+	// 	display_int(v2);
+	// 	v2.assign(3, 5);
+	// 	std::cout << "v2 = ";
+	// 	display_int(v2);
+	// 	v2.assign(v3.begin() + 1, v3.begin() + 5);
+	// 	std::cout << "v2 = ";
+	// 	display_int(v2);
+	// 	std::cout << std::endl;
+	// }
+
+	// {std::cout << "\ttest de push_back et pop_back\n";//sur v3 mais retour à l'original
+	// 	std::cout << "v3 = ";
+	// 	display_int(v3);
+	// 	v3.push_back(6);
+	// 	std::cout << "v3 = ";
+	// 	display_int(v3);
+	// 	v3.pop_back();
+	// 	std::cout << "v3 = ";
+	// 	display_int(v3);
+	// 	std::cout << endl;
+	// }
+
+	// {std::cout << "\ttest de swap\n";//sur v7 et v8 crees pour
+	// 	ft::vector<int> v7(5,10);
+	// 	ft::vector<int> v8(8,12);
+	// 	std::cout << "v7 = ";
+	// 	display_int(v7);
+	// 	std::cout << "v8 = ";
+	// 	display_int(v8);
+	// 	v7.swap(v8);
+	// 	std::cout << "v7 = ";
+	// 	display_int(v7);
+	// 	std::cout << "v8 = ";
+	// 	display_int(v8);
+	// 	std::cout << std::endl;
+	// }
+
+	// {std::cout << "\ttest de insert\n";
+	// 	std::cout << "v3 = ";
+	// 	display_int(v3);
+	// 	std::cout << *(v3.insert(v3.begin() + 2, 0)) << std::endl;
+	// 	std::cout << "v3 = ";
+	// 	display_int(v3);
+	// 	v3.insert(v3.begin() + 4, 2, 1);
+	// 	std::cout << "v3 = ";
+	// 	display_int(v3);
+	// 	v3.insert(v3.begin() + 3, tab, tab + 4);
+	// 	std::cout << "v3 = ";
+	// 	display_int(v3);
+	// 	std::cout << std::endl;
+	// }
+}
 }

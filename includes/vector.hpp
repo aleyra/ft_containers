@@ -70,11 +70,11 @@ namespace ft{
 			iterator		end(){iterator	it(this->_data); return (it + this->_size);}
 			const_iterator	end() const {const_iterator	cit(end()); return (cit + this->_size);}
 
-			reverse_iterator		rbegin(){reverse_iterator rit(end()); return (++rit);}
-			const_reverse_iterator	rbegin() const {const_reverse_iterator crit(end()); return (++crit);}
+			reverse_iterator		rbegin(){reverse_iterator rit(end()); return (rit);}
+			const_reverse_iterator	rbegin() const {const_reverse_iterator crit(end()); return (crit);}
 
-			reverse_iterator		rend(){reverse_iterator rit(begin()); return (++rit);}
-			const_reverse_iterator	rend() const {const_reverse_iterator crit(begin()); return (++crit);}
+			reverse_iterator		rend(){reverse_iterator rit(begin()); return (rit);}
+			const_reverse_iterator	rend() const {const_reverse_iterator crit(begin()); return (crit);}
 
 			//member functions: capacity
 			size_type	size(){return this->_size;}
@@ -151,11 +151,11 @@ namespace ft{
 
 			//member functions: modifiers
 			template<class InputIterator>
-			void	assign(InputIterator first, InputIterator last){/*void	assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator first, InputIterator last){*/
+			void	assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0){
 				size_type n = (size_type)(last - first);
 				if (n > this->_capacity)
 					this->reserve(n);
-				this->erase(this->begin(), this->last());
+				this->erase(this->begin(), this->end());
 				this->_size = (size_type)(last - first);
 				for (size_type i = 0; i < this->_size; i++){
 					this->_alloct.construct(&this->_data[i], *first);
@@ -165,7 +165,7 @@ namespace ft{
 			void	assign(size_type n, const value_type & val){
 				if (n > this->_capacity)
 					this->reserve(n);
-				this->erase(this->begin(), this->last());
+				this->erase(this->begin(), this->end());
 				for (size_type i = 0; i < n; i++)
 					this->_alloct.construct(&this->_data[i], val);
 				this->_size = n;
@@ -195,17 +195,18 @@ namespace ft{
 			void	pop_back(){
 				if (this->_size < 1)
 					return ;
-				this->_alloct.destroy(&this->data[this->_size - 1]);
+				this->_alloct.destroy(&this->_data[this->_size - 1]);
 				this->_size--;
 			}
 
 			iterator	insert(iterator position, const value_type & val){
+				// std::cout << "in insert\n";//
 				if (this->_size + 1 > this->_capacity){
 					value_type	*tmp;
 
 					tmp = this->_data;
 					if (this->_size != 0)
-						for (size_type i = this->_size - 1 ; i >= 0; i--)
+						for (size_type i = 0; i < this->_size; i++)
 							this->_alloct.destroy(&(this->_data[i]));
 					if (this->_data != NULL){
 						this->_alloct.deallocate(this->_data, this->_size);
@@ -216,11 +217,19 @@ namespace ft{
 					for (size_type i = 0; i < this->_size; i++)
 						this->_alloct.construct(&this->_data[i], tmp[i]);
 				}
+				// display();//
 				this->_size++;
 				size_type start = position - this->begin();
-				this->_alloct.construct(&this->data[this->_size - 1], val);
-				for (size_type i = this->_size - 1; i > start; i--)
-					this->_data[i + 1] = this->_data[i];
+				this->_alloct.construct(&this->_data[this->_size - 1], val);
+				if (start == 0){
+					for (size_type i = this->_size - 1; i > start; i--)
+						this->_data[i + 1] = this->_data[i];
+					this->_data[1] = this->_data[0];
+				}
+				else
+					for (size_type i = this->_size - 1; i > start - 1; i--)
+						this->_data[i + 1] = this->_data[i];
+				// display();//
 				this->_data[start] = val;
 				return (position);
 			}
@@ -229,8 +238,9 @@ namespace ft{
 					this->insert(position, val);
 			}
 			template <class InputIterator>
-			void		insert(iterator position, InputIterator first, InputIterator last){/*insert(typename ft::enable_if<!ft::is_integral<InputIterator>::value, iterator position, InputIterator first, InputIterator last){*/
-				for (size_type i = 0; i < (size_type)(last - first); i++)
+			void		insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0){
+				size_type nb_elem = (size_type)(last - first);
+				for (size_type i = 0; i < nb_elem; i++)
 					this->insert(position, *(last--));
 			}
 
@@ -242,8 +252,11 @@ namespace ft{
 				return (position);
 			}
 			iterator	erase(iterator first, iterator last){
-				for (iterator it = first; it < last; it++)
-					erase(it);
+				size_type max = (size_type)(last - first);
+				for (size_type i = 0; i < max; i++){
+					erase(first);
+				}
+				return (first);
 			}
 
 			void	swap(vector& x){
