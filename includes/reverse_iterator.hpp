@@ -65,9 +65,7 @@ namespace ft{
 			}
 
 			reverse_iterator	operator-(difference_type n){
-				// iterator_type	tmp = this->base();
-				// tmp = tmp + n;
-				return ((reverse_iterator)(this->base() - n));
+				return ((reverse_iterator)(this->base() + n));
 			}
 
 			reverse_iterator &	operator--(){
