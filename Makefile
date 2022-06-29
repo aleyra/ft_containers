@@ -10,7 +10,7 @@ PATH_LOG	=	logs
 
 
 # List of sources
-SRCS_TESTER		=	test_vector.cpp
+SRCS_TESTER		=	test_vector.cpp test_map.cpp test_pair.cpp
 SRCS_RACINE		=	main.cpp
 SRCS			=	$(addprefix $(PATH_SRC)/tester/, $(SRCS_TESTER)) \
 					$(addprefix $(PATH_SRC)/, $(SRCS_RACINE))

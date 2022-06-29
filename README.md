@@ -41,4 +41,6 @@
 			<li>https://www.cplusplus.com/reference/map/map/?kw=map</li>
 			<li>https://en.cppreference.com/w/cpp/container/map</li>
 			<li>https://www.cplusplus.com/reference/map/map/value_comp/</li>
+			<li>https://en.cppreference.com/w/cpp/container/map/value_compare</li>
+			<li>https://docs.microsoft.com/fr-fr/cpp/standard-library/value-compare-class?view=msvc-170</li>
 </ul>
