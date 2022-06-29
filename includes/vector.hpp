@@ -13,18 +13,18 @@ namespace ft{
 	class vector{
 		public:
 			//member attributs // typedef everywhere to make reading-friendly
-			typedef T											value_type;
-			typedef Alloc										allocator_type;
+			typedef T														value_type;
+			typedef Alloc													allocator_type;
 			typedef typename allocator_type::reference						reference;
 			typedef typename allocator_type::const_reference				const_reference;
 			typedef typename allocator_type::pointer						pointer;
 			typedef typename allocator_type::const_pointer					const_pointer;
-			typedef pointer										iterator;
-			typedef const_pointer								const_iterator;
-			typedef ft::reverse_iterator<iterator>				reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
+			typedef pointer													iterator;
+			typedef const_pointer											const_iterator;
+			typedef ft::reverse_iterator<iterator>							reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 			typedef	typename ft::iterator_traits<iterator>::difference_type	difference_type;
-			typedef std::size_t									size_type;
+			typedef std::size_t												size_type;
 		private:
 			allocator_type	_alloct;//?
 			size_type		_capacity;//>= nb d'elem
@@ -67,16 +67,16 @@ namespace ft{
 
 			//member functions: iterators
 			iterator		begin(){iterator it(this->_data); return (it);}
-			const_iterator	begin() const {const_iterator	cit(this->_data); return (cit);}
+			const_iterator	begin() const {return (const_iterator)this->_data;}
 
 			iterator		end(){iterator	it(this->_data); return (it + this->_size);}
-			const_iterator	end() const {const_iterator	cit(end()); return (cit + this->_size);}
+			const_iterator	end() const {return (const_iterator)(this->_data + this->_size);}
 
 			reverse_iterator		rbegin(){reverse_iterator rit(end()); return (rit);}
-			const_reverse_iterator	rbegin() const {const_reverse_iterator crit(end()); return (crit);}
+			const_reverse_iterator	rbegin() const {return ((const_reverse_iterator)this->end());}
 
 			reverse_iterator		rend(){reverse_iterator rit(begin()); return (rit);}
-			const_reverse_iterator	rend() const {const_reverse_iterator crit(this->begin()); return (crit);}
+			const_reverse_iterator	rend() const {return (const_reverse_iterator)this->begin();}
 
 			//member functions: capacity
 			size_type	size() const{return this->_size;}

@@ -1,4 +1,4 @@
-#if 0 //1 = original 0 = perso
+#if 1 //1 = original 0 = perso
 	# include <vector>
 	namespace ft = std;
 #else
@@ -16,32 +16,49 @@ void	display_int(ft::vector<int> v){
 }
 
 void test_vector(){
-	ft::vector<int> v1;
-	ft::vector<int> v2(5, 12);
+	// ft::vector<int> v1;
+	// ft::vector<int> v2(5, 12);
 	int tab[]={1,2,3,4,5};
 	ft::vector<int> v3(tab, tab + 5);
-	ft::vector<int> v4(v2);
-	ft::vector<int> v5(100);
-{
+	// ft::vector<int> v4(v2);
+	// ft::vector<int> v5(100);
+
 	{std::cout << "\ttest de iterator, reverse_iterator, begin, end, rbegin et rend et leurs const\n";
-		std::cout << "v2 = ";
-		display_int(v2);
-		std::cout << "v3 = ";
-		display_int(v3);
-		std::cout << "v4 = ";
-		display_int(v4);
+	// 	std::cout << "v2 = ";
+	// 	display_int(v2);
+	// 	std::cout << "v3 = ";
+	// 	display_int(v3);
+	// 	std::cout << "v4 = ";
+	// 	display_int(v4);
 		std::cout << "v3 à l'envers = ";
 		for (ft::vector<int>::reverse_iterator it = v3.rbegin(); it != v3.rend(); it++)
+			std::cout << *it << " - ";
+		std::cout << std::endl;
+		const ft::vector<int> v6(v3);
+		std::cout << "v6 est une version const de v3\n";
+		std::cout << "v6 à l'envers = ";
+		for (ft::vector<int>::const_reverse_iterator it = v6.rbegin(); it != v6.rend(); it++)
 			std::cout << *it << " - ";
 		std::cout << std::endl;
 		ft::vector<int>::const_iterator citb = v3.begin();
 		ft::vector<int>::const_iterator cite = v3.end();
 		ft::vector<int>::const_reverse_iterator critb = v3.rbegin();
 		ft::vector<int>::const_reverse_iterator crite = v3.rend();
+		ft::vector<int>::const_reverse_iterator critb6 = v6.rbegin();
+		ft::vector<int>::const_reverse_iterator crite6 = v6.rend();
 		std::cout << "versions const :\n";
 		std::cout << "v3.begin() = " << *citb << "\tv3.end() = " << *(cite - 1);
 		std::cout << "\nv3.rbegin() = " << *critb << "\tv3.rend() = " << *(crite - 1) << std::endl;
+		std::cout << "v6.rbegin() = " << *critb6 << "\tv6.rend() = " << *(crite6 - 1) << std::endl;
 	}
+
+	// int tb[10]={0,1,2,3,4,5,6,7,8,9};
+	// ft::vector<int> test1(tb,tb+10);
+	// const ft::vector<int> test2(tb,tb+10);
+	// for (ft::vector<int>::reverse_iterator it = test1.rbegin();it != test1.rend();it++)
+	// std::cout << *it << std::endl;
+	// for (ft::vector<int>::const_reverse_iterator it = test2.rbegin();it != test2.rend();it++)
+	// std::cout << *it << std::endl;
 
 	// std::cout << "size = " << v2.size() << std::endl;
 	
@@ -156,48 +173,46 @@ void test_vector(){
 	// 	v1.get_allocator().deallocate(p,5);
 	// 	std::cout << std::endl;
 	// }
-}
-	{std::cout << "\ttest des fonctions non membres\n";
-		std::cout << "v2 = ";
-		display_int(v2);
-		std::cout << "v3 = ";
-		display_int(v3);
-		v4 = v2;
-		v4.push_back(12);
-		std::cout << "v4 = ";
-		display_int(v4);
 
-		std::cout << "\t\ttest de == :\n";
-		std::cout << "v2 et v2 : " << (v2 == v2) << "\tv2 et v3 : " << (v2 == v3) << std::endl;
+	// {std::cout << "\ttest des fonctions non membres\n";
+	// 	std::cout << "v2 = ";
+	// 	display_int(v2);
+	// 	std::cout << "v3 = ";
+	// 	display_int(v3);
+	// 	v4 = v2;
+	// 	v4.push_back(12);
+	// 	std::cout << "v4 = ";
+	// 	display_int(v4);
 
-		std::cout << "\t\ttest de != :\n";
-		std::cout << "v2 et v2 : " << (v2 != v2) << "\tv2 et v3 : " << (v2 != v3) << std::endl;
+	// 	std::cout << "\t\ttest de == :\n";
+	// 	std::cout << "v2 et v2 : " << (v2 == v2) << "\tv2 et v3 : " << (v2 == v3) << std::endl;
 
-		std::cout << "\t\ttest de < :\n";
-		std::cout << "v2 et v2 : " << (v2 < v2) << "\tv2 et v3 : " << (v2 < v3) << std::endl;
-		std::cout << "v3 et v2 : " << (v3 < v2) << std::endl;
+	// 	std::cout << "\t\ttest de != :\n";
+	// 	std::cout << "v2 et v2 : " << (v2 != v2) << "\tv2 et v3 : " << (v2 != v3) << std::endl;
 
-		std::cout << "\t\ttest de <= :\n";
-		std::cout << "v2 et v2 : " << (v2 <= v2) << "\tv2 et v3 : " << (v2 <= v3) << std::endl;
-		std::cout << "v3 et v2 : " << (v3 <= v2) << std::endl;
+	// 	std::cout << "\t\ttest de < :\n";
+	// 	std::cout << "v2 et v2 : " << (v2 < v2) << "\tv2 et v3 : " << (v2 < v3) << std::endl;
+	// 	std::cout << "v3 et v2 : " << (v3 < v2) << std::endl;
 
-		std::cout << "\t\ttest de > :\n";
-		std::cout << "v2 et v2 : " << (v2 > v2) << "\tv2 et v3 : " << (v2 > v3) << std::endl;
-		std::cout << "v3 et v2 : " << (v3 > v2) << std::endl;
+	// 	std::cout << "\t\ttest de <= :\n";
+	// 	std::cout << "v2 et v2 : " << (v2 <= v2) << "\tv2 et v3 : " << (v2 <= v3) << std::endl;
+	// 	std::cout << "v3 et v2 : " << (v3 <= v2) << std::endl;
 
-		std::cout << "\t\ttest de >= :\n";
-		std::cout << "v2 et v2 : " << (v2 >= v2) << "\tv2 et v3 : " << (v2 >= v3) << std::endl;
-		std::cout << "v3 et v2 : " << (v3 >= v2) << std::endl;
+	// 	std::cout << "\t\ttest de > :\n";
+	// 	std::cout << "v2 et v2 : " << (v2 > v2) << "\tv2 et v3 : " << (v2 > v3) << std::endl;
+	// 	std::cout << "v3 et v2 : " << (v3 > v2) << std::endl;
 
-		std::cout << "\t\ttest de ft::equal avec v2 et v4 :\n";
-		std::cout << (ft::equal(v2.begin(), v2.end(), v4.begin())) << std::endl;
+	// 	std::cout << "\t\ttest de >= :\n";
+	// 	std::cout << "v2 et v2 : " << (v2 >= v2) << "\tv2 et v3 : " << (v2 >= v3) << std::endl;
+	// 	std::cout << "v3 et v2 : " << (v3 >= v2) << std::endl;
+
+	// 	std::cout << "\t\ttest de ft::equal avec v2 et v4 :\n";
+	// 	std::cout << (ft::equal(v2.begin(), v2.end(), v4.begin())) << std::endl;
 		
-		swap(v2, v3);
-		std::cout << "v2 = ";
-		display_int(v2);
-		std::cout << "v3 = ";
-		display_int(v3);
-
-		
-	}
+	// 	swap(v2, v3);
+	// 	std::cout << "v2 = ";
+	// 	display_int(v2);
+	// 	std::cout << "v3 = ";
+	// 	display_int(v3);	
+	// }
 }
