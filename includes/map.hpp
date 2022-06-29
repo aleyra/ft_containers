@@ -6,6 +6,7 @@
 # include "reverse_iterator.hpp"
 # include "enable_if.hpp"
 # include "is_integral.hpp"
+# include "birectional_iterator_tag.hpp"
 
 namespace ft{
 	template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > >
@@ -21,8 +22,8 @@ namespace ft{
 		typedef typename allocator_type::const_reference				const_reference;
 		typedef typename allocator_type::pointer						pointer;
 		typedef typename allocator_type::const_pointer					const_pointer;
-		typedef typename value_type::bidirectional_iterator				iterator;
-		typedef const typename value_type::bidirectional_iterator		const_iterator;
+		typedef typename value_type::bidirectional_iterator				iterator;//?
+		typedef const typename value_type::bidirectional_iterator		const_iterator;//?
 		typedef ft::reverse_iterator<iterator>							reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
@@ -50,8 +51,8 @@ namespace ft{
 
 // 		//member functions
 		explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()){
-			(void)comp;
-			(void)alloc;
+			(void)comp;//?
+			(void)alloc;//?
 		}
 		// template <class InputIterator>
 		// map (InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type(),
