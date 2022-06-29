@@ -15,14 +15,15 @@ namespace ft{
 			typedef typename ft::iterator_traits<Iter>::value_type			value_type;
 			typedef typename ft::iterator_traits<Iter>::difference_type		difference_type;
 			typedef typename ft::iterator_traits<Iter>::pointer				pointer;
-			typedef typename ft::iterator_traits<Iter>::reference					reference;
+			typedef typename ft::iterator_traits<Iter>::reference			reference;
 
 		protected:
 			iterator_type	current;
 		
 		public:
 			//member functions : canonical form
-			reverse_iterator(){}
+			explicit reverse_iterator(iterator_type it):current(it){}
+			//explicit so it can't be used for implicit conversion or copy-initialization
 			template <class Iter2>
 			reverse_iterator(const reverse_iterator<Iter2> & src) :current(src.base()){}
 			virtual ~reverse_iterator(){}
@@ -34,9 +35,6 @@ namespace ft{
 			}
 
 			//member functions: others
-			explicit reverse_iterator(iterator_type it):current(it){}
-			//explicit so it can't be used for implicit conversion or copy-initialization
-
 			iterator_type		base() const{return (current);}
 			
 			reference			operator*() const{
@@ -45,8 +43,8 @@ namespace ft{
 				return(*tmp);
 			}
 			
-			reverse_iterator	operator+(difference_type n) const{
-				iterator_type	tmp = current;
+			reverse_iterator	operator+(difference_type n){
+				iterator_type	tmp = this->base();
 				tmp = tmp - n;
 				return (tmp);
 			}
@@ -66,10 +64,10 @@ namespace ft{
 				return (*this);
 			}
 
-			reverse_iterator	operator-(difference_type n) const{
-				iterator_type	tmp = current;
-				tmp = tmp + n;
-				return (tmp);
+			reverse_iterator	operator-(difference_type n){
+				// iterator_type	tmp = this->base();
+				// tmp = tmp + n;
+				return ((reverse_iterator)(this->base() - n));
 			}
 
 			reverse_iterator &	operator--(){

@@ -56,7 +56,8 @@ namespace ft{
 				for(size_type i = 0; i < this->_size ; i++){this->_alloct.construct(&this->_data[i], val);}
 			}
 			template <class InputIterator>
-			vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_alloct(alloc), _capacity((size_type)(last - first) + 10),
+			vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type(),
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_alloct(alloc), _capacity((size_type)(last - first) + 10),
 				_data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){
 				for (size_type i = 0; i < this->_size; i++){
 					this->_alloct.construct(&this->_data[i], *first);
@@ -75,12 +76,12 @@ namespace ft{
 			const_reverse_iterator	rbegin() const {const_reverse_iterator crit(end()); return (crit);}
 
 			reverse_iterator		rend(){reverse_iterator rit(begin()); return (rit);}
-			const_reverse_iterator	rend() const {const_reverse_iterator crit(begin()); return (crit);}
+			const_reverse_iterator	rend() const {const_reverse_iterator crit(this->begin()); return (crit);}
 
 			//member functions: capacity
-			size_type	size(){return this->_size;}
+			size_type	size() const{return this->_size;}
 
-			size_type	max_size(){return this->_alloct.max_size();}
+			size_type	max_size() const{return this->_alloct.max_size();}
 
 			void		resize(size_type n, value_type val = value_type()){//la capacité sera de taille différente
 				if (n < this->capacity() * 2 && n > this->capacity())

@@ -23,25 +23,25 @@ void test_vector(){
 	ft::vector<int> v4(v2);
 	ft::vector<int> v5(100);
 {
-	// {std::cout << "\ttest de iterator, reverse_iterator, begin, end, rbegin et rend et leurs const\n";
-	// 	std::cout << "v2 = ";
-	// 	display_int(v2);
-	// 	std::cout << "v3 = ";
-	// 	display_int(v3);
-	// 	std::cout << "v4 = ";
-	// 	display_int(v4);
-	// 	std::cout << "v3 à l'envers = ";
-	// 	for (ft::vector<int>::reverse_iterator it = v3.rbegin(); it != v3.rend(); it++)
-	// 		std::cout << *it << " - ";
-	// 	std::cout << std::endl;
-	// 	ft::vector<int>::const_iterator citb = v3.begin();
-	// 	ft::vector<int>::const_iterator cite = v3.end();
-	// 	ft::vector<int>::const_reverse_iterator critb = v3.rbegin();
-	// 	ft::vector<int>::const_reverse_iterator crite = v3.rend();
-	// 	std::cout << "versions const :\n";
-	// 	std::cout << "v3.begin() = " << *citb << "\tv3.end() = " << *cite;
-	// 	std::cout << "\nv3.rbegin() = " << *critb << "\tv3.rend() = " << *crite << std::endl;
-	// }
+	{std::cout << "\ttest de iterator, reverse_iterator, begin, end, rbegin et rend et leurs const\n";
+		std::cout << "v2 = ";
+		display_int(v2);
+		std::cout << "v3 = ";
+		display_int(v3);
+		std::cout << "v4 = ";
+		display_int(v4);
+		std::cout << "v3 à l'envers = ";
+		for (ft::vector<int>::reverse_iterator it = v3.rbegin(); it != v3.rend(); it++)
+			std::cout << *it << " - ";
+		std::cout << std::endl;
+		ft::vector<int>::const_iterator citb = v3.begin();
+		ft::vector<int>::const_iterator cite = v3.end();
+		ft::vector<int>::const_reverse_iterator critb = v3.rbegin();
+		ft::vector<int>::const_reverse_iterator crite = v3.rend();
+		std::cout << "versions const :\n";
+		std::cout << "v3.begin() = " << *citb << "\tv3.end() = " << *(cite - 1);
+		std::cout << "\nv3.rbegin() = " << *critb << "\tv3.rend() = " << *(crite - 1) << std::endl;
+	}
 
 	// std::cout << "size = " << v2.size() << std::endl;
 	
