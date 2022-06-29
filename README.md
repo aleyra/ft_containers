@@ -37,6 +37,11 @@
 			<li>https://www.cplusplus.com/reference/utility/make_pair/</li>
 		</ul>
 	</li>
+	<li>bidirectionnal_iterator : (non-mandatory but needed)<ul>
+			<li>https://cplusplus.com/reference/iterator/BidirectionalIterator/</li>
+			<li></li>
+		</ul>
+	</li>
 	<li>map :<ul>
 			<li>https://www.cplusplus.com/reference/map/map/?kw=map</li>
 			<li>https://en.cppreference.com/w/cpp/container/map</li>

@@ -4,8 +4,8 @@
 
 int main() {
 	// test_vector();
-	// test_map();
-	test_pair();
+	// test_pair();
+	test_map();
 
 	return (0);
 }
