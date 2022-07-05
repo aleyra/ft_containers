@@ -8,7 +8,7 @@ namespace ft{
 	template <class P>
 	struct node{
 		//attributs
-		typedef typename node<P>*	pointer;
+		typedef node<P>*	pointer;
 		P 		data;//clé de map
 		pointer lchild;//pointeur enfant gauche à remplir avant enfant droite
 		pointer rchild;//pointeur enfant droite
@@ -42,22 +42,22 @@ namespace ft{
 
 		int		size;//nb d'elem
 
-		my_avl_tree(P data){
+		my_avl_tree(P data){//ça va pas...
 			_node	r;
-			r.data = data
+			r.data = data;//...ici ?
 			this->root = *r;
 			this->size = 1;
 		}
 		~my_avl_tree(){}
 
-		_node const &getFirst() const{
+		_node* const getFirst(){
 			_node* tmp = root;
 			while (tmp->lchild != nullptr)
 				tmp = tmp->lchild;
 			return (tmp);
 		}
 
-		_node const	&getLast() const{
+		_node* const	getLast() {
 			_node* tmp = root;
 			while (tmp->rchild != nullptr)
 				tmp = tmp->rchild;

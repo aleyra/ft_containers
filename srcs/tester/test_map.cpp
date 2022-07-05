@@ -1,4 +1,4 @@
-#if 0 //1 = original 0 = perso
+#if 1 //1 = original 0 = perso
 	# include <map>
 	namespace ft = std;
 #else

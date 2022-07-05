@@ -10,13 +10,13 @@ PATH_LOG	=	logs
 
 
 # List of sources
-SRCS_TESTER		=	test_vector.cpp test_map.cpp test_pair.cpp
+SRCS_TESTER		=	test_vector.cpp test_map.cpp test_pair.cpp test_tree.cpp
 SRCS_RACINE		=	main.cpp
 SRCS			=	$(addprefix $(PATH_SRC)/tester/, $(SRCS_TESTER)) \
 					$(addprefix $(PATH_SRC)/, $(SRCS_RACINE))
 
 OBJS		=	$(addprefix $(PATH_OBJ)/, $(notdir $(SRCS:.cpp=.o)))
-ALL_INCS	=	birectional_iterator_tag.hpp enable_if.hpp equal.hpp is_integral.hpp iterators_traits.hpp make_pair.hpp map.hpp my_tests.hpp pair.hpp reverse_iterator.hpp vector.hpp
+ALL_INCS	=	birectional_iterator_tag.hpp enable_if.hpp equal.hpp is_integral.hpp iterators_traits.hpp make_pair.hpp map.hpp my_avl_tree.hpp my_tests.hpp pair.hpp reverse_iterator.hpp vector.hpp
 INCS		=	$(addprefix $(PATH_INC)/, $(ALL_INCS))
 
 # Commands of compilation
