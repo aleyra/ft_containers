@@ -5,15 +5,15 @@
 # include "make_pair.hpp"
 
 namespace ft{
-	template <class P>
+	template <class T1>
 	struct node{
 		//attributs
-		typedef typename P*	pointer;
+		typedef typename node<T1>*	pointer;
+		T1 		data;//clé de map
 		pointer lchild;//pointeur enfant gauche à remplir avant enfant droite
 		pointer rchild;//pointeur enfant droite
 		pointer	parent;//pointeur parent
 		int		depth;//profondeur = nombre de node entre celui la et le descendant le plus loin
-		P 		data;//clé de map
 
 		//member function
 		node():lchild(nullptr), rchild(nullptr), parent(nullptr){}
@@ -31,7 +31,7 @@ namespace ft{
 		}
 	};
 
-
+	
 	
 
 }
