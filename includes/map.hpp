@@ -10,7 +10,7 @@
 
 namespace ft{
 	template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > >
-	class map{
+	class map{//c'est un genre d'arbre
 		public:
 		//member attributs
 		typedef Key														key_type;
