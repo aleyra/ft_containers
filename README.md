@@ -37,6 +37,11 @@
 			<li>https://www.cplusplus.com/reference/utility/make_pair/</li>
 		</ul>
 	</li>
+	<li>an avl tree : (non-mandatory but so useful)<ul>
+			<li>https://www.cs.usfca.edu/~galles/visualization/AVLtree.html</li>
+			<li>https://www.geeksforgeeks.org/avl-tree-set-1-insertion/</li>
+		</ul>
+	</li>
 	<li>bidirectionnal_iterator : (non-mandatory but needed)<ul>
 			<li>https://cplusplus.com/reference/iterator/BidirectionalIterator/</li>
 			<li>https://cplusplus.com/reference/iterator/</li>
