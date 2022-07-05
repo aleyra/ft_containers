@@ -42,22 +42,22 @@ namespace ft{
 
 		int		size;//nb d'elem
 
-		my_avl_tree(P data){//ça va pas...
+		my_avl_tree(P data){//utiliser l'allocator...
 			_node	r;
-			r.data = data;//...ici ?
-			this->root = *r;
+			r.data = data;
+			this->root = &r;
 			this->size = 1;
 		}
 		~my_avl_tree(){}
 
-		_node* const getFirst(){
+		_node* getFirst() const{
 			_node* tmp = root;
 			while (tmp->lchild != nullptr)
 				tmp = tmp->lchild;
 			return (tmp);
 		}
 
-		_node* const	getLast() {
+		_node*	getLast() const{
 			_node* tmp = root;
 			while (tmp->rchild != nullptr)
 				tmp = tmp->rchild;
