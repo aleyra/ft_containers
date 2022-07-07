@@ -23,8 +23,8 @@ namespace ft{
 
 		bool		operator==(bidirectional_iterator_tag &other){};//?
 		bool		operator!=(bidirectional_iterator_tag &other){};//?
-		value_type	operator*(){};//?
-		pointer		operator->(){return (&(this->operator*()));};//?
+		value_type	&operator*(){};//?
+		pointer		&operator->(){return (&(this->operator*()));};//?
 
 		bidirectional_iterator_tag &	operator++(){
 			// ++current;
