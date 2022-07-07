@@ -1,3 +1,7 @@
+<p>I recommand to code in first place iterator_traits then reverse_iterator</p>
+<p>Before coding vector or map, you should code enable_if, equal and is_integral</p>
+<p>Before coding map, you should code pair and make_pair</p>
+<p>To code map, you may need to create an avl_iterator, an avl_tree</p>
 <ul>
 	<li>iterator_traits :<ul>
 			<li>https://en.cppreference.com/w/cpp/iterator/iterator_traits</li>
@@ -40,6 +44,7 @@
 	<li>an avl tree : (non-mandatory but so useful)<ul>
 			<li>https://www.cs.usfca.edu/~galles/visualization/AVLtree.html</li>
 			<li>https://www.geeksforgeeks.org/avl-tree-set-1-insertion/</li>
+			<li>https://rosettacode.org/wiki/AVL_tree/C%2B%2B</li>
 		</ul>
 	</li>
 	<li>bidirectionnal_iterator : (non-mandatory but needed)<ul>
