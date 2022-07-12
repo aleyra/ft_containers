@@ -51,14 +51,16 @@ namespace ft{
 	template<class P>
 	struct avl_iterator{
 		public:
+			typedef Iter													iterator_type;
+			typedef typename ft::iterator_traits<Iter>::iterator_category	iterator_category;
+			typedef typename ft::iterator_traits<Iter>::value_type			value_type;
+			typedef typename ft::iterator_traits<Iter>::difference_type		difference_type;
+			typedef typename ft::iterator_traits<Iter>::pointer				pointer;
+			typedef typename ft::iterator_traits<Iter>::reference			reference;
+
+		protected:
 			typedef	ft::node<P>						node;
-			typedef	P								value_type;
-			typedef	value_type*						pointer;//?
-			typedef value_type&						reference;//?
-			typedef ptrdiff_t						difference_type;
-			typedef std::avl_iterator	iterator_category;//?
-		// protected:
-		// 	node	
+			node	current;
 
 			avl_iterator(const avl_iterator &src){this = src;}
 			~avl_iterator(){}
