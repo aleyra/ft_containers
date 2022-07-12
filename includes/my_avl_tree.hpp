@@ -83,17 +83,21 @@ namespace ft{
 					current = current->parent;
 				}
 				return (*this);
-			}//?
+			}//a verif
 			avl_iterator	operator++(int){
 				avl_iterator tmp = *this;
 				++(*this);
 				return (tmp);
-			}//?
+			}
 
-			bool		operator==(avl_iterator &other){};//?
-			bool		operator!=(avl_iterator &other){};//?
+			bool		operator==(avl_iterator &other){
+				current == other.current;
+			};
+			bool		operator!=(avl_iterator &other){
+				current != other.current;
+			};
 
-			value_type		&operator*(){return node.data;}
+			value_type		&operator*(){return current->data;}
 			pointer			&operator->(){return &(this->operator*())}
 			
 			avl_iterator(){}
@@ -112,14 +116,12 @@ namespace ft{
 					current = current->parent;
 				}
 				return (*this);
-				return (*this);
-			}
+			}//a verif
 			avl_iterator	operator--(int){
 				avl_iterator tmp = *this;
 				++(*this);
 				return (tmp);
 			}
-
 	};
 
 	template <class T, class Key, class Compare, class Alloc>
