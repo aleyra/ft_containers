@@ -33,20 +33,13 @@ namespace ft{
 			}
 	};
 
-	// template <class P>//amai
-	// void	swap_nodes(ft::node<P>* n1, ft::node<P>* n2){
-	// 	ft::node<P>*	tmp;
-	// 	tmp = n1;
-	// 	n1 = n2;
-	// 	n2 = tmp;
-	// }
-	// template <class P>
-	// void	swap_nodes(ft::node<P>*& n1, ft::node<P>*& n2){
-	// 	ft::node<P>*	tmp;
-	// 	tmp = n1;
-	// 	n1 = n2;
-	// 	n2 = tmp;
-	// }
+	template <class P>
+	void	swap_nodes_data(ft::node<P>* n1, ft::node<P>* n2){
+		ft::node<P>*	tmp;
+		tmp->data = n1->data;
+		n1->data = n2->data;
+		n2->data = tmp->data;
+	}
 
 	template<class P>
 	struct avl_iterator{
