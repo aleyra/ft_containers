@@ -91,14 +91,14 @@ namespace ft{
 			}
 
 			bool		operator==(avl_iterator &other){
-				current == other.current;
+				return (current == other.current);
 			};
 			bool		operator!=(avl_iterator &other){
-				current != other.current;
+				return (current != other.current);
 			};
 
 			value_type		&operator*(){return current->data;}
-			pointer			&operator->(){return &(this->operator*())}
+			pointer			operator->(){return &(this->operator*())}
 			
 			avl_iterator(){}
 

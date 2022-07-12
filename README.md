@@ -44,7 +44,6 @@
 	<li>node, avl_iterator, avl tree : (non-mandatory but so useful)<ul>
 			<li>https://www.cs.usfca.edu/~galles/visualization/AVLtree.html</li>
 			<li>https://www.geeksforgeeks.org/avl-tree-set-1-insertion/</li>
-			<li>https://rosettacode.org/wiki/AVL_tree/C%2B%2B</li>
 		</ul>
 	</li>
 	<li>bidirectionnal_iterator : (non-mandatory but needed)<ul>
