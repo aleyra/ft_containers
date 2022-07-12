@@ -70,26 +70,19 @@ namespace ft{
 			}
 			
 			avl_iterator	&operator++(){
-				if (current->parent == nullptr)[
-					current = current->lchild;
-					return (*this);
-				]
 				if (current->rchild != nullptr){
 					current = current->rchild;
 					while (current->lchild != nullptr)
-						current = current->left;
-					return (*this)
+						current = current->lchild;
 				}
-				node tmp = current->parent;
-				if (tmp->parent == nullptr){
-					current = tmp;
-					return (*this);
+				node tmp = current;
+				current = current->parent;
+				while (current->rchild == tmp){
+					tmp = current;
+					current = current->parent;
 				}
-				while (current == tmp->rchild){
-					current = tmp;
-					tmp = tmp->parent;
-				}
-				current = tmp;
+
+				
 				return (*this);
 			}//?
 			avl_iterator	operator++(int){
