@@ -17,7 +17,7 @@ namespace ft{
 			int		depth;//profondeur = nombre de node entre celui la et le descendant le plus loin
 
 		//member function
-			node():lchild(nullptr), rchild(nullptr), parent(nullptr){}
+			node():lchild(nullptr), rchild(nullptr), parent(nullptr), isroot(false){}
 			node(node const &src){
 				*this = src;
 			}
@@ -33,6 +33,21 @@ namespace ft{
 			}
 	};
 
+	// template <class P>//amai
+	// void	swap_nodes(ft::node<P>* n1, ft::node<P>* n2){
+	// 	ft::node<P>*	tmp;
+	// 	tmp = n1;
+	// 	n1 = n2;
+	// 	n2 = tmp;
+	// }
+	// template <class P>
+	// void	swap_nodes(ft::node<P>*& n1, ft::node<P>*& n2){
+	// 	ft::node<P>*	tmp;
+	// 	tmp = n1;
+	// 	n1 = n2;
+	// 	n2 = tmp;
+	// }
+
 	template<class P>
 	struct avl_iterator{
 		public:
@@ -42,6 +57,8 @@ namespace ft{
 			typedef value_type&						reference;//?
 			typedef ptrdiff_t						difference_type;
 			typedef std::avl_iterator	iterator_category;//?
+		// protected:
+		// 	node	
 
 			avl_iterator(const avl_iterator &src){this = src;}
 			~avl_iterator(){}
@@ -50,8 +67,21 @@ namespace ft{
 				return (*this);
 			}//?
 			
-			avl_iterator	&operator++(){
-				//?
+			avl_iterator	&operator++(){//a revoir
+				if (this->parent == nullptr)
+					return (*(this->lchild));
+				if (this->rchild != nullptr){
+					this = this->rchild;
+					while (this->lchild != nullptr)
+						this = this->left;
+				}
+				else{
+					node* tmp = this;
+					this = this->parent;
+					if (this->parent == nullptr)
+						return (*this);
+					
+				}
 				return (*this);
 			}//?
 			avl_iterator	operator++(int){
