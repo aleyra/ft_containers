@@ -74,6 +74,7 @@ namespace ft{
 					current = current->rchild;
 					while (current->lchild != nullptr)
 						current = current->lchild;
+						return (*this);
 				}
 				node tmp = current;
 				current = current->parent;
@@ -81,8 +82,6 @@ namespace ft{
 					tmp = current;
 					current = current->parent;
 				}
-
-				
 				return (*this);
 			}//?
 			avl_iterator	operator++(int){
@@ -100,14 +99,26 @@ namespace ft{
 			avl_iterator(){}
 
 			avl_iterator &	operator--(){
-				// --current;
+				f (current->lchild != nullptr){
+					current = current->lchild;
+					while (current->lchild != nullptr)
+						current = current->rchild;
+						return (*this);
+				}
+				node tmp = current;
+				current = current->parent;
+				while (current->lchild == tmp){
+					tmp = current;
+					current = current->parent;
+				}
 				return (*this);
-			}//?
+				return (*this);
+			}
 			avl_iterator	operator--(int){
 				avl_iterator tmp = *this;
 				++(*this);
 				return (tmp);
-			}//?
+			}
 
 	};
 
