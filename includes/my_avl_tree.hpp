@@ -53,37 +53,43 @@ namespace ft{
 		public:
 			typedef P*															iterator_type;
 			typedef typename std::bidirectionnal_iterator::iterator_category	iterator_category;
-			typedef typename ft::iterator_traits<Iter>::value_type				value_type;
-			typedef typename ft::iterator_traits<Iter>::difference_type			difference_type;
-			typedef typename ft::iterator_traits<Iter>::pointer					pointer;
-			typedef typename ft::iterator_traits<Iter>::reference				reference;
+			typedef typename ft::iterator_traits<P*>::value_type				value_type;
+			typedef typename ft::iterator_traits<P*>::difference_type			difference_type;
+			typedef typename ft::iterator_traits<P*>::pointer					pointer;
+			typedef typename ft::iterator_traits<P*>::reference					reference;
 
 		protected:
-			typedef	ft::node<P>						node;
+			typedef	ft::node<P>*						node;
 			node	current;
 
 			avl_iterator(const avl_iterator &src){this = src;}
 			~avl_iterator(){}
 			avl_iterator & operator=(const avl_iterator &src){
-
+				current = src.current;
 				return (*this);
-			}//?
+			}
 			
-			avl_iterator	&operator++(){//a revoir
-				if (this->parent == nullptr)
-					return (*(this->lchild));
-				if (this->rchild != nullptr){
-					this = this->rchild;
-					while (this->lchild != nullptr)
-						this = this->left;
+			avl_iterator	&operator++(){
+				if (current->parent == nullptr)[
+					current = current->lchild;
+					return (*this);
+				]
+				if (current->rchild != nullptr){
+					current = current->rchild;
+					while (current->lchild != nullptr)
+						current = current->left;
+					return (*this)
 				}
-				else{
-					node* tmp = this;
-					this = this->parent;
-					if (this->parent == nullptr)
-						return (*this);
-					
+				node tmp = current->parent;
+				if (tmp->parent == nullptr){
+					current = tmp;
+					return (*this);
 				}
+				while (current == tmp->rchild){
+					current = tmp;
+					tmp = tmp->parent;
+				}
+				current = tmp;
 				return (*this);
 			}//?
 			avl_iterator	operator++(int){
