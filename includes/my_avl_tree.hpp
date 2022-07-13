@@ -152,14 +152,14 @@ namespace ft{
 			node* getFirst() const{
 				node* tmp = root;
 				while (tmp->lchild != nullptr)
-					tmp = tmp->lchild;
+					tmp--;
 				return (tmp);
 			}
 
 			node*	getLast() const{
 				node* tmp = root;
 				while (tmp->rchild != nullptr)
-					tmp = tmp->rchild;
+					tmp++;
 				return (tmp);
 			}
 
