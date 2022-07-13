@@ -141,12 +141,12 @@ namespace ft{
 			int		size;//nb d'elem
 
 		public:
-			my_avl_tree(P data){//utiliser l'allocator...
-				this->root = 
-				r.data = data;
-				this->root = &r;
+			my_avl_tree(P data){
+				this->root = this->alloc.allocate(1);
+				this->alloc.construct(&this->root->data, data);
 				this->size = 1;
 			}
+
 			~my_avl_tree(){}
 
 			node* getFirst() const{
@@ -163,23 +163,38 @@ namespace ft{
 				return (tmp);
 			}
 
-			node*	newNode(P data){
-				node	n;
-				n.data = data;
-				return (n);
-			}
-
 			bool	isBalanced(){
-				//pour tous les nodes
-				//check si la diff entre la depth les deux enfants est compris entre -1 et 1
-				//si c'est pas le cas return (false);
-
-				//la question c'est comment naviguer...
-				//en recursif ?
+				node* tmp = getFirst();
+				node* last = getLast();
+				node* p;
+				node* rc;
+				node* lc
+				while (tmp != last){
+					p = tmp->parent;
+					rc = p->rchild;
+					lc = p->lchild;
+					if ((rc != nullptr && lc != nullptr) && (lc->depth - rc->depth > 1 || lc->depth - rc->depth < -1))
+						return (false);
+					tmp++;
+				}
 				return (true);
 			}//?
 
-			void	makeBalanced(){}//?
+			void	insert(P data){
+				
+			}//?
+
+			void	erase(P data){
+
+			}//?
+			
+			void clear(){
+				
+			}
+
+			void	makeBalanced(){
+
+			}//?
 	};
 	
 
