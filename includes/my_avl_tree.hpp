@@ -198,7 +198,7 @@ namespace ft{
 				return (true);
 			}//?
 
-			void	insert(P data){//soit n lq nouvelle node
+			void	insert(P data){
 				node*	tmp = root;
 				bool	b = false;
 				while (b == false){
@@ -211,7 +211,7 @@ namespace ft{
 							tmp->lchild->lchild = nullptr;
 							tmp->lchild->rchild = nullptr;
 							this->size++;
-							while (tmp != nullptr){//pour adapter depth
+							while (tmp != nullptr){//pour adapter depth //a revoir
 								tmp->depth++;
 								tmp = tmp->parent;
 							}
@@ -229,7 +229,7 @@ namespace ft{
 							tmp->rchild->lchild = nullptr;
 							tmp->rchild->rchild = nullptr;
 							this->size++;
-							while (tmp != nullptr){//pour adapter depth
+							while (tmp != nullptr){//pour adapter depth //a revoir
 								tmp->depth++;
 								tmp = tmp->parent;
 							}
@@ -244,10 +244,47 @@ namespace ft{
 						b = true;
 					}
 				}
+				if (!isBalanced())
+					makeBalanced();
 			}//?
 
 			void	erase(P data){
-				//on cherche la node e
+				node*	tmp = root;
+				bool	b = false;
+				while (b == false && tmp != nullptr){
+					if (comp(data, tmp->data) && (tmp->lchild != nullptr)){//data < tmp.data
+						tmp = tmp->lchild;
+					}
+					else if (comp(tmp->data, data) && (tmp->rchild != nullptr)){//tmp.data < data
+						tmp = tmp->rchild;
+					}
+					else{// n == tmp
+						if (tmp->lchild != nullptr && tmp->lchild->depth == 1){//lc existe et n'a pas d'enfant
+							this->nalloc.destroy(&(tmp->data));
+							this->nalloc.construct(&(tmp->data), tmp->lchild->data);
+							this->nalloc.destroy(&(tmp->lchild->data));
+							this->nalloc.deallocate(tmp->lchild, 1);
+							//gerer la depth
+							b = true;
+						}
+						else {
+							node*	t = tmp->lchild;
+							while (t != nullptr && t->rchild != nullptr){
+								t = t->rchild;
+							}
+							if (t != nullptr){//petite secu avant les manip
+								this->nalloc.destroy(&(tmp->data));
+								this->nalloc.construct(&(tmp->data), t->data);
+								this->nalloc.destroy(&(t->data));
+								this->nalloc.deallocate(t, 1);
+								//gerer la depth
+								b = true;
+							}
+						}
+					}
+				}
+				if (!isBalanced())
+					makeBalanced();
 			}//?
 
 			void clear(){
