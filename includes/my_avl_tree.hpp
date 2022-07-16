@@ -3,6 +3,7 @@
 
 # include "pair.hpp"
 # include "make_pair.hpp"
+# include "iterators_traits.hpp"
 
 namespace ft{
 	template <class P>
@@ -10,17 +11,18 @@ namespace ft{
 		public:
 		//attributs
 			typedef node<P>*	pointer;
-			P 		data;//clé de map
 			pointer lchild;//pointeur enfant gauche à remplir avant enfant droite
 			pointer rchild;//pointeur enfant droite
 			pointer	parent;//pointeur parent
+			P 		data;//clé de map
 			int		depth;//profondeur = nombre de node entre celui la et le descendant le plus loin
 
 		//member function
-			node():lchild(nullptr), rchild(nullptr), parent(nullptr), isroot(false){}
+			node():lchild(nullptr), rchild(nullptr), parent(nullptr), data(), depth(1){}
 			node(node const &src){
 				*this = src;
 			}
+			node(P const &p):lchild()
 			~node(){}
 		
 		private:
@@ -117,33 +119,51 @@ namespace ft{
 			}
 	};
 
-	template <class T, class Key, class Compare, class Alloc>
+	template <class Key, class T, class Compare, class Alloc = std::allocator<T>>//pourquoi typename a lq place de class chez aberneli ?
 	struct my_avl_tree
 	{
+		// typedef typename Alloc::template rebind<node<pair<Key, T> > >::other	node_alloc;//gné ?
+		// typedef typename node<pair<Key, Val> >::pointer						link_type;//=node * quel interet ?
+
 		public:
 		//attributs
-			typedef	Key														key_type;
-			typedef Compare													key_compare;
-			typedef Alloc													allocator_type;
+			typedef Key														key_type;
+			typedef T														mapped_type;
+			typedef ft::pair<key_type, mapped_type>							value_type;
+			typedef ft::pair<const key_type, mapped_type>					iter_value_type;//gné ?
 			typedef typename ft::node<T>									node;
+		 	typedef node*													pointer;
+			typedef const node*												const_pointer;
+			typedef node&													reference;
+			typedef const node&												const_reference;
+			// typedef const node<T>*											const_link_type;//=const_pointer quel interet ?
+			typedef size_t													size_type;
+			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 			typedef Alloc													allocator_type;
-			typedef typename allocator_type::reference						reference;
-			typedef typename allocator_type::const_reference				const_reference;
-			typedef typename allocator_type::pointer						pointer;
-			typedef typename allocator_type::const_pointer					const_pointer;
+			// typedef bi_iterator<iter_value_type *, Tree>		iterator;//recup chez aberneli correcpond à mon avl_it ?
+			// typedef bi_iterator<const iter_value_type *, Tree>	const_iterator;//idem ver const?
+			typedef ft::reverse_iterator<iterator>							reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+
 		
 		private:
 			node*				root;
 			node*				begin;
 			node*				end;
 			allocator_type		alloc;
+			// node_alloc			nalloc;//?????
+			size_type			size;//nb d'elem
+			Compare				comp;
 
-			int		size;//nb d'elem
 
 		public:
 			my_avl_tree(P data){
 				this->root = this->alloc.allocate(1);
 				this->alloc.construct(&this->root->data, data);
+				this->root->depth = 1;
+				this->root->parent = nullptr;
+				this->root->lchild = nullptr;
+				this->root->rchild = nullptr;
 				this->size = 1;
 			}
 
@@ -190,7 +210,7 @@ namespace ft{
 			
 			void clear(){
 				
-			}
+			}//?
 
 			void	makeBalanced(){
 
