@@ -129,7 +129,7 @@ namespace ft{
 			typedef Key														key_type;
 			typedef T														mapped_type;
 			typedef ft::pair<key_type, mapped_type>							value_type;
-			typedef ft::pair<const key_type, mapped_type>					iter_value_type;//gné ?
+			typedef ft::pair<const key_type, mapped_type>					iter_value_type;//sert quand on cree les iterator pour pourvoir generer des version const
 			typedef typename ft::node<value_type>							node;
 		 	typedef node*													pointer;
 			typedef const node*												const_pointer;
@@ -138,8 +138,8 @@ namespace ft{
 			typedef size_t													size_type;
 			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 			typedef Alloc													allocator_type;
-			// typedef bi_iterator<iter_value_type *, Tree>		iterator;//recup chez aberneli correcpond à mon avl_it ?
-			// typedef bi_iterator<const iter_value_type *, Tree>	const_iterator;//idem ver const?
+			typedef avl_iterator<iter_value_type>							iterator;
+			typedef avl_iterator<const iter_value_type>						const_iterator;
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
@@ -149,7 +149,7 @@ namespace ft{
 			node*				begin;
 			node*				end;
 			allocator_type		alloc;
-			// node_alloc			nalloc;//?????
+			node_alloc		nalloc;
 			size_type			size;//nb d'elem
 			Compare				comp;
 
