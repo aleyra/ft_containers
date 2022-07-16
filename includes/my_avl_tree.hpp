@@ -22,7 +22,7 @@ namespace ft{
 			node(node const &src){
 				*this = src;
 			}
-			node(P const &p):lchild()
+			node(P const &p):lchild(){}//a finir
 			~node(){}
 		
 		private:
@@ -122,8 +122,7 @@ namespace ft{
 	template <class Key, class T, class Compare, class Alloc = std::allocator<T>>//pourquoi typename a lq place de class chez aberneli ?
 	struct my_avl_tree
 	{
-		// typedef typename Alloc::template rebind<node<pair<Key, T> > >::other	node_alloc;//gné ?
-		// typedef typename node<pair<Key, Val> >::pointer						link_type;//=node * quel interet ?
+		typedef typename Alloc::template rebind<node<pair<Key, T> > >::other	node_alloc;//pour avoir une allocator qui genere lq plce pour une node plutot que la place pour pair.-
 
 		public:
 		//attributs
@@ -131,12 +130,11 @@ namespace ft{
 			typedef T														mapped_type;
 			typedef ft::pair<key_type, mapped_type>							value_type;
 			typedef ft::pair<const key_type, mapped_type>					iter_value_type;//gné ?
-			typedef typename ft::node<T>									node;
+			typedef typename ft::node<value_type>							node;
 		 	typedef node*													pointer;
 			typedef const node*												const_pointer;
 			typedef node&													reference;
 			typedef const node&												const_reference;
-			// typedef const node<T>*											const_link_type;//=const_pointer quel interet ?
 			typedef size_t													size_type;
 			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 			typedef Alloc													allocator_type;
