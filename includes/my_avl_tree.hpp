@@ -155,6 +155,7 @@ namespace ft{
 
 
 		public:
+		//member function
 			my_avl_tree(P data){
 				this->root = this->nalloc.allocate(1);
 				this->nalloc.construct(&this->root->data, data);
