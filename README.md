@@ -44,6 +44,7 @@
 	<li>node, avl_iterator, avl tree : (non-mandatory but so useful)<ul>
 			<li>https://www.cs.usfca.edu/~galles/visualization/AVLtree.html</li>
 			<li>https://www.geeksforgeeks.org/avl-tree-set-1-insertion/</li>
+			<li>https://www.oodlestechnologies.com/blogs/basic-operations-of-avl-trees-adelson-velenskii-and-landis/</li>
 		</ul>
 	</li>
 	<li>bidirectionnal_iterator : (non-mandatory but needed)<ul>

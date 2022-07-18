@@ -165,7 +165,9 @@ namespace ft{
 				this->size = 1;
 			}
 
-			~my_avl_tree(){}
+			~my_avl_tree(){
+				this->clear();
+			}
 
 			node* getFirst() const{
 				node*	tmp = root;
@@ -181,6 +183,102 @@ namespace ft{
 				return (tmp);
 			}
 
+			void	insert(P data){
+				node*	tmp = root;
+				bool	b = false;
+				node*	n = nullptr;//will be new node pointer
+				while (b == false){
+					if (comp(data, tmp->data)){//data < tmp.data
+						if (tmp->lchild == nullptr){
+							tmp->lchild = this->nalloc.allocate(1);
+							this->nalloc.construct(&tmp->lchild->data, data);
+							tmp->lchild->depth = 1;
+							tmp->lchild->parent = tmp;
+							tmp->lchild->lchild = nullptr;
+							tmp->lchild->rchild = nullptr;
+							this->size++;
+							n = tmp->lchild;
+							while (tmp != nullptr){//pour adapter depth// a revoir ?
+								if (tmp->depth == tmp->rchild->depth || tmp->depth == tmp->lchild->depth)
+									tmp->depth++;
+								tmp = tmp->parent;
+							}
+							b = true;
+						}
+						else
+							tmp = tmp->lchild;
+					}
+					else if (comp(tmp->data, data)){//tmp.data < data
+						if (tmp->rchild == nullptr){
+							tmp->rchild = this->nalloc.allocate(1);
+							this->nalloc.construct(&tmp->rchild->data, data);
+							tmp->rchild->depth = 1;
+							tmp->rchild->parent = tmp;
+							tmp->rchild->lchild = nullptr;
+							tmp->rchild->rchild = nullptr;
+							this->size++;
+							n = tmp->rchild;
+							while (tmp != nullptr){//pour adapter depth  //a revoir
+								if (tmp->depth == tmp->rchild->depth || tmp->depth == tmp->lchild->depth)
+									tmp->depth++;
+								tmp = tmp->parent;
+							}
+							b = true;
+						}
+						else
+							tmp = tmp->rchild;
+					}
+					else{// n == tmp
+						this->nalloc.destroy(&(tmp->data));
+						this->nalloc.construct(&(tmp->data), data);
+						b = true;
+					}
+				}
+				if (n!= nullptr && !isBalanced())
+					makeBalanced(n);
+			}//?
+
+			void	erase(P data){
+				node*	tmp = root;
+				bool	b = false;
+				while (b == false && tmp != nullptr){
+					if (comp(data, tmp->data) && (tmp->lchild != nullptr)){//data < tmp.data
+						tmp = tmp->lchild;
+					}
+					else if (comp(tmp->data, data) && (tmp->rchild != nullptr)){//tmp.data < data
+						tmp = tmp->rchild;
+					}
+					else{// data = tmp.data
+						if (tmp->lchild != nullptr && tmp->lchild->depth == 1){//lc existe et n'a pas d'enfant
+							this->nalloc.destroy(&(tmp->data));
+							this->nalloc.construct(&(tmp->data), tmp->lchild->data);
+							this->nalloc.destroy(&(tmp->lchild->data));
+							this->nalloc.deallocate(tmp->lchild, 1);
+							//gerer depth ?
+							b = true;
+						}
+						else {
+							node*	t = tmp->lchild;
+							while (t != nullptr && t->rchild != nullptr){
+								t = t->rchild;
+							}
+							if (t != nullptr){//petite secu avant les manip
+								this->nalloc.destroy(&(tmp->data));
+								this->nalloc.construct(&(tmp->data), t->data);
+								this->nalloc.destroy(&(t->data));
+								this->nalloc.deallocate(t, 1);
+								//gerer depth ?
+								b = true;
+							}
+						}
+					}
+				}
+				this->size--;
+				if (!isBalanced())
+					makeBalanced();
+			}//? depth a gerer dans makeBalanced
+
+		private:
 			bool	isBalanced(){
 				node*	tmp = getFirst();
 				node*	last = getLast();
@@ -198,102 +296,70 @@ namespace ft{
 				return (true);
 			}//?
 
-			void	insert(P data){
-				node*	tmp = root;
-				bool	b = false;
-				while (b == false){
-					if (comp(data, tmp->data)){//data < tmp.data
-						if (tmp->lchild == nullptr){
-							tmp->lchild = this->nalloc.allocate(1);
-							this->nalloc.construct(&tmp->lchild->data, data);
-							tmp->lchild->depth = 1;
-							tmp->lchild->parent = tmp;
-							tmp->lchild->lchild = nullptr;
-							tmp->lchild->rchild = nullptr;
-							this->size++;
-							while (tmp != nullptr){//pour adapter depth //a revoir
-								tmp->depth++;
-								tmp = tmp->parent;
-							}
-							b = true;
-						}
-						else
-							tmp = tmp->lchild;
-					}
-					else if (comp(tmp->data, data)){//tmp.data < data
-						if (tmp->rchild == nullptr){
-							tmp->rchild = this->nalloc.allocate(1);
-							this->nalloc.construct(&tmp->rchild->data, data);
-							tmp->rchild->depth = 1;
-							tmp->rchild->parent = tmp;
-							tmp->rchild->lchild = nullptr;
-							tmp->rchild->rchild = nullptr;
-							this->size++;
-							while (tmp != nullptr){//pour adapter depth //a revoir
-								tmp->depth++;
-								tmp = tmp->parent;
-							}
-							b = true;
-						}
-						else
-							tmp = tmp->rchild;
-					}
-					else{// n == tmp
-						this->nalloc.destroy(&(tmp->data));
-						this->nalloc.construct(&(tmp->data), data);
-						b = true;
-					}
-				}
-				if (!isBalanced())
-					makeBalanced();
-			}//?
-
-			void	erase(P data){
-				node*	tmp = root;
-				bool	b = false;
-				while (b == false && tmp != nullptr){
-					if (comp(data, tmp->data) && (tmp->lchild != nullptr)){//data < tmp.data
-						tmp = tmp->lchild;
-					}
-					else if (comp(tmp->data, data) && (tmp->rchild != nullptr)){//tmp.data < data
-						tmp = tmp->rchild;
-					}
-					else{// n == tmp
-						if (tmp->lchild != nullptr && tmp->lchild->depth == 1){//lc existe et n'a pas d'enfant
-							this->nalloc.destroy(&(tmp->data));
-							this->nalloc.construct(&(tmp->data), tmp->lchild->data);
-							this->nalloc.destroy(&(tmp->lchild->data));
-							this->nalloc.deallocate(tmp->lchild, 1);
-							//gerer la depth
-							b = true;
-						}
-						else {
-							node*	t = tmp->lchild;
-							while (t != nullptr && t->rchild != nullptr){
-								t = t->rchild;
-							}
-							if (t != nullptr){//petite secu avant les manip
-								this->nalloc.destroy(&(tmp->data));
-								this->nalloc.construct(&(tmp->data), t->data);
-								this->nalloc.destroy(&(t->data));
-								this->nalloc.deallocate(t, 1);
-								//gerer la depth
-								b = true;
-							}
-						}
-					}
-				}
-				if (!isBalanced())
-					makeBalanced();
-			}//?
-
 			void clear(){
-				
-			}//?
+				this->clear(this->root);
+				this->size = 0;
+			}
+
+			void clear(node* n){
+				if (n->lchild != nullptr)
+					clear(n->lchild);
+				if (n->rchild != nullptr)
+					clear(n->rchild);
+				this->nalloc.destroy(&(n->data));
+				this->nalloc.deallocate(n, 1);
+				n = nullptr;
+			}
+
+			void rightRotate(node* z){//see Left Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+				node*	y = z->lchild;
+				node*	t3 = y->rchild;
+				y->rchild = z;
+				z->lchild = t3;
+			}
+
+			void leftRotate(node* z){//see Right Right Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+				node*	y = z->rchild;
+				node*	t2 = y->lchild;
+				y->lchild = z;
+				z->rchild = t2;
+			}
+
+			void leftRightRotate(node* z){//see Left Right Case  example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+				node*	y = z->lchild;
+				leftRotate(y);
+				rightRotate(z);
+			}
+
+			void rightLeftRotate(node* z){//see Right Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+				node*	y = z->rchild;
+				rightRotate(y);
+				leftRotate(z);
+			}
 
 			void	makeBalanced(){
 
 			}//?
+
+			void	makeBalanced(node* n){//from new node
+				node*	x = n->parent;
+				if (x == nullptr)
+					return ;
+				node*	y = x->parent;
+				if (y == nullptr)
+					return ;
+				node*	z = y->parent;
+				if (z == nullptr)
+					return ;
+				if (z->lchild == y && y->lchild == x)//Left Left Case
+					rightRotate(z);
+				if (z->lchild == y && y->rchild == x)//Left Right Case
+					leftRightRotate(z);
+				if (z->rchild == y && y->rchild == x)//Right Right Case
+					leftRotate(z);
+				if (z->rchild == y && y->lchild == x)//Right Left Case
+					rightLeftRotate(z);
+			}
 	};
 	
 
