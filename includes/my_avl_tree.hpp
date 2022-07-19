@@ -4,6 +4,7 @@
 # include "pair.hpp"
 # include "make_pair.hpp"
 # include "iterators_traits.hpp"
+# include <algorithm>
 
 namespace ft{
 	template <class P>
@@ -199,7 +200,7 @@ namespace ft{
 							tmp->lchild->rchild = nullptr;
 							this->size++;
 							n = tmp->lchild;
-							while (tmp != nullptr){//pour adapter depth// a revoir ?
+							while (tmp != nullptr){//pour adapter depth
 								if (tmp->depth == tmp->rchild->depth || tmp->depth == tmp->lchild->depth)
 									tmp->depth++;
 								tmp = tmp->parent;
@@ -219,7 +220,7 @@ namespace ft{
 							tmp->rchild->rchild = nullptr;
 							this->size++;
 							n = tmp->rchild;
-							while (tmp != nullptr){//pour adapter depth  //a revoir
+							while (tmp != nullptr){//pour adapter depth
 								if (tmp->depth == tmp->rchild->depth || tmp->depth == tmp->lchild->depth)
 									tmp->depth++;
 								tmp = tmp->parent;
@@ -239,9 +240,11 @@ namespace ft{
 					makeBalanced(n);
 			}//?
 
-			void	erase(P data){
+			void	erase(P data){//revoir les cas ou l'arbre est moins profond : root->depth <= 3
 				node*	tmp = root;
 				bool	b = false;
+				node*	x = nullptr;//will be parent of deallocate node.
+				int	rcd, lcd, max;
 				while (b == false && tmp != nullptr){
 					if (comp(data, tmp->data) && (tmp->lchild != nullptr)){//data < tmp.data
 						tmp = tmp->lchild;
@@ -255,7 +258,16 @@ namespace ft{
 							this->nalloc.construct(&(tmp->data), tmp->lchild->data);
 							this->nalloc.destroy(&(tmp->lchild->data));
 							this->nalloc.deallocate(tmp->lchild, 1);
-							//gerer depth ?
+							tmp->lchild = nullptr;
+							x = tmp;
+							while (tmp != nullptr){//pour adapter la depth
+								rcd = (tmp->rchild != nullptr) ? tmp->rchild->depth : 0;
+								lcd = (tmp->lchild != nullptr) ? tmp->lchild->depth : 0;
+								max = std::max(rcd, lcd);
+								if (tmp->depth == max + 1)
+									break ;
+								tmp->depth = max + 1;
+							}
 							b = true;
 						}
 						else {
@@ -267,17 +279,35 @@ namespace ft{
 								this->nalloc.destroy(&(tmp->data));
 								this->nalloc.construct(&(tmp->data), t->data);
 								this->nalloc.destroy(&(t->data));
+								x = t->parent;
 								this->nalloc.deallocate(t, 1);
-								//gerer depth ?
+								x->rchild = nullptr;
+								t = x;
+								while (t != nullptr){//pour adapter la depth
+									rcd = (t->rchild != nullptr) ? t->rchild->depth : 0;
+									lcd = (t->lchild != nullptr) ? t->lchild->depth : 0;
+									max = std::max(rcd, lcd);
+									if (t->depth == max + 1)
+										break ;
+									t->depth = max + 1;
+								}
 								b = true;
 							}
 						}
 					}
 				}
 				this->size--;
-				if (!isBalanced())
-					makeBalanced();
-			}//? depth a gerer dans makeBalanced
+				while (x != nullptr && x->depth < 4)//search for nephew or cousin or brother of deallocate node
+					x = x->parent;
+				while (x != nullptr && x->depth != 1){
+					if (x->rchild->depth == x->depth - 1)
+						x = x->rchild;
+					else
+						x = x->lchild;
+				}//found it
+				if (x != nullptr && !isBalanced())
+					makeBalanced(x);
+			}
 
 		private:
 			bool	isBalanced(){
@@ -315,15 +345,53 @@ namespace ft{
 			void rightRotate(node* z){//see Left Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
 				node*	y = z->lchild;
 				node*	t3 = y->rchild;
+				node*	p = z->parent;
 				y->rchild = z;
 				z->lchild = t3;
+				if (p != nullptr){//gerer le parent de z et l'enfant du parent (anciennement z)
+					if (p->lchild == z)
+						p->lchild = y;
+					else
+						p->rchild = y;
+				}
+				y->parent = z->parent;
+				z->parent = y;
+				t3->parent = z;
+				int	rcd, lcd, max;
+				while (z != nullptr){//pour adapter la depth
+					rcd = (z->rchild != nullptr) ? z->rchild->depth : 0;
+					lcd = (t->lchild != nullptr) ? z->lchild->depth : 0;
+					max = std::max(rcd, lcd);
+					if (z->depth == max + 1)
+						break ;
+					z->depth = max + 1;
+				}
 			}
 
 			void leftRotate(node* z){//see Right Right Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
 				node*	y = z->rchild;
 				node*	t2 = y->lchild;
+				node*	p = z->parent;
 				y->lchild = z;
 				z->rchild = t2;
+				if (p != nullptr){//gerer le parent de z et l'enfant du parent (anciennement z)
+					if (p->lchild == z)
+						p->lchild = y;
+					else
+						p->rchild = y;
+				}
+				y->parent = z->parent;
+				z->parent = y;
+				t2->parent = z;
+				int	rcd, lcd, max;
+				while (z != nullptr){//pour adapter la depth
+					rcd = (z->rchild != nullptr) ? z->rchild->depth : 0;
+					lcd = (t->lchild != nullptr) ? z->lchild->depth : 0;
+					max = std::max(rcd, lcd);
+					if (z->depth == max + 1)
+						break ;
+					z->depth = max + 1;
+				}
 			}
 
 			void leftRightRotate(node* z){//see Left Right Case  example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
@@ -338,11 +406,7 @@ namespace ft{
 				leftRotate(z);
 			}
 
-			void	makeBalanced(){
-
-			}//?
-
-			void	makeBalanced(node* n){//from new node
+			void	makeBalanced(node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
 				node*	x = n->parent;
 				if (x == nullptr)
 					return ;
@@ -362,8 +426,6 @@ namespace ft{
 					rightLeftRotate(z);
 			}
 	};
-	
-
 }
 
 #endif
