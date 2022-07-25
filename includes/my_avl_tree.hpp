@@ -252,11 +252,13 @@ namespace ft{
 						b = true;
 					}
 				}
-				bool isBal = isBalanced();
-				if (!isBal && this->root->depth)
-					makeBalancedFromRoot();
-				else if (n != NULL && !isBal)
-					makeBalanced(n);
+				// bool isBal = isBalanced();
+				// std::cout << isBal
+				// if (!isBal && this->root->depth)
+				// 	makeBalancedFromRoot();
+				// else if (n != NULL && !isBal)
+				// 	makeBalanced(n);
+				makeBalanced(isBalanced(n));
 			}//?
 
 			void	erase(value_type data){//pas complet
@@ -315,13 +317,6 @@ namespace ft{
 								t = t->rchild;
 							}
 							if (t != NULL){//petite secu avant les manip
-								// this->nalloc.destroy(tmp);
-								// this->nalloc.construct(tmp, t->data);
-								// this->nalloc.destroy(t);
-								// x = t->parent;
-								// this->nalloc.deallocate(t, 1);
-								// x->rchild = NULL;
-								// t = x;
 								x = t->parent;
 								swap_nodes_data(tmp, t);
 								if (x->rchild == t)
@@ -346,26 +341,28 @@ namespace ft{
 					}
 				}
 				this->size--;
-				bool isBal = isBalanced();
+				//a revoir a partir d'ici
+				// bool isBal = isBalanced();
+				
 				if (!isBal && this->root->depth == 3){
 					makeBalancedFromRoot();
 				}
 				else{
-					while (x != NULL && x->depth < 4)//search for nephew or cousin or brother of deallocate node
-						x = x->parent;
-					while (x != NULL && x->depth != 1){
-				// std::cout << "ds erase\n";//
-						if (x->rchild != NULL && x->rchild->depth == x->depth - 1)
-							x = x->rchild;
-						else
-							x = x->lchild;
-					}//found it
-					if (x != NULL && !isBal)
-						makeBalanced(x);
+				// 	while (x != NULL && x->depth < 4)//search for nephew or cousin or brother of deallocate node
+				// 		x = x->parent;
+				// 	while (x != NULL && x->depth != 1){
+				// // std::cout << "ds erase\n";//
+				// 		if (x->rchild != NULL && x->rchild->depth == x->depth - 1)
+				// 			x = x->rchild;
+				// 		else
+				// 			x = x->lchild;
+				// 	}//found it
+				// 	if (x != NULL && !isBal)
+				// 		makeBalanced(x);
+					makeBalanced(isBalanced(x));//a verif
 				}
 			}
 
-		private:
 			bool	isBalanced(){
 				if (this->size <= 2)
 					return true;
@@ -387,6 +384,21 @@ namespace ft{
 				}
 				return (true);
 			}//?
+
+			node*	isBalanced(node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
+				node*	rc;
+				node*	lc;
+				
+				while (n != NULL && n != this->root){
+					rc = n->rchild;
+					lc = n->lchild;
+					if (rc->depth - lc->depth > 1 || rc->depth - lc->depth < -1)
+						return (n);
+					n = n->parent;
+				}
+				return NULL;
+			}
+		private:
 
 			void clear(){
 				this->clear(this->root);
@@ -423,7 +435,7 @@ namespace ft{
 				}
 				t3->parent = z;
 				int	rcd, lcd, max;
-				while (z != NULL){//pour adapter la depth
+				while (z != NULL){//pour adapter la depth//boucle infinie !!!!!!!
 					rcd = (z->rchild != NULL) ? z->rchild->depth : 0;
 					lcd = (t3->lchild != NULL) ? z->lchild->depth : 0;
 					max = std::max(rcd, lcd);
@@ -453,7 +465,7 @@ namespace ft{
 				}
 				t2->parent = z;
 				int	rcd, lcd, max;
-				while (z != NULL){//pour adapter la depth
+				while (z != NULL){//pour adapter la depth//boucle infinie !!!!!!!
 					rcd = (z->rchild != NULL) ? z->rchild->depth : 0;
 					lcd = (t2->lchild != NULL) ? z->lchild->depth : 0;
 					max = std::max(rcd, lcd);
@@ -475,24 +487,48 @@ namespace ft{
 				leftRotate(z);
 			}
 
-			void	makeBalanced(node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
-				node*	x = n->parent;
-				if (x == NULL)
-					return ;
-				node*	y = x->parent;
-				if (y == NULL)
-					return ;
-				node*	z = y->parent;
+			// void	makeBalanced(node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
+			// 	node*	x = n->parent;
+			// 	if (x == NULL)
+			// 		return ;
+			// 	node*	y = x->parent;
+			// 	if (y == NULL)
+			// 		return ;
+			// 	node*	z = y->parent;
+			// 	if (z == NULL)
+			// 		return ;
+			// 	if (z->lchild == y && y->lchild == x)//Left Left Case
+			// 		rightRotate(z);
+			// 	if (z->lchild == y && y->rchild == x)//Left Right Case
+			// 		leftRightRotate(z);
+			// 	if (z->rchild == y && y->rchild == x)//Right Right Case
+			// 		leftRotate(z);
+			// 	if (z->rchild == y && y->lchild == x)//Right Left Case
+			// 		rightLeftRotate(z);
+			// }
+
+			void	makeBalanced(node* z){
 				if (z == NULL)
 					return ;
-				if (z->lchild == y && y->lchild == x)//Left Left Case
-					rightRotate(z);
-				if (z->lchild == y && y->rchild == x)//Left Right Case
-					leftRightRotate(z);
-				if (z->rchild == y && y->rchild == x)//Right Right Case
-					leftRotate(z);
-				if (z->rchild == y && y->lchild == x)//Right Left Case
-					rightLeftRotate(z);
+				node*	y;
+				if (z->lchild == NULL || z->lchild->depth == 1){//case c or d
+					y = z->rchild;
+					if (y->lchild == NULL || y->lchild->depth == 1)//case c
+						if (y->rchild != NULL)
+							leftRotate(z);
+					else if (y->rchild == NULL || y->rchild == 1)//case d
+						if (y->lchild != NULL)
+							rightLeftRotate(z);
+				}
+				else if (z->rchild == NULL || z->rchild->depth == 1){//case a or b
+					y = z->lchild;
+					if (y->rchild == NULL || y->rchild->depth == 1)//case a
+						if (y->lchild != NULL)
+							rightRotate(z);
+					else if (y->lchild == NULL || y->lchild->depth == 1)//case b
+						if (y->rchild != NULL)
+							leftRightRotate(z);
+				}
 			}
 
 			void	makeBalancedFromRoot(){//fonction degueu

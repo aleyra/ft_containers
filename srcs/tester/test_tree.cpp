@@ -23,48 +23,28 @@ void test_tree(){
 	t.insert(ft::make_pair(11, 'b'));
 	// print_node(t.root);
 	// print_node(t.root->rchild);
-	// t.insert(ft::make_pair(9, 'c'));
-	// // print_node(t.root);
-	// // print_node(t.root->rchild);
-	// // print_node(t.root->lchild);
-	// std::cout << "maj\n";
-	// t.insert(ft::make_pair(7, 'd'));
-	// t.insert(ft::make_pair(12, 'e'));
-	// // print_node(t.root);
-	// // print_node(t.root->lchild);
-	// // print_node(t.root->lchild->lchild);
-	// // print_node(t.root->rchild);
-	// // print_node(t.root->rchild->rchild);
-	// std::cout << "maj\n";
-	// t.insert(ft::make_pair(6, 'f'));
-	// // print_node(t.root);
-	// // std::cout << "\nlchild de root\n";
-	// // print_node(t.root->lchild);
-	// // std::cout << "\nlchild de lchild de root\n";
-	// // print_node(t.root->lchild->lchild);
-	// // print_node(t.root->lchild->lchild->lchild);
-	// std::cout << "maj\n";
-	// t.insert(ft::make_pair(8, 'g'));
-	// // print_node(t.root);
-	// // std::cout << "\nlchild de root\n";
-	// // print_node(t.root->lchild);
-	// // std::cout << "\nlchild de lchild de root\n";
-	// // print_node(t.root->lchild->lchild);
-	// // std::cout << "\nlchild de lchild de lchild de root\n";
-	// // print_node(t.root->lchild->lchild->lchild);
-	// // std::cout << "\nrchild de lchild de lchild de root\n";
-	// // print_node(t.root->lchild->lchild->rchild);
-	// {
-	// // t.erase(ft::make_pair(8, 'h'));
-	// // print_node(t.root);
-	// // std::cout << "\nlchild de root\n";
-	// // print_node(t.root->lchild);
-	// // std::cout << "\nlchild de lchild de root\n";
-	// // print_node(t.root->lchild->lchild);
-	// // std::cout << "\nlchild de lchild de lchild de root\n";
-	// // print_node(t.root->lchild->lchild->lchild);
-	// }
-	// t.erase(ft::make_pair(9, 'i'));
+	t.insert(ft::make_pair(9, 'c'));
+	// print_node(t.root);
+	// print_node(t.root->rchild);
+	// print_node(t.root->lchild);
+	std::cout << "maj\n";
+	t.insert(ft::make_pair(7, 'd'));
+	t.insert(ft::make_pair(12, 'e'));
+	// print_node(t.root);
+	// print_node(t.root->lchild);
+	// print_node(t.root->lchild->lchild);
+	// print_node(t.root->rchild);
+	// print_node(t.root->rchild->rchild);
+	std::cout << "maj\n";
+	t.insert(ft::make_pair(6, 'f'));
+	// print_node(t.root);
+	// std::cout << "\nlchild de root\n";
+	// print_node(t.root->lchild);
+	// std::cout << "\nlchild de lchild de root\n";
+	// print_node(t.root->lchild->lchild);
+	// print_node(t.root->lchild->lchild->lchild);
+	std::cout << "maj\n";
+	t.insert(ft::make_pair(8, 'g'));
 	// print_node(t.root);
 	// std::cout << "\nlchild de root\n";
 	// print_node(t.root->lchild);
@@ -72,6 +52,28 @@ void test_tree(){
 	// print_node(t.root->lchild->lchild);
 	// std::cout << "\nlchild de lchild de lchild de root\n";
 	// print_node(t.root->lchild->lchild->lchild);
+	// std::cout << "\nrchild de lchild de lchild de root\n";
+	// print_node(t.root->lchild->lchild->rchild);
+	{
+	// t.erase(ft::make_pair(8, 'h'));
+	// print_node(t.root);
+	// std::cout << "\nlchild de root\n";
+	// print_node(t.root->lchild);
+	// std::cout << "\nlchild de lchild de root\n";
+	// print_node(t.root->lchild->lchild);
+	// std::cout << "\nlchild de lchild de lchild de root\n";
+	// print_node(t.root->lchild->lchild->lchild);
+	}
+	t.erase(ft::make_pair(9, 'i'));
+	print_node(t.root);
+	std::cout << "\nlchild de root\n";
+	print_node(t.root->lchild);
+	std::cout << "\nlchild de lchild de root\n";
+	print_node(t.root->lchild->lchild);
+	std::cout << "\nlchild de lchild de lchild de root\n";
+	print_node(t.root->lchild->lchild->lchild);
+
+	// if (t.isBalanced() == true) std::cout << "true" <<std::endl;
 
 	//on verif a droite
 }
