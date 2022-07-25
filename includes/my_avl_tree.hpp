@@ -236,7 +236,10 @@ namespace ft{
 						b = true;
 					}
 				}
-				if (n!= nullptr && !isBalanced())
+				bool isBal = isBalanced();
+				if (!isBal && this->root->depth)
+					makeBalancedFromRoot();
+				else if (n != nullptr && !isBal)
 					makeBalanced(n);
 			}//?
 
@@ -297,16 +300,21 @@ namespace ft{
 					}
 				}
 				this->size--;
-				while (x != nullptr && x->depth < 4)//search for nephew or cousin or brother of deallocate node
-					x = x->parent;
-				while (x != nullptr && x->depth != 1){
-					if (x->rchild->depth == x->depth - 1)
-						x = x->rchild;
-					else
-						x = x->lchild;
-				}//found it
-				if (x != nullptr && !isBalanced())
-					makeBalanced(x);
+				bool isBal = isBalanced();
+				if (!isBal && this->root->depth == 3)
+					makeBalancedFromRoot();
+				else{
+					while (x != nullptr && x->depth < 4)//search for nephew or cousin or brother of deallocate node
+						x = x->parent;
+					while (x != nullptr && x->depth != 1){
+						if (x->rchild->depth == x->depth - 1)
+							x = x->rchild;
+						else
+							x = x->lchild;
+					}//found it
+					if (x != nullptr && !isBal)
+						makeBalanced(x);
+				}
 			}
 
 		private:
@@ -342,10 +350,11 @@ namespace ft{
 				n = nullptr;
 			}
 
-			void rightRotate(node* z){//see Left Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+			void	rightRotate(node* z){//see Left Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
 				node*	y = z->lchild;
 				node*	t3 = y->rchild;
 				node*	p = z->parent;
+				bool	isroot = (z == this->root) ? true : false;
 				y->rchild = z;
 				z->lchild = t3;
 				if (p != nullptr){//gerer le parent de z et l'enfant du parent (anciennement z)
@@ -356,6 +365,9 @@ namespace ft{
 				}
 				y->parent = z->parent;
 				z->parent = y;
+				if (isroot){
+					this->root = y;
+				}
 				t3->parent = z;
 				int	rcd, lcd, max;
 				while (z != nullptr){//pour adapter la depth
@@ -368,10 +380,11 @@ namespace ft{
 				}
 			}
 
-			void leftRotate(node* z){//see Right Right Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+			void	leftRotate(node* z){//see Right Right Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
 				node*	y = z->rchild;
 				node*	t2 = y->lchild;
 				node*	p = z->parent;
+				bool	isroot = (z == this->root) ? true : false;
 				y->lchild = z;
 				z->rchild = t2;
 				if (p != nullptr){//gerer le parent de z et l'enfant du parent (anciennement z)
@@ -382,6 +395,9 @@ namespace ft{
 				}
 				y->parent = z->parent;
 				z->parent = y;
+				if (isroot){
+					this->root = y;
+				}
 				t2->parent = z;
 				int	rcd, lcd, max;
 				while (z != nullptr){//pour adapter la depth
@@ -394,13 +410,13 @@ namespace ft{
 				}
 			}
 
-			void leftRightRotate(node* z){//see Left Right Case  example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+			void	leftRightRotate(node* z){//see Left Right Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
 				node*	y = z->lchild;
 				leftRotate(y);
 				rightRotate(z);
 			}
 
-			void rightLeftRotate(node* z){//see Right Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+			void	rightLeftRotate(node* z){//see Right Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
 				node*	y = z->rchild;
 				rightRotate(y);
 				leftRotate(z);
@@ -424,6 +440,81 @@ namespace ft{
 					leftRotate(z);
 				if (z->rchild == y && y->lchild == x)//Right Left Case
 					rightLeftRotate(z);
+			}
+
+			void	makeBalancedFromRoot(){//fonction degueu
+				if (this->root->depth != 3)
+					return ;
+				node*	z = this->root;
+				node*	y = nullptr;
+				if (z->lchild != nullptr){
+					y = z->lchild;
+					if (y->rchild == nullptr)
+						rightRotate(z);
+					else if (y->lchild == nullptr){
+						node*	x = y->rchild;
+						x->lchild = y;
+						y->parent = x;
+						x->rchild = z;
+						z->parent = x;
+						x->parent = nullptr;
+						this->root = x;
+						z->lchild = nullptr;
+						y->rchild = nullptr;
+						x->depth = 2;
+						y->depth = 1;
+						z->depth = 1;
+					}
+					else {//y a deux enfants
+						node*	x = y->rchild;
+						node*	t = y->lchild;
+						this->root = y;
+						y->parent = nullptr;
+						y->lchild = t;
+						y->rchild = z;
+						y->depth = 3;
+						t->parent = y;
+						t->depth = 1;
+						z->parent = y;
+						z->lchild = x;
+						z->depth = 2;
+						x->parent = x;
+					}
+				}
+				else{
+					y = z->rchild;
+					if (y->lchild == nullptr)
+						leftRotate(z);
+					else if (y->rchild == nullptr){
+						node*	x = y->lchild;
+						x->lchild = z;
+						z->parent = x;
+						x->rchild = y;
+						y->parent = x;
+						x->parent = nullptr;
+						this->root = x;
+						z->rchild = nullptr;
+						y->lchild = nullptr
+						x->depth = 2;
+						z->depth = 1;
+						y->depth = 1;
+					}
+					else {//y a deux enfants
+						node*	x = y->lchild;
+						node*	t = y->rchild;
+						y = this->root;
+						y->parent = nullptr;
+						y->depth = 3;
+						y->lchild = z;
+						y->rchild = t;
+						t->parent = y;
+						t->depth = 1;
+						z->parent = y;
+						z->rchild = x;
+						z->depth = 2;
+						x->parent = z;
+					}
+				}
 			}
 	};
 }
