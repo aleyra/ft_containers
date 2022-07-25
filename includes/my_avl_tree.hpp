@@ -4,6 +4,7 @@
 # include "pair.hpp"
 # include "make_pair.hpp"
 # include "iterators_traits.hpp"
+# include "reverse_iterator.hpp"
 # include <algorithm>
 
 namespace ft{
@@ -15,15 +16,15 @@ namespace ft{
 			pointer lchild;//pointeur enfant gauche à remplir avant enfant droite
 			pointer rchild;//pointeur enfant droite
 			pointer	parent;//pointeur parent
-			P 		data;//clé de map
+			P 		data;//sera un ft::pair dans avl_tree
 			int		depth;//profondeur = nombre de node entre celui la et le descendant le plus loin
 
 		//member function
-			node():lchild(nullptr), rchild(nullptr), parent(nullptr), data(), depth(1){}
+			node():lchild(NULL), rchild(NULL), parent(NULL), data(), depth(1){}
 			node(node const &src){
 				*this = src;
 			}
-			// node(P const &p){}//a faire ?
+			node(P const &p):lchild(NULL), rchild(NULL), parent(NULL), data(p), depth(1){}
 			~node(){}
 		
 		private:
@@ -33,22 +34,22 @@ namespace ft{
 				this->rchild = src.rchild;
 				this->parent = src.parent;
 				this->depth = src.depth;
+				return (*this);
 			}
 	};
-
 	template <class P>
 	void	swap_nodes_data(ft::node<P>* n1, ft::node<P>* n2){
-		ft::node<P>*	tmp;
-		tmp->data = n1->data;
+		ft::node<P>	tmp;
+		tmp.data = n1->data;
 		n1->data = n2->data;
-		n2->data = tmp->data;
+		n2->data = tmp.data;
 	}
 
 	template<class P>
 	struct avl_iterator{
 		public:
 			typedef P*															iterator_type;
-			typedef typename std::bidirectionnal_iterator::iterator_category	iterator_category;
+			typedef typename std::bidirectional_iterator_tag	iterator_category;
 			typedef typename ft::iterator_traits<P*>::value_type				value_type;
 			typedef typename ft::iterator_traits<P*>::difference_type			difference_type;
 			typedef typename ft::iterator_traits<P*>::pointer					pointer;
@@ -66,9 +67,9 @@ namespace ft{
 			}
 			
 			avl_iterator	&operator++(){
-				if (current->rchild != nullptr){
+				if (current->rchild != NULL){
 					current = current->rchild;
-					while (current->lchild != nullptr)
+					while (current->lchild != NULL)
 						current = current->lchild;
 						return (*this);
 				}
@@ -94,14 +95,14 @@ namespace ft{
 			};
 
 			value_type		&operator*(){return current->data;}
-			pointer			operator->(){return &(this->operator*())}
+			pointer			operator->(){return &(this->operator*());}
 			
 			avl_iterator(){}
 
 			avl_iterator &	operator--(){
-				if (current->lchild != nullptr){
+				if (current->lchild != NULL){
 					current = current->lchild;
-					while (current->lchild != nullptr)
+					while (current->lchild != NULL)
 						current = current->rchild;
 						return (*this);
 				}
@@ -120,10 +121,10 @@ namespace ft{
 			}
 	};
 
-	template <class Key, class T, class Compare, class Alloc = std::allocator<T>>
+	template <class Key, class T, class Compare, class Alloc = std::allocator<T> >
 	struct my_avl_tree
 	{
-		typedef typename Alloc::template rebind<node<pair<Key, T> > >::other	node_alloc;//pour avoir une allocator qui genere lq plce pour une node plutot que la place pour pair.-
+		typedef typename Alloc::template rebind<node<pair<Key, T> > >::other	node_alloc;//pour avoir une allocator qui genere la place pour une node plutot que la place pour pair.-
 
 		public:
 		//attributs
@@ -137,16 +138,16 @@ namespace ft{
 			typedef node&													reference;
 			typedef const node&												const_reference;
 			typedef size_t													size_type;
+			typedef avl_iterator<iter_value_type>							iterator;
 			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 			typedef Alloc													allocator_type;
-			typedef avl_iterator<iter_value_type>							iterator;
 			typedef avl_iterator<const iter_value_type>						const_iterator;
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
-		
+	
+			node*				root;//a remettre en private
 		private:
-			node*				root;
 			node*				begin;
 			node*				end;
 			allocator_type		alloc;//au cas où
@@ -157,13 +158,13 @@ namespace ft{
 
 		public:
 		//member function
-			my_avl_tree(P data){
+			my_avl_tree(value_type data){
 				this->root = this->nalloc.allocate(1);
-				this->nalloc.construct(&this->root->data, data);
+				this->nalloc.construct(this->root, data);
 				this->root->depth = 1;
-				this->root->parent = nullptr;
-				this->root->lchild = nullptr;
-				this->root->rchild = nullptr;
+				this->root->parent = NULL;
+				this->root->lchild = NULL;
+				this->root->rchild = NULL;
 				this->size = 1;
 			}
 
@@ -171,38 +172,45 @@ namespace ft{
 				this->clear();
 			}
 
-			node* getFirst() const{
+			node* getFirst() const{//a mettre en private ?
 				node*	tmp = root;
-				while (tmp->lchild != nullptr)
+				while (tmp->lchild != NULL)
 					tmp--;
 				return (tmp);
 			}
 
-			node*	getLast() const{
+			node*	getLast() const{//a mettre en private ?
 				node*	tmp = root;
-				while (tmp->rchild != nullptr)
+				while (tmp->rchild != NULL)
 					tmp++;
 				return (tmp);
 			}
 
-			void	insert(P data){
+			void	insert(value_type data){
 				node*	tmp = root;
 				bool	b = false;
-				node*	n = nullptr;//will be new node pointer
+				node*	n = NULL;//will be new node pointer
+				int	rcd, lcd, max;
 				while (b == false){
-					if (comp(data, tmp->data)){//data < tmp.data
-						if (tmp->lchild == nullptr){
+					if (comp(data.first, tmp->data.first)){//data < tmp.data
+						if (tmp->lchild == NULL){
 							tmp->lchild = this->nalloc.allocate(1);
-							this->nalloc.construct(&tmp->lchild->data, data);
+							this->nalloc.construct(tmp->lchild, data);
 							tmp->lchild->depth = 1;
 							tmp->lchild->parent = tmp;
-							tmp->lchild->lchild = nullptr;
-							tmp->lchild->rchild = nullptr;
+							tmp->lchild->lchild = NULL;
+							tmp->lchild->rchild = NULL;
 							this->size++;
 							n = tmp->lchild;
-							while (tmp != nullptr){//pour adapter depth
-								if (tmp->depth == tmp->rchild->depth || tmp->depth == tmp->lchild->depth)
-									tmp->depth++;
+				std::cout << "ds insert\n";//
+							while (tmp != NULL){//pour adapter la depth
+								rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
+								lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
+								max = std::max(rcd, lcd);
+								// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
+								if (tmp->depth == max + 1)
+									break ;
+								tmp->depth = max + 1;
 								tmp = tmp->parent;
 							}
 							b = true;
@@ -210,19 +218,24 @@ namespace ft{
 						else
 							tmp = tmp->lchild;
 					}
-					else if (comp(tmp->data, data)){//tmp.data < data
-						if (tmp->rchild == nullptr){
+					else if (comp(tmp->data.first, data.first)){//tmp.data < data
+						if (tmp->rchild == NULL){
 							tmp->rchild = this->nalloc.allocate(1);
-							this->nalloc.construct(&tmp->rchild->data, data);
+							this->nalloc.construct(tmp->rchild, data);
 							tmp->rchild->depth = 1;
 							tmp->rchild->parent = tmp;
-							tmp->rchild->lchild = nullptr;
-							tmp->rchild->rchild = nullptr;
+							tmp->rchild->lchild = NULL;
+							tmp->rchild->rchild = NULL;
 							this->size++;
 							n = tmp->rchild;
-							while (tmp != nullptr){//pour adapter depth
-								if (tmp->depth == tmp->rchild->depth || tmp->depth == tmp->lchild->depth)
-									tmp->depth++;
+						while (tmp != NULL){//pour adapter la depth
+								rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
+								lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
+								max = std::max(rcd, lcd);
+								// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
+								if (tmp->depth == max + 1)
+									break ;
+								tmp->depth = max + 1;
 								tmp = tmp->parent;
 							}
 							b = true;
@@ -231,105 +244,145 @@ namespace ft{
 							tmp = tmp->rchild;
 					}
 					else{// n == tmp
-						this->nalloc.destroy(&(tmp->data));
-						this->nalloc.construct(&(tmp->data), data);
+						node* t = this->nalloc.allocate(1);
+						this->nalloc.construct(t, data);
+						swap_nodes_data(t, tmp);
+						this->nalloc.destroy(t);
+						this->nalloc.deallocate(t, 1);
 						b = true;
 					}
 				}
 				bool isBal = isBalanced();
 				if (!isBal && this->root->depth)
 					makeBalancedFromRoot();
-				else if (n != nullptr && !isBal)
+				else if (n != NULL && !isBal)
 					makeBalanced(n);
 			}//?
 
-			void	erase(P data){//revoir les cas ou l'arbre est moins profond : root->depth <= 3
+			void	erase(value_type data){//pas complet
 				node*	tmp = root;
 				bool	b = false;
-				node*	x = nullptr;//will be parent of deallocate node.
+				node*	x = NULL;//will be parent of deallocate node.
 				int	rcd, lcd, max;
-				while (b == false && tmp != nullptr){
-					if (comp(data, tmp->data) && (tmp->lchild != nullptr)){//data < tmp.data
+				while (b == false && tmp != NULL){
+					if (comp(data.first, tmp->data.first) && (tmp->lchild != NULL)){//data < tmp.data
 						tmp = tmp->lchild;
 					}
-					else if (comp(tmp->data, data) && (tmp->rchild != nullptr)){//tmp.data < data
+					else if (comp(tmp->data.first, data.first) && (tmp->rchild != NULL)){//tmp.data < data
 						tmp = tmp->rchild;
 					}
-					else{// data = tmp.data
-						if (tmp->lchild != nullptr && tmp->lchild->depth == 1){//lc existe et n'a pas d'enfant
-							this->nalloc.destroy(&(tmp->data));
-							this->nalloc.construct(&(tmp->data), tmp->lchild->data);
-							this->nalloc.destroy(&(tmp->lchild->data));
+					else{// data = tmp.data //tmp est la node a erase
+						if (tmp->lchild != NULL && tmp->lchild->depth == 1){//tmp.lc existe et n'a pas d'enfant
+							this->nalloc.destroy(tmp);
+							this->nalloc.construct(tmp, tmp->lchild->data);
+							this->nalloc.destroy(tmp->lchild);
 							this->nalloc.deallocate(tmp->lchild, 1);
-							tmp->lchild = nullptr;
+							tmp->lchild = NULL;
 							x = tmp;
-							while (tmp != nullptr){//pour adapter la depth
-								rcd = (tmp->rchild != nullptr) ? tmp->rchild->depth : 0;
-								lcd = (tmp->lchild != nullptr) ? tmp->lchild->depth : 0;
+							while (tmp != NULL){//pour adapter la depth
+								rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
+								lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
 								max = std::max(rcd, lcd);
+								// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
 								if (tmp->depth == max + 1)
 									break ;
 								tmp->depth = max + 1;
+								tmp = tmp->parent;
 							}
-							b = true;
 						}
-						else {
+						else if (tmp->depth == 1){//si tmp n'a pas d'enfants
+							node*	x = tmp->parent;
+							if (x->rchild == tmp)
+								x->rchild = NULL;
+							if (x->lchild == tmp)
+								x->lchild = NULL;
+							this->clear(tmp);
+							tmp = x;
+							while (tmp != NULL){//pour adapter la depth
+								rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
+								lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
+								max = std::max(rcd, lcd);
+								// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
+								if (tmp->depth == max + 1)
+									break ;
+								tmp->depth = max + 1;
+								tmp = tmp->parent;
+							}
+						}
+						else {//tmp n'a pas de lc ou il a un lc qui a lui meme une descendance
 							node*	t = tmp->lchild;
-							while (t != nullptr && t->rchild != nullptr){
+							while (t != NULL && t->rchild != NULL){
 								t = t->rchild;
 							}
-							if (t != nullptr){//petite secu avant les manip
-								this->nalloc.destroy(&(tmp->data));
-								this->nalloc.construct(&(tmp->data), t->data);
-								this->nalloc.destroy(&(t->data));
+							if (t != NULL){//petite secu avant les manip
+								// this->nalloc.destroy(tmp);
+								// this->nalloc.construct(tmp, t->data);
+								// this->nalloc.destroy(t);
+								// x = t->parent;
+								// this->nalloc.deallocate(t, 1);
+								// x->rchild = NULL;
+								// t = x;
 								x = t->parent;
-								this->nalloc.deallocate(t, 1);
-								x->rchild = nullptr;
-								t = x;
-								while (t != nullptr){//pour adapter la depth
-									rcd = (t->rchild != nullptr) ? t->rchild->depth : 0;
-									lcd = (t->lchild != nullptr) ? t->lchild->depth : 0;
+								swap_nodes_data(tmp, t);
+								if (x->rchild == t)
+									x->rchild = NULL;
+								if (x->lchild == t)
+									x->lchild = NULL;
+								clear(t);
+								tmp = t;
+								while (tmp != NULL){//pour adapter la depth
+									rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
+									lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
 									max = std::max(rcd, lcd);
-									if (t->depth == max + 1)
+									// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
+									if (tmp->depth == max + 1)
 										break ;
-									t->depth = max + 1;
+									tmp->depth = max + 1;
+									tmp = tmp->parent;
 								}
-								b = true;
 							}
 						}
+						b = true;
 					}
 				}
 				this->size--;
 				bool isBal = isBalanced();
-				if (!isBal && this->root->depth == 3)
+				if (!isBal && this->root->depth == 3){
 					makeBalancedFromRoot();
+				}
 				else{
-					while (x != nullptr && x->depth < 4)//search for nephew or cousin or brother of deallocate node
+					while (x != NULL && x->depth < 4)//search for nephew or cousin or brother of deallocate node
 						x = x->parent;
-					while (x != nullptr && x->depth != 1){
-						if (x->rchild->depth == x->depth - 1)
+					while (x != NULL && x->depth != 1){
+				// std::cout << "ds erase\n";//
+						if (x->rchild != NULL && x->rchild->depth == x->depth - 1)
 							x = x->rchild;
 						else
 							x = x->lchild;
 					}//found it
-					if (x != nullptr && !isBal)
+					if (x != NULL && !isBal)
 						makeBalanced(x);
 				}
 			}
 
 		private:
 			bool	isBalanced(){
+				if (this->size <= 2)
+					return true;
 				node*	tmp = getFirst();
 				node*	last = getLast();
 				node*	p;
 				node*	rc;
 				node*	lc;
 				while (tmp != last){
-					p = tmp->parent;
-					rc = p->rchild;
-					lc = p->lchild;
-					if ((rc != nullptr && lc != nullptr) && (lc->depth - rc->depth > 1 || lc->depth - rc->depth < -1))
-						return (false);
+					if (tmp != this->root){
+						p = tmp->parent;
+					// std::cout << "in isBalanced" << std::endl;
+						rc = tmp->rchild;
+						lc = tmp->lchild;
+						if ((rc != NULL && lc != NULL) && (lc->depth - rc->depth > 1 || lc->depth - rc->depth < -1))
+							return (false);
+					}
 					tmp++;
 				}
 				return (true);
@@ -341,13 +394,13 @@ namespace ft{
 			}
 
 			void clear(node* n){
-				if (n->lchild != nullptr)
+				if (n->lchild != NULL)
 					clear(n->lchild);
-				if (n->rchild != nullptr)
+				if (n->rchild != NULL)
 					clear(n->rchild);
-				this->nalloc.destroy(&(n->data));
+				this->nalloc.destroy(n);
 				this->nalloc.deallocate(n, 1);
-				n = nullptr;
+				n = NULL;
 			}
 
 			void	rightRotate(node* z){//see Left Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
@@ -357,7 +410,7 @@ namespace ft{
 				bool	isroot = (z == this->root) ? true : false;
 				y->rchild = z;
 				z->lchild = t3;
-				if (p != nullptr){//gerer le parent de z et l'enfant du parent (anciennement z)
+				if (p != NULL){//gerer le parent de z et l'enfant du parent (anciennement z)
 					if (p->lchild == z)
 						p->lchild = y;
 					else
@@ -370,9 +423,9 @@ namespace ft{
 				}
 				t3->parent = z;
 				int	rcd, lcd, max;
-				while (z != nullptr){//pour adapter la depth
-					rcd = (z->rchild != nullptr) ? z->rchild->depth : 0;
-					lcd = (t->lchild != nullptr) ? z->lchild->depth : 0;
+				while (z != NULL){//pour adapter la depth
+					rcd = (z->rchild != NULL) ? z->rchild->depth : 0;
+					lcd = (t3->lchild != NULL) ? z->lchild->depth : 0;
 					max = std::max(rcd, lcd);
 					if (z->depth == max + 1)
 						break ;
@@ -387,7 +440,7 @@ namespace ft{
 				bool	isroot = (z == this->root) ? true : false;
 				y->lchild = z;
 				z->rchild = t2;
-				if (p != nullptr){//gerer le parent de z et l'enfant du parent (anciennement z)
+				if (p != NULL){//gerer le parent de z et l'enfant du parent (anciennement z)
 					if (p->lchild == z)
 						p->lchild = y;
 					else
@@ -400,9 +453,9 @@ namespace ft{
 				}
 				t2->parent = z;
 				int	rcd, lcd, max;
-				while (z != nullptr){//pour adapter la depth
-					rcd = (z->rchild != nullptr) ? z->rchild->depth : 0;
-					lcd = (t->lchild != nullptr) ? z->lchild->depth : 0;
+				while (z != NULL){//pour adapter la depth
+					rcd = (z->rchild != NULL) ? z->rchild->depth : 0;
+					lcd = (t2->lchild != NULL) ? z->lchild->depth : 0;
 					max = std::max(rcd, lcd);
 					if (z->depth == max + 1)
 						break ;
@@ -424,13 +477,13 @@ namespace ft{
 
 			void	makeBalanced(node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
 				node*	x = n->parent;
-				if (x == nullptr)
+				if (x == NULL)
 					return ;
 				node*	y = x->parent;
-				if (y == nullptr)
+				if (y == NULL)
 					return ;
 				node*	z = y->parent;
-				if (z == nullptr)
+				if (z == NULL)
 					return ;
 				if (z->lchild == y && y->lchild == x)//Left Left Case
 					rightRotate(z);
@@ -446,21 +499,21 @@ namespace ft{
 				if (this->root->depth != 3)
 					return ;
 				node*	z = this->root;
-				node*	y = nullptr;
-				if (z->lchild != nullptr){
+				node*	y = NULL;
+				if (z->lchild != NULL){
 					y = z->lchild;
-					if (y->rchild == nullptr)
+					if (y->rchild == NULL)
 						rightRotate(z);
-					else if (y->lchild == nullptr){
+					else if (y->lchild == NULL){
 						node*	x = y->rchild;
 						x->lchild = y;
 						y->parent = x;
 						x->rchild = z;
 						z->parent = x;
-						x->parent = nullptr;
+						x->parent = NULL;
 						this->root = x;
-						z->lchild = nullptr;
-						y->rchild = nullptr;
+						z->lchild = NULL;
+						y->rchild = NULL;
 						x->depth = 2;
 						y->depth = 1;
 						z->depth = 1;
@@ -469,7 +522,7 @@ namespace ft{
 						node*	x = y->rchild;
 						node*	t = y->lchild;
 						this->root = y;
-						y->parent = nullptr;
+						y->parent = NULL;
 						y->lchild = t;
 						y->rchild = z;
 						y->depth = 3;
@@ -483,18 +536,18 @@ namespace ft{
 				}
 				else{
 					y = z->rchild;
-					if (y->lchild == nullptr)
+					if (y->lchild == NULL)
 						leftRotate(z);
-					else if (y->rchild == nullptr){
+					else if (y->rchild == NULL){
 						node*	x = y->lchild;
 						x->lchild = z;
 						z->parent = x;
 						x->rchild = y;
 						y->parent = x;
-						x->parent = nullptr;
+						x->parent = NULL;
 						this->root = x;
-						z->rchild = nullptr;
-						y->lchild = nullptr
+						z->rchild = NULL;
+						y->lchild = NULL;
 						x->depth = 2;
 						z->depth = 1;
 						y->depth = 1;
@@ -503,7 +556,7 @@ namespace ft{
 						node*	x = y->lchild;
 						node*	t = y->rchild;
 						y = this->root;
-						y->parent = nullptr;
+						y->parent = NULL;
 						y->depth = 3;
 						y->lchild = z;
 						y->rchild = t;

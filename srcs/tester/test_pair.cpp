@@ -11,10 +11,6 @@ void	display_pair_char_int(ft::pair<char, int> p){
 	std::cout << "(" << p.first << ", " << p.second << ")" << std::endl;
 }
 
-void	display_pair_int_char(ft::pair<int, char> p){
-	std::cout << "(" << p.first << ", " << p.second << ")" << std::endl;
-}
-
 void	test_pair(){
 	ft::pair<char, int> p1('a', 1);
 	ft::pair<char, int> p2(p1);
