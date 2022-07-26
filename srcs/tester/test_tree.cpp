@@ -2,7 +2,7 @@
 #include "my_avl_tree.hpp"
 #include "my_tests.hpp"
 
-void	display_pair_int_char(ft::pair<int, char> p){
+void	display_pair_int_char(const ft::pair<int, char> & p){
 	std::cout << "(" << p.first << ", " << p.second << ")" << std::endl;
 }
 

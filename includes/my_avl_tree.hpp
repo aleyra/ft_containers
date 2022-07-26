@@ -24,7 +24,13 @@ namespace ft{
 			node(node const &src){
 				*this = src;
 			}
-			node(P const &p):lchild(NULL), rchild(NULL), parent(NULL), data(p), depth(1){}
+			node(P const &p){
+				this->lchild = NULL;
+				this->rchild = NULL;
+				this->parent = NULL;
+				this->data = p;
+				this->depth = 1;
+			}//:lchild(NULL), rchild(NULL), parent(NULL), data(p), depth(1){} je sais pas pourquoi mais ça marchait pas...
 			~node(){}
 		
 		private:
@@ -71,7 +77,7 @@ namespace ft{
 					current = current->rchild;
 					while (current->lchild != NULL)
 						current = current->lchild;
-						return (*this);
+					return (*this);
 				}
 				node	tmp = current;
 				current = current->parent;
@@ -104,7 +110,7 @@ namespace ft{
 					current = current->lchild;
 					while (current->lchild != NULL)
 						current = current->rchild;
-						return (*this);
+					return (*this);
 				}
 				node	tmp = current;
 				current = current->parent;
@@ -132,11 +138,11 @@ namespace ft{
 			typedef T														mapped_type;
 			typedef ft::pair<key_type, mapped_type>							value_type;
 			typedef ft::pair<const key_type, mapped_type>					iter_value_type;//sert quand on cree les iterator pour pourvoir generer des version const
-			typedef typename ft::node<value_type>							node;
-		 	typedef node*													pointer;
-			typedef const node*												const_pointer;
-			typedef node&													reference;
-			typedef const node&												const_reference;
+			typedef typename ft::node<value_type>							_node;
+		 	typedef _node*													pointer;
+			typedef const _node*												const_pointer;
+			typedef _node&													reference;
+			typedef const _node&												const_reference;
 			typedef size_t													size_type;
 			typedef avl_iterator<iter_value_type>							iterator;
 			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
@@ -146,10 +152,10 @@ namespace ft{
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
 	
-			node*				root;//a remettre en private
+			_node*				root;//a remettre en private
 		private:
-			node*				begin;
-			node*				end;
+			_node*				begin;
+			_node*				end;
 			allocator_type		alloc;//au cas où
 			node_alloc			nalloc;
 			size_type			size;//nb d'elem
@@ -174,28 +180,28 @@ namespace ft{
 				this->clear();
 			}
 
-			node* getFirst() const{//a mettre en private ?
+			_node* getFirst() const{//a mettre en private ?
 				if (this->size == 0)
 					return NULL;
-				node*	tmp = root;
+				_node*	tmp = root;
 				while (tmp->lchild != NULL)
 					tmp--;
 				return (tmp);
 			}
 
-			node*	getLast() const{//a mettre en private ?
+			_node*	getLast() const{//a mettre en private ?
 				if (this->size == 0)
 					return NULL;
-				node*	tmp = root;
+				_node*	tmp = root;
 				while (tmp->rchild != NULL)
 					tmp++;
 				return (tmp);
 			}
 
 			void	insert(value_type data){
-				node*	tmp = root;
+				_node*	tmp = root;
 				bool	b = false;
-				node*	n = NULL;//will be new node pointer
+				_node*	n = NULL;//will be new _node pointer
 				int	rcd, lcd, max;
 				while (b == false){
 					if (comp(data.first, tmp->data.first)){//data < tmp.data
@@ -249,7 +255,7 @@ namespace ft{
 							tmp = tmp->rchild;
 					}
 					else{// n == tmp
-						node* t = this->nalloc.allocate(1);
+						_node* t = this->nalloc.allocate(1);
 						this->nalloc.construct(t, data);
 						swap_nodes_data(t, tmp);
 						this->nalloc.destroy(t);
@@ -263,15 +269,15 @@ namespace ft{
 				// 	makeBalancedFromRoot();
 				// else if (n != NULL && !isBal)
 				// 	makeBalanced(n);
-				node*	isBalN = isBalanced(n);
+				_node*	isBalN = isBalanced(n);
 				// std::cout << "ds insert\n";//
 				makeBalanced(isBalN);
 			}//?
 
 			void	erase(value_type data){
-				node*	tmp = root;
+				_node*	tmp = root;
 				bool	b = false;
-				node*	x = NULL;//will be parent of deallocate node.
+				_node*	x = NULL;//will be parent of deallocate node.
 				int	rcd, lcd, max;
 				std::cout << "ds erase\n";//
 				while (b == false && tmp != NULL){
@@ -300,7 +306,7 @@ namespace ft{
 							}
 						}
 						else if (tmp->depth == 1){//si tmp n'a pas d'enfants
-							node*	x = tmp->parent;
+							_node*	x = tmp->parent;
 							if (x->rchild == tmp)
 								x->rchild = NULL;
 							if (x->lchild == tmp)
@@ -320,7 +326,7 @@ namespace ft{
 						}
 						else {//tmp n'a pas de lc ou il a un lc qui a lui meme une descendance
 							// std::cout << "\ttmp = " << tmp << " et tmp.data.first = " << tmp->data.first << std::endl;//
-							node*	t = tmp->lchild;
+							_node*	t = tmp->lchild;
 							// std::cout << "\tt = " << t << " et t.data.first = " << t->data.first << std::endl;//
 							while (t != NULL && t->rchild != NULL){
 								t = t->rchild;
@@ -380,14 +386,14 @@ namespace ft{
 			bool	isBalanced(){
 				if (this->size <= 2)
 					return true;
-				node*	tmp = getFirst();
-				node*	last = getLast();
-				node*	p;
-				node*	rc;
-				node*	lc;
+				_node*	tmp = getFirst();
+				_node*	last = getLast();
+				// _node*	p;
+				_node*	rc;
+				_node*	lc;
 				while (tmp != last){
 					if (tmp != this->root){
-						p = tmp->parent;
+						// p = tmp->parent;
 					// std::cout << "in isBalanced" << std::endl;
 						rc = tmp->rchild;
 						lc = tmp->lchild;
@@ -399,7 +405,7 @@ namespace ft{
 				return (true);
 			}//?
 
-			node*	isBalanced(node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
+			_node*	isBalanced(_node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
 				int		rcd, lcd;
 
 				// std::cout << "in isBalanced(node *)\n";//
@@ -420,14 +426,14 @@ namespace ft{
 				this->size = 0;
 			}
 
-			void clear(node* n){
+			void clear(_node* n){
 				// std::cout << "in clear(node *)\n";//
 				// std::cout << "n = " << n << " n.lc = " << n->lchild << " n.rc = " << n->rchild << std::endl;//
 				if (n->lchild != NULL)
 					clear(n->lchild);
 				if (n->rchild != NULL)
 					clear(n->rchild);
-				node*	p = n->parent;
+				_node*	p = n->parent;
 				if (p != NULL){
 					if (p->lchild == n)
 						p->lchild = NULL;
@@ -440,13 +446,13 @@ namespace ft{
 				// std::cout << "clear(node *) fini\n";//
 			}
 
-			void	rightRotate(node* z){//see Left Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+			void	rightRotate(_node* z){//see Left Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
 				// std::cout << "z = " << z << std::endl;//
-				node*	y = z->lchild;
+				_node*	y = z->lchild;
 				// std::cout << "y = " << y << std::endl;//
-				node*	t3 = y->rchild;
+				_node*	t3 = y->rchild;
 				// std::cout << "t3 = " << t3 << std::endl;//
-				node*	p = z->parent;
+				_node*	p = z->parent;
 				// std::cout << "p = " << p << std::endl;//
 				bool	isroot = (z == this->root) ? true : false;
 				// {if (isroot)//affichage du res de isroot
@@ -481,10 +487,10 @@ namespace ft{
 				}
 			}
 
-			void	leftRotate(node* z){//see Right Right Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
-				node*	y = z->rchild;
-				node*	t2 = y->lchild;
-				node*	p = z->parent;
+			void	leftRotate(_node* z){//see Right Right Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+				_node*	y = z->rchild;
+				_node*	t2 = y->lchild;
+				_node*	p = z->parent;
 				bool	isroot = (z == this->root) ? true : false;
 				y->lchild = z;
 				z->rchild = t2;
@@ -513,26 +519,26 @@ namespace ft{
 				}
 			}
 
-			void	leftRightRotate(node* z){//see Left Right Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
-				node*	y = z->lchild;
+			void	leftRightRotate(_node* z){//see Left Right Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+				_node*	y = z->lchild;
 				leftRotate(y);
 				rightRotate(z);
 			}
 
-			void	rightLeftRotate(node* z){//see Right Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
-				node*	y = z->rchild;
+			void	rightLeftRotate(_node* z){//see Right Left Case example in https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+				_node*	y = z->rchild;
 				rightRotate(y);
 				leftRotate(z);
 			}
 
-			// void	makeBalanced(node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
-			// 	node*	x = n->parent;
+			// void	makeBalanced(_node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
+			// 	_node*	x = n->parent;
 			// 	if (x == NULL)
 			// 		return ;
-			// 	node*	y = x->parent;
+			// 	_node*	y = x->parent;
 			// 	if (y == NULL)
 			// 		return ;
-			// 	node*	z = y->parent;
+			// 	_node*	z = y->parent;
 			// 	if (z == NULL)
 			// 		return ;
 			// 	if (z->lchild == y && y->lchild == x)//Left Left Case
@@ -545,10 +551,10 @@ namespace ft{
 			// 		rightLeftRotate(z);
 			// }
 
-			void	makeBalanced(node* z){
+			void	makeBalanced(_node* z){
 				if (z == NULL || this->size <= 2)
 					return ;
-				node*	y;
+				_node*	y;
 				if (z->lchild == NULL || z->lchild->depth == 1){//case c or d
 					y = z->rchild;
 					if (y->lchild == NULL || y->lchild->depth == 1){//case c
@@ -577,14 +583,14 @@ namespace ft{
 			void	makeBalancedFromRoot(){//fonction degueu
 				if (this->root->depth != 3)
 					return ;
-				node*	z = this->root;
-				node*	y = NULL;
+				_node*	z = this->root;
+				_node*	y = NULL;
 				if (z->lchild != NULL){
 					y = z->lchild;
 					if (y->rchild == NULL)
 						rightRotate(z);
 					else if (y->lchild == NULL){
-						node*	x = y->rchild;
+						_node*	x = y->rchild;
 						x->lchild = y;
 						y->parent = x;
 						x->rchild = z;
@@ -598,8 +604,8 @@ namespace ft{
 						z->depth = 1;
 					}
 					else {//y a deux enfants
-						node*	x = y->rchild;
-						node*	t = y->lchild;
+						_node*	x = y->rchild;
+						_node*	t = y->lchild;
 						this->root = y;
 						y->parent = NULL;
 						y->lchild = t;
@@ -618,7 +624,7 @@ namespace ft{
 					if (y->lchild == NULL)
 						leftRotate(z);
 					else if (y->rchild == NULL){
-						node*	x = y->lchild;
+						_node*	x = y->lchild;
 						x->lchild = z;
 						z->parent = x;
 						x->rchild = y;
@@ -632,8 +638,8 @@ namespace ft{
 						y->depth = 1;
 					}
 					else {//y a deux enfants
-						node*	x = y->lchild;
-						node*	t = y->rchild;
+						_node*	x = y->lchild;
+						_node*	t = y->rchild;
 						y = this->root;
 						y->parent = NULL;
 						y->depth = 3;
