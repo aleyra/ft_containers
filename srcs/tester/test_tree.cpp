@@ -110,13 +110,20 @@ void test_tree(){
 	// print_node(t.root->rchild->rchild->lchild);
 	// std::cout << "\nrchild de rchild de rchild de root\n";
 	// print_node(t.root->rchild->rchild->rchild);}
-	std::cout << "suppression de 13\n";
-	t.erase(ft::make_pair(13, 'o'));
+	// {std::cout << "suppression de 13\n";
+	// t.erase(ft::make_pair(13, 'o'));
+	// print_node(t.root);
+	// std::cout << "\nrchild de root\n";
+	// print_node(t.root->rchild);
+	// std::cout << "\nrchild de rchild de root\n";
+	// print_node(t.root->rchild->rchild);}
+	{std::cout << "suppression de 13\n";
+	t.erase(ft::make_pair(15, 'p'));
 	print_node(t.root);
 	std::cout << "\nrchild de root\n";
 	print_node(t.root->rchild);
 	std::cout << "\nrchild de rchild de root\n";
-	print_node(t.root->rchild->rchild);
+	print_node(t.root->rchild->rchild);}
 
 
 
