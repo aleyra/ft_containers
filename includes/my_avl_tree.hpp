@@ -279,8 +279,8 @@ namespace ft{
 				bool	b = false;
 				_node*	x = NULL;//will be parent of deallocate node.
 				int	rcd, lcd, max;
-				std::cout << "ds erase\n";//
 				while (b == false && tmp != NULL){
+				std::cout << "ds erase\n";//
 					if (comp(data.first, tmp->data.first) && (tmp->lchild != NULL)){//data < tmp.data
 						tmp = tmp->lchild;
 					}
