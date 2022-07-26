@@ -268,7 +268,7 @@ namespace ft{
 				makeBalanced(isBalN);
 			}//?
 
-			void	erase(value_type data){//pas complet
+			void	erase(value_type data){
 				node*	tmp = root;
 				bool	b = false;
 				node*	x = NULL;//will be parent of deallocate node.
@@ -326,7 +326,7 @@ namespace ft{
 								// std::cout << "\tt = " << t << std::endl;//
 							}
 							if (t != NULL){//petite secu avant les manip
-				// std::cout << "ds erase\n";//
+				std::cout << "ds erase\n";//
 								x = t;
 								while (t != NULL){
 									// std::cout << "t = " << t << "\tt.data.f = " << t->data.first << std::endl;//

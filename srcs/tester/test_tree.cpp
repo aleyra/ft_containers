@@ -117,13 +117,24 @@ void test_tree(){
 	// print_node(t.root->rchild);
 	// std::cout << "\nrchild de rchild de root\n";
 	// print_node(t.root->rchild->rchild);}
-	{std::cout << "suppression de 13\n";
-	t.erase(ft::make_pair(15, 'p'));
+	// {std::cout << "suppression de 15\n";
+	// t.erase(ft::make_pair(15, 'p'));
+	// print_node(t.root);
+	// std::cout << "\nrchild de root\n";
+	// print_node(t.root->rchild);
+	// std::cout << "\nrchild de rchild de root\n";
+	// print_node(t.root->rchild->rchild);}
+	{std::cout << "suppression de 14\n";//leak !!!!
+	t.erase(ft::make_pair(14, 'q'));
 	print_node(t.root);
 	std::cout << "\nrchild de root\n";
 	print_node(t.root->rchild);
 	std::cout << "\nrchild de rchild de root\n";
-	print_node(t.root->rchild->rchild);}
+	print_node(t.root->rchild->rchild);
+	std::cout << "\nrchild de rchild de rchild de root\n";
+	print_node(t.root->rchild->rchild->rchild);}
+	// std::cout << "suppression de 12\n";
+	// t.erase(ft::make_pair(12, 'r'));
 
 
 
