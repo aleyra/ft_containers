@@ -177,7 +177,6 @@ void test_tree(){
 		// print_node(t.root->lchild->rchild->rchild->lchild);
 		// std::cout << "son rc\n";
 		// print_node(t.root->lchild->rchild->rchild->rchild);
-
 	}
 
 	// if (t.isBalanced() == true) std::cout << "true" <<std::endl;
