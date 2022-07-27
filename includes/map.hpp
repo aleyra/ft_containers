@@ -7,27 +7,18 @@
 # include "enable_if.hpp"
 # include "is_integral.hpp"
 # include "birectional_iterator_tag.hpp"
+# include "my_avl_tree.hpp"
 
 namespace ft{
 	template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > >
 	class map{//c'est un genre d'arbre
 		public:
 		//member attributs
-		typedef Key														key_type;
-		typedef T														mapped_type;
-		typedef ft::pair<const key_type, mapped_type>					value_type;
-		typedef Compare													key_compare;
-		typedef Alloc													allocator_type;
-		typedef typename allocator_type::reference						reference;
-		typedef typename allocator_type::const_reference				const_reference;
-		typedef typename allocator_type::pointer						pointer;
-		typedef typename allocator_type::const_pointer					const_pointer;
-		typedef typename value_type::bidirectional_iterator				iterator;//?
-		typedef const typename value_type::bidirectional_iterator		const_iterator;//?
-		typedef ft::reverse_iterator<iterator>							reverse_iterator;
-		typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
-		typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
-		typedef size_t													size_type;
+		typedef Key										key_type;
+		typedef T										mapped_type;
+		typedef ft::pair<const key_type, mapped_type>	value_type;
+		typedef Compare									key_compare;
+		typedef Alloc									allocator_type;
 
 		class value_compare:public std::binary_function<value_type, value_type, bool>{
 			friend class map;
@@ -40,25 +31,47 @@ namespace ft{
   				typedef value_type	second_argument_type;
   				bool				operator()(const value_type& x, const value_type& y) const{return comp(x.first, y.first);}
 		};
-		// template <class Key, class T, class Compare, call Alloc>
-		// typedef	map<Key, T, Compare, Alloc>::value_compare	value_compare;//?
+		template <class Key, class T, class Compare, call Alloc>
+		typedef	map<Key, T, Compare, Alloc>::value_compare	value_compare;//?
+
+		private:
+		typedef typename Alloc::template rebind<value_type>::other				pair_alloc;
+		typedef ft::avl_tree<key_type, mapped_type, value_compare, pair_alloc>	map_tree;
+
+		key_compare	comp;
+		map_tree	tree;
+
+		public:
+		typedef typename pair_alloc::pointer				pointer;
+		typedef typename pair_alloc::const_pointer			const_pointer;
+		typedef typename pair_alloc::reference				reference;
+		typedef typename pair_alloc::const_reference		const_reference;
+		typedef typename map_tree::iterator					iterator;
+		typedef typename map_tree::const_iterator			const_iterator;
+		typedef typename map_tree::reverse_iterator			reverse_iterator;
+		typedef typename map_tree::const_reverse_iterator	const_reverse_iterator;
+		typedef typename map_tree::difference_type			difference_type;
+		typedef typename map_tree::size_type				size_type;
 
 		//member functions : canonical form
+		private:
 		map(){}//?
-		// map(const map & src){}//?
+		public:
+		map(const map & src):comp(src.comp), tree(src.tree){}//?
 		virtual ~map(){/*this->clear()*/}//?
-		// map & operator=(const map & src){}//?
+		map & operator=(const map & src){
+			comp = src.comp;
+			tree = src.tree;
+			return (*this);
+		}//?
 
-// 		//member functions
-		explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()){
-			(void)comp;//?
-			(void)alloc;//?
-		}
+		//member functions
+		explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()):comp(comp), tree(value_compare(comp), alloc) {}//?
 		// template <class InputIterator>
 		// map (InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type(),
 		// 	typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0){}//?
 		
-// 		//member functions: iterators
+		//member functions: iterators
 // 		iterator		begin(){}//?
 // 		const_iterator	begin() const{}//?
 
@@ -71,14 +84,14 @@ namespace ft{
 // 		reverse_iterator		rend(){}//?
 // 		const_reverse_iterator	rend() const{}//?
 
-// 		//member functions: capacity
+		//member functions: capacity
 // 		bool		empty() const{}//?
 
 // 		size_type	size() const{}//?
 
 // 		size_type	max_size() const{}//?
 
-// 		//member functions: element access
+		//member functions: element access
 // 		mapped_type &	operator[](const key_type & k){/* return (*((this->insert(make_pair(k,mapped_type()))).first)).second; */}//?
 
 // 		//member functions: modifiers
@@ -95,12 +108,12 @@ namespace ft{
 
 // 		void	clear(){}//?
 
-// 		//member functions: observers
+		//member functions: observers
 // 		key_compare	key_comp() const{}//?
 
 // 		value_compare	value_comp() const{}//?//????????????????
 
-// 		//member functions: operations
+		//member functions: operations
 // 		iterator		find(const key_type & k){}//?
 // 		const_iterator	find(const key_type & k) const{}//?
 
@@ -115,7 +128,7 @@ namespace ft{
 // 		pair<const_iterator, const_iterator>	equal_range(const key_type & k) const{}//?
 // 		pair<iterator, iterator>				equal_range(const key_type & k){}//?
 
-// 		//member functions: allocator
+		//member functions: allocator
 // 		allocator_type	get_allocator() const{}//?
 
 // 		protected:

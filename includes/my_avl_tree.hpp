@@ -31,7 +31,7 @@ namespace ft{
 				this->data = p;
 				this->depth = 1;
 			}//:lchild(NULL), rchild(NULL), parent(NULL), data(p), depth(1){} je sais pas pourquoi mais ça marchait pas...
-			~node(){}
+			virtual ~node(){}
 		
 		private:
 			node &	operator=(node const &src){
@@ -66,7 +66,7 @@ namespace ft{
 			node					current;
 
 			avl_iterator(const avl_iterator &src){this = src;}
-			~avl_iterator(){}
+			virtual ~avl_iterator(){}
 			avl_iterator & operator=(const avl_iterator &src){
 				current = src.current;
 				return (*this);
@@ -128,7 +128,7 @@ namespace ft{
 	};
 
 	template <class Key, class T, class Compare, class Alloc = std::allocator<T> >
-	struct my_avl_tree
+	struct avl_tree
 	{
 		typedef typename Alloc::template rebind<node<pair<Key, T> > >::other	node_alloc;//pour avoir une allocator qui genere la place pour une node plutot que la place pour pair.-
 
@@ -154,8 +154,8 @@ namespace ft{
 	
 			_node*				root;//a remettre en private
 		private:
-			_node*				begin;
-			_node*				end;
+			// _node*				begin;
+			// _node*				end;
 			allocator_type		alloc;//au cas où
 			node_alloc			nalloc;
 			size_type			size;//nb d'elem
@@ -164,7 +164,7 @@ namespace ft{
 
 		public:
 		//member function
-			my_avl_tree(value_type data){
+			avl_tree(value_type data){
 				this->root = this->nalloc.allocate(1);
 				this->nalloc.construct(this->root, data);
 				this->root->depth = 1;
@@ -174,7 +174,28 @@ namespace ft{
 				this->size = 1;
 			}
 
-			~my_avl_tree(){
+			avl_tree(const avl_tree & src){
+				*this = src;
+			}
+
+			avl_tree	operator=(const avl_tree & src){
+				this->alloc = src.alloc;
+				this->nalloc = src.nalloc;
+				this->size = src.size;
+				this->comp = src.comp;
+				this->root = copy_tree(src.root, NULL);
+			}
+
+			avl_tree(iterator first, iterator last, const Compare & comp, typename ft::enable_if<!ft::is_integral<iterator>::value>::type* = 0), , const allocator_type & alloc = allocator_type(){
+				this->alloc = alloc;
+				this->nalloc = node_alloc();
+				this->comp = comp;
+				for (iterator it = first, it != last; it++){
+					this.insert((*it).data);
+				}
+			}
+
+			virtual ~avl_tree(){
 				// std::cout << "in destructor\n";//
 				// std::cout << "size = " << this->size << std::endl;//
 				if (this->size != 0)
@@ -450,6 +471,8 @@ namespace ft{
 			void clear(_node* n){
 				// std::cout << "in clear(node *)\n";//
 				// std::cout << "n = " << n << " n.lc = " << n->lchild << " n.rc = " << n->rchild << std::endl;//
+				if (n == NULL)
+					return ;
 				if (n->lchild != NULL)
 					clear(n->lchild);
 				if (n->rchild != NULL)
@@ -691,6 +714,44 @@ namespace ft{
 			// 		}
 			// 	}
 			// }
+		
+			_node*	copy_tree(const _node & src, const _node & p){
+				_node*	n;
+				if (&src == NULL)
+					return (NULL);
+				n = this->nalloc.allocate(1);
+				this->nalloc.construct(n, src.data);
+				n->depth = src.depth;
+				n->parent = &p;
+				try{
+					n->lchild = copy_tree(src.lchild, n);
+				}
+				catch (...){
+					delete_node(n);
+					throw ;//ceci est un rethrow : ca gere l'erreur (ici leak de memoire), puis ca redonne l'erreur au user
+				}
+				try{
+					n->rchild = copy_tree(src.rchild, n);
+				}
+				catch (...){
+					delete_node(n->lchild);
+					n->lchild = NULL;
+					n->rchild = NULL;
+					delete_node(n);
+					throw ;
+				}
+				return (n);
+			}
+
+			void	delete_node(_node* n){
+				if (n == NULL)
+					return ;
+				delete_node(n->lchild);
+				delete_node(n->lchild);
+				this->nalloc.destroy(n);
+				this->nalloc.deallocate(n, 1);
+				n = NULL;
+			}
 	};
 }
 
