@@ -177,7 +177,8 @@ namespace ft{
 			~my_avl_tree(){
 				// std::cout << "in destructor\n";//
 				// std::cout << "size = " << this->size << std::endl;//
-				this->clear();
+				if (this->size != 0)
+					this->clear();
 			}
 
 			_node* getFirst() const{//a mettre en private ?
@@ -280,6 +281,7 @@ namespace ft{
 				// else if (n != NULL && !isBal)
 				// 	makeBalanced(n);
 				_node*	isBalN = isBalanced(n);
+				std::cout << "isBalN = " << isBalN << std::endl;//
 				// std::cout << "ds insert\n";//
 				makeBalanced(isBalN);
 			}//?
@@ -300,6 +302,7 @@ namespace ft{
 						if (tmp == this->root && tmp->depth == 1){//cas particulier où on efface la derniere node existante : root
 							clear(tmp);
 							this->root = NULL;
+				
 						}
 						else if (tmp->lchild != NULL && tmp->lchild->depth == 1){//tmp.lc existe et n'a pas d'enfant
 							swap_nodes_data(tmp, tmp->lchild);
@@ -378,7 +381,6 @@ namespace ft{
 				this->size--;
 				//a revoir a partir d'ici
 				// bool isBal = isBalanced();
-				std::cout << "ds erase\n";//
 				
 				// if (!isBal && this->root->depth == 3){
 				// 	makeBalancedFromRoot();
@@ -394,6 +396,7 @@ namespace ft{
 				// 	}//found it
 				// 	if (x != NULL && !isBal)
 				// 		makeBalanced(x);
+				// std::cout << "ds erase\n";//
 					makeBalanced(isBalanced(x));//a verif
 				// }
 			}
@@ -423,14 +426,17 @@ namespace ft{
 			_node*	isBalanced(_node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
 				int		rcd, lcd;
 
-				// std::cout << "in isBalanced(node *)\n";//
-				while (n != NULL && n != this->root){
+				// std::cout << "n = " << n << std::endl;//
+				while (n != NULL){
+				// std::cout << "n = " << n << " n.data.f = " << n->data.first << " n.depth = " << n->depth << std::endl;//
 					rcd = (n->rchild != NULL) ? n->rchild->depth : 0;
 					lcd = (n->lchild != NULL) ? n->lchild->depth : 0;
+					// std::cout << "rcd = " << rcd << "\tlcd = " << lcd << std::endl;//
 					if (rcd - lcd > 1 || rcd - lcd < -1)
 						return (n);
 					n = n->parent;
 				}
+				// std::cout << "in isBalanced(node *)\n";//
 				return NULL;
 			}
 		private:
@@ -567,28 +573,40 @@ namespace ft{
 			// }
 
 			void	makeBalanced(_node* z){
-				if (z == NULL || this->size <= 2)
+				if (z == NULL || this->size <= 2){
 					return ;
+				}
 				_node*	y;
-				if (z->lchild == NULL || z->lchild->depth == 1){//case c or d
+				int rcd, lcd;
+				rcd = (z->rchild != NULL) ? z->rchild->depth : 0;
+				lcd = (z->lchild != NULL) ? z->lchild->depth : 0;
+				if (lcd - rcd < -1){//case c or d
+				// std::cout << "in makeBalanced(node *)\n";//
 					y = z->rchild;
-					if (y->lchild == NULL || y->lchild->depth == 1){//case c
+					rcd = (y->rchild != NULL) ? y->rchild->depth : 0;
+					lcd = (y->lchild != NULL) ? y->lchild->depth : 0;
+					if (lcd - rcd <= 0){//case c
 						if (y->rchild != NULL)
 							leftRotate(z);
 					}
-					else if (y->rchild == NULL || y->rchild->depth == 1){//case d
+					// else if (y->rchild == NULL || y->rchild->depth == 1){//case d
+					else {//case d
 						if (y->lchild != NULL)
 							rightLeftRotate(z);
 					}
 				}
-				else if (z->rchild == NULL || z->rchild->depth == 1){//case a or b
+				// else if (z->rchild == NULL || z->rchild->depth == 1){//case a or b
+				else if (lcd - rcd > 1){//case a or b
 					y = z->lchild;
-					if (y->rchild == NULL || y->rchild->depth == 1){//case a
+					rcd = (y->rchild != NULL) ? y->rchild->depth : 0;
+					lcd = (y->lchild != NULL) ? y->lchild->depth : 0;
+					// if (y->rchild == NULL || y->rchild->depth == 1){//case a
+					if (lcd - rcd >= 0){//case a
 						if (y->lchild != NULL)
-				// std::cout << "in makeBalanced(node *)\n";//
 							rightRotate(z);
 					}
-					else if (y->lchild == NULL || y->lchild->depth == 1){//case b
+					// else if (y->lchild == NULL || y->lchild->depth == 1){//case b
+					else {//case b
 						if (y->rchild != NULL)
 							leftRightRotate(z);
 					}
