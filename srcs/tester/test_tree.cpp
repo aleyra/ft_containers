@@ -149,30 +149,34 @@ void test_tree(){
 	// // print_node(t.root->rchild->lchild->rchild);}
 	// }
 	{std::cout << "creation d'un arbre avec 15 nodes allant de 1 à 15\n";
-		ft::my_avl_tree<int, char, std::less<int> >	t(ft::make_pair(150, 'a'));
-		t.insert(ft::make_pair(140, 'n'));
-		t.insert(ft::make_pair(130, 'm'));
-		t.insert(ft::make_pair(120, 'l'));
-		t.insert(ft::make_pair(110, 'k'));
-		t.insert(ft::make_pair(100, 'j'));
-		t.insert(ft::make_pair(90, 'i'));
+		ft::my_avl_tree<int, char, std::less<int> >	t(ft::make_pair(10, 'a'));
+		t.insert(ft::make_pair(20, 'b'));
+		t.insert(ft::make_pair(30, 'c'));
+		t.insert(ft::make_pair(40, 'd'));
+		t.insert(ft::make_pair(50, 'e'));
+		t.insert(ft::make_pair(60, 'f'));
+		t.insert(ft::make_pair(70, 'g'));
 		// std::cout << "\nca va casser\n";
 		t.insert(ft::make_pair(80, 'h'));
-		t.insert(ft::make_pair(70, 'g'));
-		t.insert(ft::make_pair(60, 'f'));
-		t.insert(ft::make_pair(50, 'e'));
-		t.insert(ft::make_pair(40, 'd'));
-		t.insert(ft::make_pair(30, 'c'));
-		t.insert(ft::make_pair(20, 'b'));
-		t.insert(ft::make_pair(10, 'o'));
-		t.insert(ft::make_pair(65, 'o'));
-		t.insert(ft::make_pair(66, 'o'));
-		std::cout << "node\n";
-		print_node(t.root);
-		std::cout << "son lc\n";
-		print_node(t.root->rchild->lchild);
-		std::cout << "son rc\n";
-		print_node(t.root->rchild->rchild);
+		t.insert(ft::make_pair(90, 'i'));
+		t.insert(ft::make_pair(100, 'j'));
+		t.insert(ft::make_pair(110, 'k'));
+		t.insert(ft::make_pair(120, 'l'));
+		t.insert(ft::make_pair(130, 'm'));
+		t.insert(ft::make_pair(140, 'n'));
+		t.insert(ft::make_pair(150, 'o'));
+		// {
+		// 	t.insert(ft::make_pair(66, 'o'));
+		// 	t.insert(ft::make_pair(65, 'o'));
+		// }
+		t.insert(ft::make_pair(55, 'o'));
+		t.insert(ft::make_pair(54, 'o'));
+		// std::cout << "node\n";
+		// print_node(t.root->lchild->rchild->rchild);
+		// std::cout << "son lc\n";
+		// print_node(t.root->lchild->rchild->rchild->lchild);
+		// std::cout << "son rc\n";
+		// print_node(t.root->lchild->rchild->rchild->rchild);
 
 	}
 

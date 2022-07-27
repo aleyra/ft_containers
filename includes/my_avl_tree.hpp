@@ -586,11 +586,13 @@ namespace ft{
 					rcd = (y->rchild != NULL) ? y->rchild->depth : 0;
 					lcd = (y->lchild != NULL) ? y->lchild->depth : 0;
 					if (lcd - rcd <= 0){//case c
+						std::cout << "case c\n";//
 						if (y->rchild != NULL)
 							leftRotate(z);
 					}
 					// else if (y->rchild == NULL || y->rchild->depth == 1){//case d
 					else {//case d
+						std::cout << "case d\n";//
 						if (y->lchild != NULL)
 							rightLeftRotate(z);
 					}
@@ -602,11 +604,13 @@ namespace ft{
 					lcd = (y->lchild != NULL) ? y->lchild->depth : 0;
 					// if (y->rchild == NULL || y->rchild->depth == 1){//case a
 					if (lcd - rcd >= 0){//case a
+						std::cout << "case a\n";//
 						if (y->lchild != NULL)
 							rightRotate(z);
 					}
 					// else if (y->lchild == NULL || y->lchild->depth == 1){//case b
 					else {//case b
+						std::cout << "case b\n";//
 						if (y->rchild != NULL)
 							leftRightRotate(z);
 					}
