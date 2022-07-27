@@ -205,7 +205,7 @@ namespace ft{
 				this->nalloc = node_alloc();
 				this->comp = comp;
 				for (iterator it = first; it != last; it++){
-					insert((*it).data);
+					insert(*it);
 				}
 			}
 
