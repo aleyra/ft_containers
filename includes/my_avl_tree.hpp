@@ -73,6 +73,8 @@ namespace ft{
 				current = src.current;
 				return (*this);
 			}
+
+			avl_iterator(node n){current = n;}//?
 			
 			avl_iterator	&operator++(){
 				if (current->rchild != NULL){
@@ -142,9 +144,9 @@ namespace ft{
 			typedef ft::pair<const key_type, mapped_type>					iter_value_type;//sert quand on cree les iterator pour pourvoir generer des version const
 			typedef typename ft::node<value_type>							_node;
 		 	typedef _node*													pointer;
-			typedef const _node*												const_pointer;
+			typedef const _node*											const_pointer;
 			typedef _node&													reference;
-			typedef const _node&												const_reference;
+			typedef const _node&											const_reference;
 			typedef size_t													size_type;
 			typedef avl_iterator<iter_value_type>							iterator;
 			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
@@ -477,6 +479,16 @@ namespace ft{
 				// std::cout << "in isBalanced(node *)\n";//
 				return NULL;
 			}
+		
+			Compare getComp() const{//a mettre en private ?
+				return (this->comp);
+			}
+
+			iterator	begin(){return (iterator(getFirst()));}
+			const_iterator	begin(){return (const_iterator(getFirst()));}
+			iterator	end(){return (iterator(getLast()));}
+			const_iterator	begin(){return (const_iterator(getLast()));}
+
 		private:
 
 			avl_tree(){};
@@ -772,6 +784,7 @@ namespace ft{
 				this->nalloc.deallocate(n, 1);
 				n = NULL;
 			}
+
 	};
 }
 
