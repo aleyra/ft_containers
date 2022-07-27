@@ -67,14 +67,13 @@ namespace ft{
 			typedef	ft::node<P>*	node;
 			node					current;
 
+		public:
 			avl_iterator(const avl_iterator &src){this = src;}
 			virtual ~avl_iterator(){}
 			avl_iterator & operator=(const avl_iterator &src){
 				current = src.current;
 				return (*this);
 			}
-
-			avl_iterator(node n){current = n;}//?
 			
 			avl_iterator	&operator++(){
 				if (current->rchild != NULL){
@@ -129,6 +128,8 @@ namespace ft{
 				++(*this);
 				return (tmp);
 			}
+
+			avl_iterator(const node & n){current = n;}//?
 	};
 
 	template <class Key, class T, class Compare, class Alloc = std::allocator<T> >
@@ -143,17 +144,17 @@ namespace ft{
 			typedef ft::pair<key_type, mapped_type>							value_type;
 			typedef ft::pair<const key_type, mapped_type>					iter_value_type;//sert quand on cree les iterator pour pourvoir generer des version const
 			typedef typename ft::node<value_type>							_node;
+			typedef Alloc													allocator_type;
+			typedef avl_iterator<iter_value_type>							iterator;
+			typedef avl_iterator<const iter_value_type>						const_iterator;
 		 	typedef _node*													pointer;
 			typedef const _node*											const_pointer;
 			typedef _node&													reference;
 			typedef const _node&											const_reference;
-			typedef size_t													size_type;
-			typedef avl_iterator<iter_value_type>							iterator;
-			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
-			typedef Alloc													allocator_type;
-			typedef avl_iterator<const iter_value_type>						const_iterator;
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+			typedef size_t													size_type;
+			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 
 	
 			_node*				root;//a remettre en private
@@ -179,10 +180,6 @@ namespace ft{
 			}
 
 			avl_tree(avl_tree const & src){
-				// *this = src;
-				// if (this->root != NULL){
-				// 	this->clear();
-				// }
 				// std::cout << "in constructor par copie\n";//
 				this->alloc = src.alloc;
 				this->nalloc = src.nalloc;
@@ -484,10 +481,10 @@ namespace ft{
 				return (this->comp);
 			}
 
-			iterator	begin(){return (iterator(getFirst()));}
+			iterator		begin(){return (iterator(getFirst()));}
 			const_iterator	begin(){return (const_iterator(getFirst()));}
-			iterator	end(){return (iterator(getLast()));}
-			const_iterator	begin(){return (const_iterator(getLast()));}
+			iterator		end(){return (iterator(getLast()));}
+			const_iterator	end(){return (const_iterator(getLast()));}
 
 		private:
 

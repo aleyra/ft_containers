@@ -148,6 +148,7 @@ void test_tree(){
 	// // std::cout << "\nrchild de lchild de rchild de root\n";
 	// // print_node(t.root->rchild->lchild->rchild);}
 	// }
+
 	// {std::cout << "creation d'un arbre avec 15 nodes allant de 1 à 15\n";
 	// 	ft::avl_tree<int, char, std::less<int> >	t(ft::make_pair(10, 'a'));
 	// 	t.insert(ft::make_pair(20, 'b'));
@@ -202,6 +203,6 @@ void test_tree(){
 		print_node(t3.root);
 		print_node(t3.root->rchild->rchild);
 		std::cout << "test du constructeur par range\n";
-		ft::avl_tree<int, char, std::less<int> >	t4(t1.getFirst(), t1.getLast(), t1.getComp());
+		ft::avl_tree<int, char, std::less<int> >	t4(t1.begin(), t1.end(), t1.getComp());
 	}
 }
