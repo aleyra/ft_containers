@@ -6,6 +6,8 @@
 # include "iterators_traits.hpp"
 # include "reverse_iterator.hpp"
 # include <algorithm>
+# include "enable_if.hpp"
+# include "is_integral.hpp"
 
 namespace ft{
 	template <class P>
@@ -174,11 +176,12 @@ namespace ft{
 				this->size = 1;
 			}
 
-			avl_tree(const avl_tree & src){
-				*this = src;
-			}
-
-			avl_tree	operator=(const avl_tree & src){
+			avl_tree(avl_tree const & src){
+				// *this = src;
+				// if (this->root != NULL){
+				// 	this->clear();
+				// }
+				// std::cout << "in constructor par copie\n";//
 				this->alloc = src.alloc;
 				this->nalloc = src.nalloc;
 				this->size = src.size;
@@ -186,14 +189,28 @@ namespace ft{
 				this->root = copy_tree(src.root, NULL);
 			}
 
-			avl_tree(iterator first, iterator last, const Compare & comp, typename ft::enable_if<!ft::is_integral<iterator>::value>::type* = 0), , const allocator_type & alloc = allocator_type(){
+			avl_tree &	operator=(const avl_tree & src){
+				if (this->root != NULL)
+					this->clear();
+				this->alloc = src.alloc;
+				this->nalloc = src.nalloc;
+				this->size = src.size;
+				this->comp = src.comp;
+				// std::cout << "in =\n";//
+				this->root = copy_tree(src.root, NULL);
+				return (*this);
+			}
+
+			avl_tree(iterator first, iterator last, const Compare & comp, typename ft::enable_if<!ft::is_integral<iterator>::value>::type* = 0, const allocator_type & alloc = allocator_type()){
 				this->alloc = alloc;
 				this->nalloc = node_alloc();
 				this->comp = comp;
-				for (iterator it = first, it != last; it++){
-					this.insert((*it).data);
+				for (iterator it = first; it != last; it++){
+					insert((*it).data);
 				}
 			}
+
+			avl_tree(const Compare & comp, const allocator_type & alloc = allocator_type()):alloc(alloc), nalloc(node_alloc()), size(0), comp(comp){}
 
 			virtual ~avl_tree(){
 				// std::cout << "in destructor\n";//
@@ -462,6 +479,8 @@ namespace ft{
 			}
 		private:
 
+			avl_tree(){};
+
 			void clear(){
 				// std::cout << "in clear()\n";//
 				this->clear(this->root);
@@ -715,23 +734,24 @@ namespace ft{
 			// 	}
 			// }
 		
-			_node*	copy_tree(const _node & src, const _node & p){
+			_node*	copy_tree(const _node * src, _node * p){
+				// std::cout << "in copy_tree\n";//
 				_node*	n;
-				if (&src == NULL)
+				if (src == NULL)
 					return (NULL);
 				n = this->nalloc.allocate(1);
-				this->nalloc.construct(n, src.data);
-				n->depth = src.depth;
-				n->parent = &p;
+				this->nalloc.construct(n, src->data);
+				n->depth = src->depth;
+				n->parent = p;
 				try{
-					n->lchild = copy_tree(src.lchild, n);
+					n->lchild = copy_tree(src->lchild, n);
 				}
 				catch (...){
 					delete_node(n);
 					throw ;//ceci est un rethrow : ca gere l'erreur (ici leak de memoire), puis ca redonne l'erreur au user
 				}
 				try{
-					n->rchild = copy_tree(src.rchild, n);
+					n->rchild = copy_tree(src->rchild, n);
 				}
 				catch (...){
 					delete_node(n->lchild);

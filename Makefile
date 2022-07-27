@@ -40,10 +40,13 @@ all:	$(NAME)
 
 bonus :	all
 
+$(PATH_OBJ):
+			mkdir -p $@
+
 $(NAME): 	$(OBJS)
 			$(COMP) $(COMP_FLAG) $(OBJS) -o $(NAME)
 
-$(PATH_OBJ)/%.o : $(PATH_SRC)/tester/%.cpp  $(INCS)
+$(PATH_OBJ)/%.o : $(PATH_SRC)/tester/%.cpp  $(INCS) | $(PATH_OBJ)
 	 $(COMP) $(COMP_FLAG) $(COMP_ADD) -c $< -o $@
 	@ echo "$(_INFO) Compilation of $*"
 
