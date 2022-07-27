@@ -68,7 +68,7 @@ namespace ft{
 			node					current;
 
 		public:
-			avl_iterator(const avl_iterator &src){this = src;}
+			avl_iterator(const avl_iterator &src){*this = src;}
 			virtual ~avl_iterator(){}
 			avl_iterator & operator=(const avl_iterator &src){
 				current = src.current;
