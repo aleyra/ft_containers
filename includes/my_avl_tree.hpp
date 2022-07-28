@@ -204,7 +204,8 @@ namespace ft{
 				return (*this);
 			}
 
-			avl_tree(iterator first, iterator last, const Compare & comp, typename ft::enable_if<!ft::is_integral<iterator>::value>::type* = 0, const allocator_type & alloc = allocator_type()){
+			template <class InputIter>
+			avl_tree(InputIter first, InputIter last, const Compare & comp, typename ft::enable_if<!ft::is_integral<iterator>::value>::type* = 0, const allocator_type & alloc = allocator_type()){
 				this->alloc = alloc;
 				this->nalloc = node_alloc();
 				this->comp = comp;
