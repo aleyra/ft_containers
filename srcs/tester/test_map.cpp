@@ -19,7 +19,7 @@ void test_map(){
 		tm[6] = 6;
 		tm[7] = 7;
 
-	ft::map<int, int> mm(tm.begin(), tm.end(), tm.value_comp());
+	ft::map<int, int> mm(tm.begin(), tm.end(), tm.key_comp());
 	// m1['a'] = 1;
 	// m1['b'] = 2;
 	// m1['c'] = 3;
