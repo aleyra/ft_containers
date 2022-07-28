@@ -213,7 +213,7 @@ namespace ft{
 					std::cout << (*it).first << std::endl;//
 					insert(*it);
 					std::cout << "coucou\n";//
-					std::cout << "it=" << (void*)((++it).base());//
+					std::cout << "it=" << (void*)((++it).base());//segfault
 					std::cout << "\nlast" << (void*)(last.base()) << "\n";//
 					it--;//
 				}
