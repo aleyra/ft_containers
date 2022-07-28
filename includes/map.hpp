@@ -6,7 +6,7 @@
 # include "reverse_iterator.hpp"
 # include "enable_if.hpp"
 # include "is_integral.hpp"
-# include "birectional_iterator_tag.hpp"
+// # include "birectional_iterator_tag.hpp"
 # include "my_avl_tree.hpp"
 
 namespace ft{
@@ -31,8 +31,7 @@ namespace ft{
   				typedef value_type	second_argument_type;
   				bool				operator()(const value_type& x, const value_type& y) const{return comp(x.first, y.first);}
 		};
-		template <class Key, class T, class Compare, call Alloc>
-		typedef	map<Key, T, Compare, Alloc>::value_compare	value_compare;//?
+		typedef	map<Key, T, Compare, Alloc>::value_compare	value_compare;
 
 		private:
 		typedef typename Alloc::template rebind<value_type>::other				pair_alloc;
@@ -55,7 +54,7 @@ namespace ft{
 
 		//member functions : canonical form
 		private:
-		map(){}//?
+		// map(){}//?
 		public:
 		map(const map & src):comp(src.comp), tree(src.tree){}//?
 		virtual ~map(){/*this->clear()*/}//?
@@ -72,17 +71,17 @@ namespace ft{
 		// 	typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0){}//?
 		
 		//member functions: iterators
-// 		iterator		begin(){}//?
-// 		const_iterator	begin() const{}//?
+		iterator		begin(){return this->tree.begin();}
+		const_iterator	begin() const{return this->tree.begin();};
 
-// 		iterator		end(){}//?
-// 		const_iterator	end() const{}//?
+		iterator		end(){return (this->tree.end())++;}
+		const_iterator	end() const{return (this->tree.end())++;}//?
 
-// 		reverse_iterator		rbegin(){}//?
-// 		const_reverse_iterator	rbegin() const{}//?
+		reverse_iterator		rbegin(){return this->tree.r}//?
+		const_reverse_iterator	rbegin() const{}//?
 
-// 		reverse_iterator		rend(){}//?
-// 		const_reverse_iterator	rend() const{}//?
+		reverse_iterator		rend(){}//?
+		const_reverse_iterator	rend() const{}//?
 
 		//member functions: capacity
 // 		bool		empty() const{}//?
@@ -92,7 +91,7 @@ namespace ft{
 // 		size_type	max_size() const{}//?
 
 		//member functions: element access
-// 		mapped_type &	operator[](const key_type & k){/* return (*((this->insert(make_pair(k,mapped_type()))).first)).second; */}//?
+		mapped_type &	operator[](const key_type & k){return this->tree[k];}
 
 // 		//member functions: modifiers
 // 		pair<iterator, bool>	insert(conost value_type & val){}//?

@@ -64,10 +64,10 @@ namespace ft{
 			typedef typename ft::iterator_traits<P>::reference			reference;
 
 		protected:
-			typedef	ft::node<P>*					node;
+			typedef	ft::node<P>*						node;
 			typedef	ft::node<typename cont::value_type>	node_type;//pour le tour de magie et renvoyer le bon type pour avl_tree::begin et avl_tree::end
-			typedef 
-			node_type*								current;
+			typedef ft::node<value_type>				node_grr;//creation de ca parce que conflit de type avec current pour operator*
+			node_type*									current;
 
 		public:
 			avl_iterator(const avl_iterator &src){*this = src;}
@@ -105,7 +105,7 @@ namespace ft{
 				return (current != other.current);
 			};
 
-			value_type		&operator*(){return current->data;}
+			value_type		&operator*(){return ((node_grr *)current)->data;}//j'ai du cast en node_grr et creer ce type expres !
 			pointer			operator->(){return &(this->operator*());}
 			
 			avl_iterator(){}
@@ -206,9 +206,12 @@ namespace ft{
 				this->alloc = alloc;
 				this->nalloc = node_alloc();
 				this->comp = comp;
+				this->root = NULL;
 				for (iterator it = first; it != last; it++){
+					// std::cout << (*it).first << std::endl;//
 					insert(*it);
 				}
+				// insert(*last);
 			}
 
 			avl_tree(const Compare & comp, const allocator_type & alloc = allocator_type()):alloc(alloc), nalloc(node_alloc()), size(0), comp(comp){}
@@ -225,7 +228,7 @@ namespace ft{
 					return NULL;
 				_node*	tmp = root;
 				while (tmp->lchild != NULL)
-					tmp--;
+					tmp = tmp->lchild;
 				return (tmp);
 			}
 
@@ -234,12 +237,13 @@ namespace ft{
 					return NULL;
 				_node*	tmp = root;
 				while (tmp->rchild != NULL)
-					tmp++;
-				return (tmp);
+					tmp = tmp->rchild;
+				return (tmp->rchild);
 			}
 
 			void	insert(value_type data){
 				if (this->root == NULL){//cas particulier où meme root est vide
+				// std::cout << "ds insert\n";//
 					this->root = this->nalloc.allocate(1);
 					this->nalloc.construct(this->root, data);
 					this->root->depth = 1;
@@ -254,6 +258,7 @@ namespace ft{
 				_node*	n = NULL;//will be new _node pointer
 				int	rcd, lcd, max;
 				while (b == false){
+				// std::cout << "tmp.data.f = " << tmp->data.first <<std::endl;//
 					if (comp(data.first, tmp->data.first)){//data < tmp.data
 						if (tmp->lchild == NULL){
 							tmp->lchild = this->nalloc.allocate(1);
@@ -289,7 +294,7 @@ namespace ft{
 							tmp->rchild->rchild = NULL;
 							this->size++;
 							n = tmp->rchild;
-						while (tmp != NULL){//pour adapter la depth
+							while (tmp != NULL){//pour adapter la depth
 								rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
 								lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
 								max = std::max(rcd, lcd);
@@ -321,8 +326,8 @@ namespace ft{
 				// 	makeBalanced(n);
 				_node*	isBalN = isBalanced(n);
 				// std::cout << "isBalN = " << isBalN << std::endl;//
-				// std::cout << "ds insert\n";//
 				makeBalanced(isBalN);
+				// std::cout << "sortie de insert\n";//
 			}//?
 
 			void	erase(value_type data){
@@ -487,6 +492,11 @@ namespace ft{
 			const_iterator	begin() const{return (const_iterator(getFirst()));}
 			iterator		end(){return (iterator(getLast()));}
 			const_iterator	end() const{return (const_iterator(getLast()));}
+
+			reverse_iterator		rbegin(){return (reverse_iterator(getLast()));}
+			const_reverse_iterator	rbegin() const{return (const_reverse_iterator(getLast()));}
+			reverse_iterator		rend(){return (reverse_iterator(getFirst)());}
+			const_reverse_iterator	rend() const{return (const_reverse_iterator(getFirst()));}
 
 		private:
 
