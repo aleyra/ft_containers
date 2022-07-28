@@ -211,7 +211,7 @@ namespace ft{
 				// this->nalloc = node_alloc();
 				// this->comp = comp;
 				this->root = NULL;
-				for (iterator it = first; it != last; it++){
+				for (InputIter it = first; it != last; it++){
 					std::cout << (*it).first << std::endl;//
 					// insert(ft::make_pair<key_type, mapped_type>((*it).first, (*it).second));
 					insert(*it);
@@ -251,7 +251,7 @@ namespace ft{
 				return (tmp);
 			}
 
-			void	insert(value_type data){
+			void	insert(const value_type & data){
 				if (this->root == NULL){//cas particulier où meme root est vide
 				// std::cout << "ds insert\n";//
 					this->root = this->nalloc.allocate(1);
