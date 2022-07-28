@@ -161,15 +161,15 @@ namespace ft{
 			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 
 	
-			_node*				root;//a remettre en private
 		private:
 			// _node*				begin;
 			// _node*				end;
 			allocator_type		alloc;//au cas où
 			node_alloc			nalloc;
-			size_type			size;//nb d'elem
+		public:
 			Compare				comp;
-
+			size_type			size;//nb d'elem
+			_node*				root;//a remettre en private
 
 		public:
 		//member function
@@ -205,10 +205,11 @@ namespace ft{
 			}
 
 			template <class InputIter>
-			avl_tree(InputIter first, typename enable_if<!is_integral<InputIter>::value, InputIter>::type last, const Compare & comp, const allocator_type & alloc = allocator_type()){
-				this->alloc = alloc;
-				this->nalloc = node_alloc();
-				this->comp = comp;
+			avl_tree(InputIter first, typename enable_if<!is_integral<InputIter>::value, InputIter>::type last, const Compare & comp,
+				const allocator_type & alloc = allocator_type()):alloc(alloc), nalloc(node_alloc()), comp(comp){
+				// this->alloc = alloc;
+				// this->nalloc = node_alloc();
+				// this->comp = comp;
 				this->root = NULL;
 				for (iterator it = first; it != last; it++){
 					std::cout << (*it).first << std::endl;//
