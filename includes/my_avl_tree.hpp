@@ -212,7 +212,7 @@ namespace ft{
 				this->root = NULL;
 				for (iterator it = first; it != last; it++){
 					std::cout << (*it).first << std::endl;//
-					insert(*it);
+					insert(ft::make_pair<key_type, mapped_type>((*it).first, (*it).second));
 					// std::cout << "coucou\n";//
 					// std::cout << "it=" << (void*)((++it).base());//segfault
 					// std::cout << "\nlast" << (void*)(last.base()) << "\n";//
