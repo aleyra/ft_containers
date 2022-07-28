@@ -53,19 +53,20 @@ namespace ft{
 		n2->data = tmp.data;
 	}
 
-	template<class P>
+	template<class P, class cont>//class cont pour le tour de magie et renvoyer le bon type pour avl_tree::begin et avl_tree::end
 	struct avl_iterator{
 		public:
-			typedef P*															iterator_type;
-			typedef typename std::bidirectional_iterator_tag	iterator_category;
-			typedef typename ft::iterator_traits<P*>::value_type				value_type;
-			typedef typename ft::iterator_traits<P*>::difference_type			difference_type;
-			typedef typename ft::iterator_traits<P*>::pointer					pointer;
-			typedef typename ft::iterator_traits<P*>::reference					reference;
+			typedef P													iterator_type;
+			typedef typename std::bidirectional_iterator_tag			iterator_category;
+			typedef typename ft::iterator_traits<P>::value_type			value_type;
+			typedef typename ft::iterator_traits<P>::difference_type	difference_type;
+			typedef typename ft::iterator_traits<P>::pointer			pointer;
+			typedef typename ft::iterator_traits<P>::reference			reference;
 
 		protected:
-			typedef	ft::node<P>*	node;
-			node					current;
+			typedef	ft::node<P>*					node;
+			typedef	ft::node<typename cont::value_type>	node_type;//pour le tour de magie et renvoyer le bon type pour avl_tree::begin et avl_tree::end
+			node_type*								current;
 
 		public:
 			avl_iterator(const avl_iterator &src){*this = src;}
@@ -82,7 +83,7 @@ namespace ft{
 						current = current->lchild;
 					return (*this);
 				}
-				node	tmp = current;
+				node_type*	tmp = current;
 				current = current->parent;
 				while (current->rchild == tmp){
 					tmp = current;
@@ -129,7 +130,7 @@ namespace ft{
 				return (tmp);
 			}
 
-			avl_iterator(const node & n){current = n;}//?
+			avl_iterator(node_type* n){current = n;}//fin du tour de magie
 	};
 
 	template <class Key, class T, class Compare, class Alloc = std::allocator<T> >
@@ -145,8 +146,8 @@ namespace ft{
 			typedef ft::pair<const key_type, mapped_type>					iter_value_type;//sert quand on cree les iterator pour pourvoir generer des version const
 			typedef typename ft::node<value_type>							_node;
 			typedef Alloc													allocator_type;
-			typedef avl_iterator<iter_value_type>							iterator;
-			typedef avl_iterator<const iter_value_type>						const_iterator;
+			typedef avl_iterator<iter_value_type *, avl_tree>				iterator;//* car tour de magie pour renvoyer le bon type pour begin et end
+			typedef avl_iterator<const iter_value_type *, avl_tree>			const_iterator;//* car tour de magie pour renvoyer le bon type pour begin et end
 		 	typedef _node*													pointer;
 			typedef const _node*											const_pointer;
 			typedef _node&													reference;
@@ -482,9 +483,9 @@ namespace ft{
 			}
 
 			iterator		begin(){return (iterator(getFirst()));}
-			const_iterator	begin(){return (const_iterator(getFirst()));}
+			const_iterator	begin() const{return (const_iterator(getFirst()));}
 			iterator		end(){return (iterator(getLast()));}
-			const_iterator	end(){return (const_iterator(getLast()));}
+			const_iterator	end() const{return (const_iterator(getLast()));}
 
 		private:
 
