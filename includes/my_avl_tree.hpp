@@ -132,6 +132,8 @@ namespace ft{
 			}
 
 			avl_iterator(node_type* n){current = n;}//fin du tour de magie
+
+			node_type*	base(){return current;}
 	};
 
 	template <class Key, class T, class Compare, class Alloc = std::allocator<T> >
@@ -207,10 +209,16 @@ namespace ft{
 				this->nalloc = node_alloc();
 				this->comp = comp;
 				this->root = NULL;
+				// std::cout << "last = " << last << std::endl;//
 				for (iterator it = first; it != last; it++){
-					// std::cout << (*it).first << std::endl;//
+					std::cout << (*it).first << std::endl;//
 					insert(*it);
+					std::cout << "coucou\n";//
+					std::cout << "it=" << (void*)((++it).base());//
+					std::cout << "\nlast" << (void*)(last.base()) << "\n";//
+					it--;//
 				}
+				std::cout << "youpi\n";//
 				// insert(*last);
 			}
 
@@ -238,7 +246,7 @@ namespace ft{
 				_node*	tmp = root;
 				while (tmp->rchild != NULL)
 					tmp = tmp->rchild;
-				return (tmp->rchild);
+				return (tmp);
 			}
 
 			void	insert(value_type data){
@@ -327,7 +335,7 @@ namespace ft{
 				_node*	isBalN = isBalanced(n);
 				// std::cout << "isBalN = " << isBalN << std::endl;//
 				makeBalanced(isBalN);
-				// std::cout << "sortie de insert\n";//
+				std::cout << "sortie de insert\n";//
 			}//?
 
 			void	erase(value_type data){
@@ -490,13 +498,19 @@ namespace ft{
 
 			iterator		begin(){return (iterator(getFirst()));}
 			const_iterator	begin() const{return (const_iterator(getFirst()));}
-			iterator		end(){return (iterator(getLast()));}
-			const_iterator	end() const{return (const_iterator(getLast()));}
+			iterator		end(){
+				_node*	e = getLast();
+				return iterator(e->parent);
+			}
+			const_iterator	end() const{
+				_node*	e = getLast();
+				return const_iterator(e->parent);
+			}
 
-			reverse_iterator		rbegin(){return (reverse_iterator(getLast()));}
-			const_reverse_iterator	rbegin() const{return (const_reverse_iterator(getLast()));}
-			reverse_iterator		rend(){return (reverse_iterator(getFirst)());}
-			const_reverse_iterator	rend() const{return (const_reverse_iterator(getFirst()));}
+			reverse_iterator		rbegin(){return (reverse_iterator(end()));}
+			const_reverse_iterator	rbegin() const{return (const_reverse_iterator(end()));}
+			reverse_iterator		rend(){return (reverse_iterator(begin()));}
+			const_reverse_iterator	rend() const{return (const_reverse_iterator(begin()));}
 
 		private:
 
@@ -796,5 +810,11 @@ namespace ft{
 
 	};
 }
+
+// template<class P, class cont>
+// std::ostream &operator<<(std::ostream &o, ft::avl_iterator<P, cont> const &it){
+// 	o << it.base();
+// 	return (o);
+// }
 
 #endif

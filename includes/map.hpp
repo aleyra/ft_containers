@@ -74,10 +74,10 @@ namespace ft{
 		iterator		begin(){return this->tree.begin();}
 		const_iterator	begin() const{return this->tree.begin();};
 
-		iterator		end(){return (this->tree.end())++;}
-		const_iterator	end() const{return (this->tree.end())++;}//?
+		iterator		end(){return (this->tree.end());}
+		const_iterator	end() const{return (this->tree.end());}//?
 
-		reverse_iterator		rbegin(){return this->tree.r}//?
+		reverse_iterator		rbegin(){return this->tree.rbegin();}//?
 		const_reverse_iterator	rbegin() const{}//?
 
 		reverse_iterator		rend(){}//?
