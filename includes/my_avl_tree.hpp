@@ -66,6 +66,7 @@ namespace ft{
 		protected:
 			typedef	ft::node<P>*					node;
 			typedef	ft::node<typename cont::value_type>	node_type;//pour le tour de magie et renvoyer le bon type pour avl_tree::begin et avl_tree::end
+			typedef 
 			node_type*								current;
 
 		public:
