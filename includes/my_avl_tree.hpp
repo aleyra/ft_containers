@@ -209,7 +209,6 @@ namespace ft{
 				this->nalloc = node_alloc();
 				this->comp = comp;
 				this->root = NULL;
-				// std::cout << "last = " << last << std::endl;//
 				for (iterator it = first; it != last; it++){
 					std::cout << (*it).first << std::endl;//
 					insert(*it);
@@ -810,11 +809,5 @@ namespace ft{
 
 	};
 }
-
-// template<class P, class cont>
-// std::ostream &operator<<(std::ostream &o, ft::avl_iterator<P, cont> const &it){
-// 	o << it.base();
-// 	return (o);
-// }
 
 #endif
