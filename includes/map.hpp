@@ -78,17 +78,21 @@ namespace ft{
 		const_iterator	end() const{return (this->tree.end());}//?
 
 		reverse_iterator		rbegin(){return this->tree.rbegin();}//?
-		const_reverse_iterator	rbegin() const{}//?
+		const_reverse_iterator	rbegin() const{return this->tree.rbegin();}//?
 
-		reverse_iterator		rend(){}//?
-		const_reverse_iterator	rend() const{}//?
+		reverse_iterator		rend(){return this->tree.rend();}//?
+		const_reverse_iterator	rend() const{return this->tree.rend();}//?
 
 		//member functions: capacity
-// 		bool		empty() const{}//?
+		bool		empty() const{
+			if (this->tree.size == 0)
+				return (true);
+			return (false);
+		}
 
-// 		size_type	size() const{}//?
+		size_type	size() const{return (this->tree.size);}
 
-// 		size_type	max_size() const{}//?
+		size_type	max_size() const{return this->max_size();}
 
 		//member functions: element access
 		mapped_type &	operator[](const key_type & k){return this->tree[k];}

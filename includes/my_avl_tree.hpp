@@ -91,7 +91,7 @@ namespace ft{
 					current = current->parent;
 				}
 				return (*this);
-			}//a verif
+			}
 			avl_iterator	operator++(int){
 				avl_iterator	tmp = *this;
 				++(*this);
@@ -117,17 +117,17 @@ namespace ft{
 						current = current->rchild;
 					return (*this);
 				}
-				node	tmp = current;
+				node_type*	tmp = current;
 				current = current->parent;
 				while (current->lchild == tmp){
 					tmp = current;
 					current = current->parent;
 				}
 				return (*this);
-			}//a verif
+			}
 			avl_iterator	operator--(int){
 				avl_iterator	tmp = *this;
-				++(*this);
+				--(*this);
 				return (tmp);
 			}
 
@@ -212,10 +212,10 @@ namespace ft{
 				for (iterator it = first; it != last; it++){
 					std::cout << (*it).first << std::endl;//
 					insert(*it);
-					std::cout << "coucou\n";//
-					std::cout << "it=" << (void*)((++it).base());//segfault
-					std::cout << "\nlast" << (void*)(last.base()) << "\n";//
-					it--;//
+					// std::cout << "coucou\n";//
+					// std::cout << "it=" << (void*)((++it).base());//segfault
+					// std::cout << "\nlast" << (void*)(last.base()) << "\n";//
+					// it--;//
 				}
 				std::cout << "youpi\n";//
 				// insert(*last);
@@ -498,18 +498,31 @@ namespace ft{
 			iterator		begin(){return (iterator(getFirst()));}
 			const_iterator	begin() const{return (const_iterator(getFirst()));}
 			iterator		end(){
-				_node*	e = getLast();
-				return iterator(e->parent);
+				// _node*	e = getLast();
+				// return iterator(e->parent);
+				_node*	e = NULL;
+				return (iterator(e));
 			}
 			const_iterator	end() const{
-				_node*	e = getLast();
-				return const_iterator(e->parent);
+				// _node*	e = getLast();
+				// return const_iterator(e->parent);
+				_node*	e = NULL;
+				return (const_iterator(e->parent));
 			}
 
 			reverse_iterator		rbegin(){return (reverse_iterator(end()));}
 			const_reverse_iterator	rbegin() const{return (const_reverse_iterator(end()));}
-			reverse_iterator		rend(){return (reverse_iterator(begin()));}
-			const_reverse_iterator	rend() const{return (const_reverse_iterator(begin()));}
+			reverse_iterator		rend(){
+				// return (reverse_iterator(begin()));
+				_node*	e = NULL;
+				return (reverse_iterator(e));
+			}
+			const_reverse_iterator	rend() const{
+				// return (const_reverse_iterator(begin()));
+				
+			}
+
+			size_type	max_size() const{return this->nalloc.max_size();}
 
 		private:
 
