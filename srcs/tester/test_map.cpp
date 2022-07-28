@@ -1,3 +1,4 @@
+#include <map>//
 #if 0 //1 = original 0 = perso
 	# include <map>
 	namespace ft = std;
@@ -7,8 +8,18 @@
 #include <iostream>
 
 void test_map(){
-	ft::map<char, int> m1;
+	// ft::map<int, int> m1;
+	std::map<int, int> tm;
 
+		tm[1] = 1;
+		tm[2] = 2;
+		tm[3] = 3;
+		tm[4] = 4;
+		tm[5] = 5;
+		tm[6] = 6;
+		tm[7] = 7;
+
+	ft::map<int, int> mm(tm.begin(), tm.end(), tm.value_comp());
 	// m1['a'] = 1;
 	// m1['b'] = 2;
 	// m1['c'] = 3;

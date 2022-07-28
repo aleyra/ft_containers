@@ -1,5 +1,5 @@
 #include <iostream>
-# include <vector>//
+# include <map>//
 #include "my_avl_tree.hpp"
 #include "my_tests.hpp"
 
@@ -228,9 +228,17 @@ void test_tree(){
 	// 	print_node(t4.root->rchild->rchild);}
 	// }
 
-	{
-		std::vector<int> v(16);
-		ft::avl_tree<int, int, std::less<int> > t(v.begin(), v.end(), vcomp());
-	}
+	// {
+	// 	std::map<int, int> m;
+
+	// 	m[1] = 1;
+	// 	m[2] = 2;
+	// 	m[3] = 3;
+	// 	m[4] = 4;
+	// 	m[5] = 5;
+	// 	m[6] = 6;
+	// 	m[7] = 7;
+	// 	ft::avl_tree<int, int, std::map<int, int>::value_compare > t(m.begin(), m.end(), m.value_comp());
+	// }
 
 }
