@@ -206,7 +206,7 @@ namespace ft{
 
 			template <class InputIter>
 			avl_tree(InputIter first, typename enable_if<!is_integral<InputIter>::value, InputIter>::type last, const Compare & Comp,
-				const allocator_type & Alloc = allocator_type()):alloc(Alloc), nalloc(node_alloc()), comp(Comp){
+				const allocator_type & alloca = allocator_type()):alloc(alloca), nalloc(node_alloc()), comp(Comp){
 				// this->alloc = alloc;
 				// this->nalloc = node_alloc();
 				// this->comp = comp;
