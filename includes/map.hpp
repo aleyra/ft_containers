@@ -66,9 +66,9 @@ namespace ft{
 
 		//member functions
 		explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()):comp(comp), tree(value_compare(comp), alloc) {}//?
-		// template <class InputIterator>
-		// map (InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type(),
-		// 	typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0){}//?
+		template <class InputIterator>
+		map (InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type(),
+			typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):comp(comp), tree(first, last, value_compare(comp), alloc){}
 		
 		//member functions: iterators
 		iterator		begin(){return this->tree.begin();}
