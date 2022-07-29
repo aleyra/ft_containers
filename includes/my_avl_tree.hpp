@@ -953,12 +953,6 @@ namespace ft{
 				return (const_iterator(tmp));
 			}
 
-			// 		iterator		upper_bound(const key_type & k){}//?
-			// 		const_iterator	upper_bound(const key_type & k) const{}//?
-
-			// 		pair<const_iterator, const_iterator>	equal_range(const key_type & k) const{}//?
-			// 		pair<iterator, iterator>				equal_range(const key_type & k){}//?
-
 			allocator_type	get_allocator() const{return this->alloc;}
 	};
 }
