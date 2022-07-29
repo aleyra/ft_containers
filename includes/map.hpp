@@ -66,9 +66,9 @@ namespace ft{
 
 		//member functions
 		explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()):comp(comp), tree(value_compare(comp), alloc) {}//?
-		template <class InputIterator>
-		map (InputIterator first, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type last,
-			const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()):comp(comp), tree(first, last, value_compare(comp), alloc){}
+		// template <class InputIterator>//a remettre avec hebriel
+		// map (InputIterator first, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type last,
+		// 	const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()):comp(comp), tree(first, last, value_compare(comp), alloc){}
 		
 		//member functions: iterators
 		iterator		begin(){return this->tree.begin();}
@@ -104,17 +104,21 @@ namespace ft{
 // 		void					insert(InputIterator first, InputIterator last){}//? need enableif ?
 
 // 		void		erase(iterator position){}//?
-// 		size_type	erase(const key_type & k){}//?
+		size_type	erase(const key_type & k){return (this->tree.erase(k));}
 // 		void		erase(iterator first, iterator last){}//?
 
-// 		void	swap(map & x){}//?
+		void	swap(map & x){//c'est pas un peu lourd ???
+			map_tree	tmp = x.tree;
+			x.tree = this->tree;
+			this->tree = tmp;
+		}
 
 		void	clear(){this->tree.clear();}
 
 		//member functions: observers
-// 		key_compare	key_comp() const{}//?
+		key_compare	key_comp() const{return this->comp;}
 
-// 		value_compare	value_comp() const{}//?//????????????????
+		// value_compare	value_comp() const{}//?
 
 		//member functions: operations
 // 		iterator		find(const key_type & k){}//?
@@ -132,7 +136,7 @@ namespace ft{
 // 		pair<iterator, iterator>				equal_range(const key_type & k){}//?
 
 		//member functions: allocator
-// 		allocator_type	get_allocator() const{}//?
+		allocator_type	get_allocator() const{return this->get_allocator();}
 
 // 		protected:
 

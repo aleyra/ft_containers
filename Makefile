@@ -21,7 +21,7 @@ INCS		=	$(addprefix $(PATH_INC)/, $(ALL_INCS))
 
 # Commands of compilation
 COMP		=	c++
-COMP_FLAG	=	-Wall -Wextra -Werror
+COMP_FLAG	=	-Wall -Wextra -Werror -g3
 COMP_ADD	=	-I $(PATH_INC)
 
 # Others Command

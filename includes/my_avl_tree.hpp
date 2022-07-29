@@ -86,7 +86,7 @@ namespace ft{
 				}
 				node_type*	tmp = current;
 				current = current->parent;
-				while (current->rchild == tmp){
+				while (current && current->rchild == tmp){//merci hébriel
 					tmp = current;
 					current = current->parent;
 				}
@@ -137,7 +137,7 @@ namespace ft{
 	};
 
 	template <class Key, class T, class Compare, class Alloc = std::allocator<T> >
-	struct avl_tree
+	class avl_tree
 	{
 		typedef typename Alloc::template rebind<node<pair<Key, T> > >::other	node_alloc;//pour avoir une allocator qui genere la place pour une node plutot que la place pour pair.-
 
@@ -164,7 +164,7 @@ namespace ft{
 		private:
 			// _node*				begin;
 			// _node*				end;
-			allocator_type		alloc;//au cas où
+			allocator_type		alloc;//ajuste pour get_allocator
 			node_alloc			nalloc;
 		public:
 			Compare				comp;
@@ -204,51 +204,11 @@ namespace ft{
 				return (*this);
 			}
 
-			template <class InputIter>
-			avl_tree(InputIter first, typename enable_if<!is_integral<InputIter>::value, InputIter>::type last, const Compare & Comp,
-				const allocator_type & alloca = allocator_type()):alloc(alloca), nalloc(node_alloc()), comp(Comp){
-				// this->alloc = alloc;
-				// this->nalloc = node_alloc();
-				// this->comp = comp;
-				this->root = NULL;
-				for (InputIter it = first; it != last; it++){
-					std::cout << (*it).first << std::endl;//
-					// insert(ft::make_pair<key_type, mapped_type>((*it).first, (*it).second));
-					insert(*it);
-					// std::cout << "coucou\n";//
-					// std::cout << "it=" << (void*)((++it).base());//segfault
-					// std::cout << "\nlast" << (void*)(last.base()) << "\n";//
-					// it--;//
-				}
-				std::cout << "youpi\n";//
-				// insert(*last);
-			}
-
-			avl_tree(const Compare & comp, const allocator_type & alloc = allocator_type()):alloc(alloc), nalloc(node_alloc()), size(0), comp(comp){}
-
 			virtual ~avl_tree(){
 				// std::cout << "in destructor\n";//
 				// std::cout << "size = " << this->size << std::endl;//
 				if (this->size != 0)
 					this->clear();
-			}
-
-			_node* getFirst() const{//a mettre en private ?
-				if (this->size == 0)
-					return NULL;
-				_node*	tmp = root;
-				while (tmp->lchild != NULL)
-					tmp = tmp->lchild;
-				return (tmp);
-			}
-
-			_node*	getLast() const{//a mettre en private ?
-				if (this->size == 0)
-					return NULL;
-				_node*	tmp = root;
-				while (tmp->rchild != NULL)
-					tmp = tmp->rchild;
-				return (tmp);
 			}
 
 			void	insert(const value_type & data){
@@ -337,22 +297,137 @@ namespace ft{
 				_node*	isBalN = isBalanced(n);
 				// std::cout << "isBalN = " << isBalN << std::endl;//
 				makeBalanced(isBalN);
-				std::cout << "sortie de insert\n";//
+				// std::cout << "sortie de insert\n";//
 			}//?
 
-			void	erase(value_type data){
+			// size_type	erase(value_type data){//erase(key_type const & k){
+			// 	_node*	tmp = root;
+			// 	bool	b = false;
+			// 	_node*	x = NULL;//will be parent of deallocate node.
+			// 	int	rcd, lcd, max;
+			// 	while (b == false && tmp != NULL){
+			// 		if (comp(data.first, tmp->data.first) && (tmp->lchild != NULL)){//data < tmp.data
+			// 			tmp = tmp->lchild;
+			// 		}
+			// 		else if (comp(tmp->data.first, data.first) && (tmp->rchild != NULL)){//tmp.data < data
+			// 			tmp = tmp->rchild;
+			// 		}
+			// 		else{// data = tmp.data //tmp est la node a erase
+			// 			if (tmp == this->root && tmp->depth == 1){//cas particulier où on efface la derniere node existante : root
+			// 				clear(tmp);
+			// 				this->root = NULL;
+			// 			}
+			// 			else if (tmp->lchild != NULL && tmp->lchild->depth == 1){//tmp.lc existe et n'a pas d'enfant
+			// 				swap_nodes_data(tmp, tmp->lchild);
+			// 				this->nalloc.destroy(tmp->lchild);
+			// 				this->nalloc.deallocate(tmp->lchild, 1);
+			// 				tmp->lchild = NULL;
+			// 				x = tmp;
+			// 				while (tmp != NULL){//pour adapter la depth
+			// 					// std::cout << "tmp = " << tmp << " rc = " << tmp->rchild << " lc = " << tmp->lchild << std::endl;//
+			// 					rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
+			// 					lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
+			// 					max = std::max(rcd, lcd);
+			// 					// std::cout << "max = "<< max << " et parent.depth = " << tmp->depth << std::endl;
+			// 					if (tmp->depth == max + 1)
+			// 						break ;
+			// 					tmp->depth = max + 1;
+			// 					tmp = tmp->parent;
+			// 				}
+			// 			}
+			// 			else if (tmp->depth == 1){//si tmp n'a pas d'enfants
+			// 				_node*	x = tmp->parent;
+			// 				if (x->rchild == tmp)
+			// 					x->rchild = NULL;
+			// 				if (x->lchild == tmp)
+			// 					x->lchild = NULL;
+			// 				this->clear(tmp);
+			// 				tmp = x;
+			// 				while (tmp != NULL){//pour adapter la depth
+			// 					rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
+			// 					lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
+			// 					max = std::max(rcd, lcd);
+			// 					// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
+			// 					if (tmp->depth == max + 1)
+			// 						break ;
+			// 					tmp->depth = max + 1;
+			// 					tmp = tmp->parent;
+			// 				}
+			// 			}
+			// 			else {//tmp n'a pas de lc ou il a un lc qui a lui meme une descendance
+			// 				// std::cout << "\ttmp = " << tmp << " et tmp.data.first = " << tmp->data.first << std::endl;//
+			// 				_node*	t = tmp->lchild;
+			// 				// std::cout << "\tt = " << t << " et t.data.first = " << t->data.first << std::endl;//
+			// 				while (t != NULL && t->rchild != NULL){
+			// 					t = t->rchild;
+			// 					// std::cout << "\tt = " << t << std::endl;//
+			// 				}
+			// 				if (t != NULL){//petite secu avant les manip
+			// 					x = t;
+			// 					while (t != NULL){
+			// 						// std::cout << "t = " << t << "\tt.data.f = " << t->data.first << std::endl;//
+			// 						swap_nodes_data(t->parent, t);
+			// 						x = t;
+			// 						t = t->lchild;
+			// 					}
+			// 					// std::cout << "x = " << x << " et x.data.first = " << x->data.first << std::endl;//
+			// 					x = x->parent;
+			// 					// std::cout << "x = " << x << " et x.data.first = " << x->data.first << std::endl;//
+			// 					clear(x->lchild);
+			// 					// std::cout << "x.lc = " << x->lchild << std::endl;//
+			// 					tmp = x;
+			// 					while (tmp != NULL){//pour adapter la depth
+			// 						rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
+			// 						lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
+			// 						max = std::max(rcd, lcd);
+			// 						// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
+			// 						if (tmp->depth == max + 1)
+			// 							break ;
+			// 						tmp->depth = max + 1;
+			// 						tmp = tmp->parent;
+			// 					}
+			// 				}
+			// 			}
+			// 			b = true;
+			// 			this->size--;
+			// 		}
+			// 	}
+			// 	// bool isBal = isBalanced();
+			// 	// if (!isBal && this->root->depth == 3){
+			// 	// 	makeBalancedFromRoot();
+			// 	// }
+			// 	// else{
+			// 	// 	while (x != NULL && x->depth < 4)//search for nephew or cousin or brother of deallocate node
+			// 	// 		x = x->parent;
+			// 	// 	while (x != NULL && x->depth != 1){
+			// 	// 		if (x->rchild != NULL && x->rchild->depth == x->depth - 1)
+			// 	// 			x = x->rchild;
+			// 	// 		else
+			// 	// 			x = x->lchild;
+			// 	// 	}//found it
+			// 	// 	if (x != NULL && !isBal)
+			// 	// 		makeBalanced(x);
+			// 	// std::cout << "ds erase\n";//
+			// 		makeBalanced(isBalanced(x));
+			// 	// }
+			// 	if (b == true)
+			// 		return (1);
+			// 	return (0);
+			// }
+
+			size_type	erase(key_type const & k){
 				_node*	tmp = root;
 				bool	b = false;
 				_node*	x = NULL;//will be parent of deallocate node.
 				int	rcd, lcd, max;
 				while (b == false && tmp != NULL){
-					if (comp(data.first, tmp->data.first) && (tmp->lchild != NULL)){//data < tmp.data
+					if (comp(k, tmp->data.first) && (tmp->lchild != NULL)){//k < tmp.data.first
 						tmp = tmp->lchild;
 					}
-					else if (comp(tmp->data.first, data.first) && (tmp->rchild != NULL)){//tmp.data < data
+					else if (comp(tmp->data.first, k) && (tmp->rchild != NULL)){//tmp.data.first < k
 						tmp = tmp->rchild;
 					}
-					else{// data = tmp.data //tmp est la node a erase
+					else{// k = tmp.data.first //tmp est la node a erase
 						if (tmp == this->root && tmp->depth == 1){//cas particulier où on efface la derniere node existante : root
 							clear(tmp);
 							this->root = NULL;
@@ -365,11 +440,9 @@ namespace ft{
 							tmp->lchild = NULL;
 							x = tmp;
 							while (tmp != NULL){//pour adapter la depth
-								// std::cout << "tmp = " << tmp << " rc = " << tmp->rchild << " lc = " << tmp->lchild << std::endl;//
 								rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
 								lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
 								max = std::max(rcd, lcd);
-								// std::cout << "max = "<< max << " et parent.depth = " << tmp->depth << std::endl;
 								if (tmp->depth == max + 1)
 									break ;
 								tmp->depth = max + 1;
@@ -388,7 +461,6 @@ namespace ft{
 								rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
 								lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
 								max = std::max(rcd, lcd);
-								// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
 								if (tmp->depth == max + 1)
 									break ;
 								tmp->depth = max + 1;
@@ -396,32 +468,24 @@ namespace ft{
 							}
 						}
 						else {//tmp n'a pas de lc ou il a un lc qui a lui meme une descendance
-							// std::cout << "\ttmp = " << tmp << " et tmp.data.first = " << tmp->data.first << std::endl;//
 							_node*	t = tmp->lchild;
-							// std::cout << "\tt = " << t << " et t.data.first = " << t->data.first << std::endl;//
 							while (t != NULL && t->rchild != NULL){
 								t = t->rchild;
-								// std::cout << "\tt = " << t << std::endl;//
 							}
 							if (t != NULL){//petite secu avant les manip
 								x = t;
 								while (t != NULL){
-									// std::cout << "t = " << t << "\tt.data.f = " << t->data.first << std::endl;//
 									swap_nodes_data(t->parent, t);
 									x = t;
 									t = t->lchild;
 								}
-								// std::cout << "x = " << x << " et x.data.first = " << x->data.first << std::endl;//
 								x = x->parent;
-								// std::cout << "x = " << x << " et x.data.first = " << x->data.first << std::endl;//
 								clear(x->lchild);
-								// std::cout << "x.lc = " << x->lchild << std::endl;//
 								tmp = x;
 								while (tmp != NULL){//pour adapter la depth
 									rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
 									lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
 									max = std::max(rcd, lcd);
-									// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
 									if (tmp->depth == max + 1)
 										break ;
 									tmp->depth = max + 1;
@@ -430,29 +494,13 @@ namespace ft{
 							}
 						}
 						b = true;
+						this->size--;
 					}
 				}
-				this->size--;
-				//a revoir a partir d'ici
-				// bool isBal = isBalanced();
-				
-				// if (!isBal && this->root->depth == 3){
-				// 	makeBalancedFromRoot();
-				// }
-				// else{
-				// 	while (x != NULL && x->depth < 4)//search for nephew or cousin or brother of deallocate node
-				// 		x = x->parent;
-				// 	while (x != NULL && x->depth != 1){
-				// 		if (x->rchild != NULL && x->rchild->depth == x->depth - 1)
-				// 			x = x->rchild;
-				// 		else
-				// 			x = x->lchild;
-				// 	}//found it
-				// 	if (x != NULL && !isBal)
-				// 		makeBalanced(x);
-				// std::cout << "ds erase\n";//
-					makeBalanced(isBalanced(x));//a verif
-				// }
+				makeBalanced(isBalanced(x));
+				if (b == true)
+					return (1);
+				return (0);
 			}
 
 			// bool	isBalanced(){
@@ -477,7 +525,7 @@ namespace ft{
 			// 	return (true);
 			// }//?
 
-			_node*	isBalanced(_node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
+			_node*	isBalanced(_node* n){//from (new node) or (nephew or cousin or brother of deallocate node)//en mettre en private ?
 				int		rcd, lcd;
 
 				// std::cout << "n = " << n << std::endl;//
@@ -493,39 +541,6 @@ namespace ft{
 				// std::cout << "in isBalanced(node *)\n";//
 				return NULL;
 			}
-		
-			Compare getComp() const{//a mettre en private ?
-				return (this->comp);
-			}
-
-			iterator		begin(){return (iterator(getFirst()));}
-			const_iterator	begin() const{return (const_iterator(getFirst()));}
-			iterator		end(){
-				// _node*	e = getLast();
-				// return iterator(e->parent);
-				_node*	e = NULL;
-				return (iterator(e));
-			}
-			const_iterator	end() const{
-				// _node*	e = getLast();
-				// return const_iterator(e->parent);
-				_node*	e = NULL;
-				return (const_iterator(e->parent));
-			}
-
-			reverse_iterator		rbegin(){return (reverse_iterator(end()));}
-			const_reverse_iterator	rbegin() const{return (const_reverse_iterator(end()));}
-			reverse_iterator		rend(){
-				// return (reverse_iterator(begin()));
-				_node*	e = NULL;
-				return (reverse_iterator(e));
-			}
-			const_reverse_iterator	rend() const{
-				// return (const_reverse_iterator(begin()));
-				
-			}
-
-			size_type	max_size() const{return this->nalloc.max_size();}
 
 		private:
 
@@ -823,6 +838,109 @@ namespace ft{
 				n = NULL;
 			}
 
+		//fonctions crees pour map
+		public:
+			template <class InputIter>
+			avl_tree(InputIter first, typename enable_if<!is_integral<InputIter>::value, InputIter>::type last, const Compare & Comp,
+				const allocator_type & alloca = allocator_type()):alloc(alloca), nalloc(node_alloc()), comp(Comp){
+				// this->alloc = alloc;
+				// this->nalloc = node_alloc();
+				// this->comp = comp;
+				this->root = NULL;
+				for (InputIter it = first; it != last; it++){
+					std::cout << (*it).first << std::endl;//
+					// insert(ft::make_pair<key_type, mapped_type>((*it).first, (*it).second));
+					insert(*it);
+					// std::cout << "coucou\n";//
+					// std::cout << "it=" << (void*)((++it).base());//segfault
+					// std::cout << "\nlast" << (void*)(last.base()) << "\n";//
+					// it--;//
+				}
+				std::cout << "youpi\n";//
+				// insert(*last);
+			}
+
+			avl_tree(const Compare & comp, const allocator_type & alloc = allocator_type()):alloc(alloc), nalloc(node_alloc()), size(0), comp(comp){}
+
+			Compare getComp() const{//a mettre en private ?
+				return (this->comp);
+			}
+
+			_node* getFirst() const{//a mettre en private ?
+				if (this->size == 0)
+					return NULL;
+				_node*	tmp = root;
+				while (tmp->lchild != NULL)
+					tmp = tmp->lchild;
+				return (tmp);
+			}
+
+			_node*	getLast() const{//a mettre en private ?
+				if (this->size == 0)
+					return NULL;
+				_node*	tmp = root;
+				while (tmp->rchild != NULL)
+					tmp = tmp->rchild;
+				return (tmp);
+			}
+			
+			iterator		begin(){return (iterator(getFirst()));}
+			const_iterator	begin() const{return (const_iterator(getFirst()));}
+			iterator		end(){
+				// _node*	e = getLast();
+				// return iterator(e->parent);
+				_node*	e = NULL;
+				return (iterator(e));
+			}
+			const_iterator	end() const{
+				// _node*	e = getLast();
+				// return const_iterator(e->parent);
+				_node*	e = NULL;
+				return (const_iterator(e->parent));
+			}
+
+			reverse_iterator		rbegin(){return (reverse_iterator(end()));}
+			const_reverse_iterator	rbegin() const{return (const_reverse_iterator(end()));}
+			reverse_iterator		rend(){
+				// return (reverse_iterator(begin()));
+				_node*	e = NULL;
+				return (reverse_iterator(e));
+			}
+			const_reverse_iterator	rend() const{
+				// return (const_reverse_iterator(begin()));
+				
+			}
+
+			size_type	max_size() const{return this->nalloc.max_size();}
+
+			//refaire fonctions pour
+			// pair<iterator, bool>	insert(conost value_type & val){}//?
+			// iterator				insert(iterator positionm const value_type & val,){}//?
+			// template <class InputIterator>
+			// void					insert(InputIterator first, InputIterator last){}//? need enableif ?
+
+			// void		erase(iterator position){}//?
+			// void		erase(iterator first, iterator last){}//?
+
+			// void	swap(map & x){}//????????? j'en ai une qui est peut etre un peu lourde
+
+			// value_compare	value_comp() const{}//?
+
+			// 		iterator		find(const key_type & k){}//?
+			// 		const_iterator	find(const key_type & k) const{}//?
+
+			// 		size_type	count(const key_type & k) const{}//?
+
+			// 		iterator		lower_bound(const key_type & k){}//?
+			// 		const_iterator	lower_bound(const key_type & k) const{}//?
+
+			// 		iterator		upper_bound(const key_type & k){}//?
+			// 		const_iterator	upper_bound(const key_type & k) const{}//?
+
+			// 		pair<const_iterator, const_iterator>	equal_range(const key_type & k) const{}//?
+			// 		pair<iterator, iterator>				equal_range(const key_type & k){}//?
+
+			allocator_type	get_allocator() const{return this->alloc;}
 	};
 }
 
