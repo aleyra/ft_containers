@@ -211,7 +211,7 @@ namespace ft{
 					this->clear();
 			}
 
-			void	insert(const value_type & data){
+			bool	insert(const value_type & data){
 				if (this->root == NULL){//cas particulier où meme root est vide
 				// std::cout << "ds insert\n";//
 					this->root = this->nalloc.allocate(1);
@@ -221,7 +221,7 @@ namespace ft{
 					this->root->lchild = NULL;
 					this->root->rchild = NULL;
 					this->size = 1;
-					return ;
+					return true;
 				}
 				_node*	tmp = root;
 				bool	b = false;
@@ -286,6 +286,7 @@ namespace ft{
 						this->nalloc.destroy(t);
 						this->nalloc.deallocate(t, 1);
 						b = true;
+						return (false);
 					}
 				}
 				// bool isBal = isBalanced();
@@ -298,6 +299,7 @@ namespace ft{
 				// std::cout << "isBalN = " << isBalN << std::endl;//
 				makeBalanced(isBalN);
 				// std::cout << "sortie de insert\n";//
+				return (true);
 			}//?
 
 			// size_type	erase(value_type data){//erase(key_type const & k){
@@ -914,25 +916,42 @@ namespace ft{
 			size_type	max_size() const{return this->nalloc.max_size();}
 
 			//refaire fonctions pour
-			// pair<iterator, bool>	insert(conost value_type & val){}//?
-			// iterator				insert(iterator positionm const value_type & val,){}//?
-			// template <class InputIterator>
-			// void					insert(InputIterator first, InputIterator last){}//? need enableif ?
-
-			// void		erase(iterator position){}//?
-			// void		erase(iterator first, iterator last){}//?
-
-			// void	swap(map & x){}//????????? j'en ai une qui est peut etre un peu lourde
-
 			// value_compare	value_comp() const{}//?
 
-			// 		iterator		find(const key_type & k){}//?
-			// 		const_iterator	find(const key_type & k) const{}//?
-
-			// 		size_type	count(const key_type & k) const{}//?
-
-			// 		iterator		lower_bound(const key_type & k){}//?
-			// 		const_iterator	lower_bound(const key_type & k) const{}//?
+			iterator		find(const key_type & k){
+				_node*	tmp = root;
+				bool	b = false;
+				while (b == false && tmp != NULL){
+					if (comp(k, tmp->data.first) && (tmp->lchild != NULL)){//k < tmp.data.first
+						tmp = tmp->lchild;
+					}
+					else if (comp(tmp->data.first, k) && (tmp->rchild != NULL)){//tmp.data.first < k
+						tmp = tmp->rchild;
+					}
+					else 
+						b = true;
+				}
+				if (tmp == NULL)
+					return (end());
+				return (iterator(tmp));
+			}
+			const_iterator	find(const key_type & k) const{
+				_node*	tmp = root;
+				bool	b = false;
+				while (b == false && tmp != NULL){
+					if (comp(k, tmp->data.first) && (tmp->lchild != NULL)){//k < tmp.data.first
+						tmp = tmp->lchild;
+					}
+					else if (comp(tmp->data.first, k) && (tmp->rchild != NULL)){//tmp.data.first < k
+						tmp = tmp->rchild;
+					}
+					else 
+						b = true;
+				}
+				if (tmp == NULL)
+					return (end());
+				return (const_iterator(tmp));
+			}
 
 			// 		iterator		upper_bound(const key_type & k){}//?
 			// 		const_iterator	upper_bound(const key_type & k) const{}//?
