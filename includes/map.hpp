@@ -24,8 +24,8 @@ namespace ft{
 		class value_compare:public std::binary_function<value_type, value_type, bool>{
 			friend class map;
 			protected:
-				value_compare(const key_compare& c) : comp (c) { }
     			key_compare comp;
+				value_compare(const key_compare& c) : comp (c) { }
 			public:
   				typedef bool		result_type;
   				typedef value_type	first_argument_type;
@@ -37,7 +37,7 @@ namespace ft{
 		private:
 		typedef typename Alloc::template rebind<value_type>::other				pair_alloc;
 		typedef ft::avl_tree<key_type, mapped_type, value_compare, pair_alloc>	map_tree;
-		typedef ff::node<value_type>											node;
+		typedef ft::node<value_type>											node;
 
 		key_compare	comp;
 		map_tree	tree;
@@ -59,7 +59,7 @@ namespace ft{
 		// map(){}//?
 		public:
 		map(const map & src):comp(src.comp), tree(src.tree){}
-		virtual ~map(){this->clear()}
+		virtual ~map(){this->clear();}
 		map & operator=(const map & src){
 			comp = src.comp;
 			tree = src.tree;
@@ -94,10 +94,14 @@ namespace ft{
 
 		size_type	size() const{return (this->tree.size);}
 
-		size_type	max_size() const{return this->max_size();}
+		size_type	max_size() const{return this->tree.max_size();}
 
 		//member functions: element access
-		mapped_type &	operator[](const key_type & k){return this->tree[k];}
+		mapped_type &	operator[](const key_type & k){
+			value_type				kvt = ft::make_pair(k, mapped_type());
+			pair<iterator, bool>	res = insert(kvt);
+			return ((res.first)->second);			
+		}
 
 // 		//member functions: modifiers
 		pair<iterator, bool>	insert(const value_type & val){
@@ -118,7 +122,7 @@ namespace ft{
 		}
 
 		void		erase(iterator position){
-			this->tree.erase((*it).data.first);
+			this->tree.erase(position->data.first);
 		}
 		size_type	erase(const key_type & k){return (this->tree.erase(k));}
 		void		erase(iterator first, iterator last){
@@ -132,9 +136,11 @@ namespace ft{
 		}
 
 		void	swap(map & x){
-			node	n = x.tree.root;
+			node		n = x.tree.root;
 			x.tree.root = this->tree.root;
 			this->tree.root = n;
+			// this->tree.root->swap(x.tree.root);
+
 			size_type	s = x.tree.size;
 			x.tree.size = this->tree.size;
 			this->tree.size = s;

@@ -1,5 +1,5 @@
 #include <map>//
-#if 1 //1 = original 0 = perso
+#if 0 //1 = original 0 = perso
 	# include <map>
 	namespace ft = std;
 #else
@@ -8,22 +8,19 @@
 #include <iostream>
 
 void test_map(){
-	// ft::map<int, int> m1;
-	std::map<int, int> tm;
+	std::cout << "\ttests constructeurs, operateur [], begin, end et keycomp()\n";
+	{std::cout << "\t\tconstructeur par default et operateur []\n";
+		ft::map<int, char> m1;
+		m1[1] = 'a';
+		m1[2] = 'b';
+		m1[3] = 'c';
+		m1[4] = 'd';
 
-		tm[1] = 1;
-		tm[2] = 2;
-		tm[3] = 3;
-		tm[4] = 4;
-		tm[5] = 5;
-		tm[6] = 6;
-		tm[7] = 7;
-
-	// ft::map<int, int> mm(tm.begin(), tm.end(), tm.key_comp());
-	// m1['a'] = 1;
-	// m1['b'] = 2;
-	// m1['c'] = 3;
-	// m1['d'] = 4;
+		std::cout << "m1[1] = " << m1[1] << std::endl;
+		std::cout << "m1[2] = " << m1[2] << std::endl; 
+		std::cout << "m1[3] = " << m1[3] << std::endl; 
+		std::cout << "m1[4] = " << m1[4] << std::endl; 
+	}
 
 	// ft::map<char, int> m2;
 	// m2 = m1;

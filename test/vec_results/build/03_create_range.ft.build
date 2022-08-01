@@ -1,0 +1,202 @@
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp: In instantiation of ‘ft::vector<T, Alloc>::vector(InputIterator, InputIterator, const allocator_type&, typename ft::enable_if<(! ft::is_integral<InputIterator>::value)>::type*) [with InputIterator = std::_List_iterator<int>; T = int; Alloc = std::allocator<int>; ft::vector<T, Alloc>::allocator_type = std::allocator<int>; typename ft::enable_if<(! ft::is_integral<InputIterator>::value)>::type = void]’:
+vector/03_create_range.cpp:18:52:   required from here
+../includes/vector.hpp:60:123: error: no match for ‘operator-’ (operand types are ‘std::_List_iterator<int>’ and ‘std::_List_iterator<int>’)
+   60 |     typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_alloct(alloc), _capacity((size_type)(last - first) + 10),
+      |                                                                                                                     ~~~~~~^~~~~~~~
+In file included from ../includes/vector.hpp:5,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/reverse_iterator.hpp:143:51: note: candidate: ‘template<class Iter> typename ft::reverse_iterator<Iter>::difference_type ft::operator-(const ft::reverse_iterator<Iter>&, const ft::reverse_iterator<Iter>&)’
+  143 |  typename reverse_iterator<Iter>::difference_type operator-(const reverse_iterator<Iter> & lhs,
+      |                                                   ^~~~~~~~
+../includes/reverse_iterator.hpp:143:51: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:60:123: note:   ‘std::_List_iterator<int>’ is not derived from ‘const ft::reverse_iterator<Iter>’
+   60 |     typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_alloct(alloc), _capacity((size_type)(last - first) + 10),
+      |                                                                                                                     ~~~~~~^~~~~~~~
+In file included from /usr/include/c++/10/bits/stl_algobase.h:67,
+                 from /usr/include/c++/10/bits/char_traits.h:39,
+                 from /usr/include/c++/10/ios:40,
+                 from /usr/include/c++/10/ostream:38,
+                 from /usr/include/c++/10/iostream:39,
+                 from ../includes/vector.hpp:4,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+/usr/include/c++/10/bits/stl_iterator.h:525:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> decltype ((__y.base() - __x.base())) std::operator-(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)’
+  525 |     operator-(const reverse_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/10/bits/stl_iterator.h:525:5: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:60:123: note:   ‘std::_List_iterator<int>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+   60 |     typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_alloct(alloc), _capacity((size_type)(last - first) + 10),
+      |                                                                                                                     ~~~~~~^~~~~~~~
+In file included from /usr/include/c++/10/bits/stl_algobase.h:67,
+                 from /usr/include/c++/10/bits/char_traits.h:39,
+                 from /usr/include/c++/10/ios:40,
+                 from /usr/include/c++/10/ostream:38,
+                 from /usr/include/c++/10/iostream:39,
+                 from ../includes/vector.hpp:4,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+/usr/include/c++/10/bits/stl_iterator.h:1566:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> decltype ((__x.base() - __y.base())) std::operator-(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorR>&)’
+ 1566 |     operator-(const move_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/10/bits/stl_iterator.h:1566:5: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:60:123: note:   ‘std::_List_iterator<int>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+   60 |     typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_alloct(alloc), _capacity((size_type)(last - first) + 10),
+      |                                                                                                                     ~~~~~~^~~~~~~~
+../includes/vector.hpp:61:64: error: no match for ‘operator-’ (operand types are ‘std::_List_iterator<int>’ and ‘std::_List_iterator<int>’)
+   61 |     _data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){
+      |                                                          ~~~~~~^~~~~~~~
+In file included from ../includes/vector.hpp:5,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/reverse_iterator.hpp:143:51: note: candidate: ‘template<class Iter> typename ft::reverse_iterator<Iter>::difference_type ft::operator-(const ft::reverse_iterator<Iter>&, const ft::reverse_iterator<Iter>&)’
+  143 |  typename reverse_iterator<Iter>::difference_type operator-(const reverse_iterator<Iter> & lhs,
+      |                                                   ^~~~~~~~
+../includes/reverse_iterator.hpp:143:51: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:61:64: note:   ‘std::_List_iterator<int>’ is not derived from ‘const ft::reverse_iterator<Iter>’
+   61 |     _data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){
+      |                                                          ~~~~~~^~~~~~~~
+In file included from /usr/include/c++/10/bits/stl_algobase.h:67,
+                 from /usr/include/c++/10/bits/char_traits.h:39,
+                 from /usr/include/c++/10/ios:40,
+                 from /usr/include/c++/10/ostream:38,
+                 from /usr/include/c++/10/iostream:39,
+                 from ../includes/vector.hpp:4,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+/usr/include/c++/10/bits/stl_iterator.h:525:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> decltype ((__y.base() - __x.base())) std::operator-(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)’
+  525 |     operator-(const reverse_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/10/bits/stl_iterator.h:525:5: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:61:64: note:   ‘std::_List_iterator<int>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+   61 |     _data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){
+      |                                                          ~~~~~~^~~~~~~~
+In file included from /usr/include/c++/10/bits/stl_algobase.h:67,
+                 from /usr/include/c++/10/bits/char_traits.h:39,
+                 from /usr/include/c++/10/ios:40,
+                 from /usr/include/c++/10/ostream:38,
+                 from /usr/include/c++/10/iostream:39,
+                 from ../includes/vector.hpp:4,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+/usr/include/c++/10/bits/stl_iterator.h:1566:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> decltype ((__x.base() - __y.base())) std::operator-(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorR>&)’
+ 1566 |     operator-(const move_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/10/bits/stl_iterator.h:1566:5: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:61:64: note:   ‘std::_List_iterator<int>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+   61 |     _data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){
+      |                                                          ~~~~~~^~~~~~~~
+../includes/vector.hpp: In instantiation of ‘ft::vector<T, Alloc>::vector(InputIterator, InputIterator, const allocator_type&, typename ft::enable_if<(! ft::is_integral<InputIterator>::value)>::type*) [with InputIterator = std::_List_iterator<ComplexType>; T = ComplexType; Alloc = std::allocator<ComplexType>; ft::vector<T, Alloc>::allocator_type = std::allocator<ComplexType>; typename ft::enable_if<(! ft::is_integral<InputIterator>::value)>::type = void]’:
+vector/03_create_range.cpp:19:61:   required from here
+../includes/vector.hpp:60:123: error: no match for ‘operator-’ (operand types are ‘std::_List_iterator<ComplexType>’ and ‘std::_List_iterator<ComplexType>’)
+   60 |     typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_alloct(alloc), _capacity((size_type)(last - first) + 10),
+      |                                                                                                                     ~~~~~~^~~~~~~~
+In file included from ../includes/vector.hpp:5,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/reverse_iterator.hpp:143:51: note: candidate: ‘template<class Iter> typename ft::reverse_iterator<Iter>::difference_type ft::operator-(const ft::reverse_iterator<Iter>&, const ft::reverse_iterator<Iter>&)’
+  143 |  typename reverse_iterator<Iter>::difference_type operator-(const reverse_iterator<Iter> & lhs,
+      |                                                   ^~~~~~~~
+../includes/reverse_iterator.hpp:143:51: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:60:123: note:   ‘std::_List_iterator<ComplexType>’ is not derived from ‘const ft::reverse_iterator<Iter>’
+   60 |     typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_alloct(alloc), _capacity((size_type)(last - first) + 10),
+      |                                                                                                                     ~~~~~~^~~~~~~~
+In file included from /usr/include/c++/10/bits/stl_algobase.h:67,
+                 from /usr/include/c++/10/bits/char_traits.h:39,
+                 from /usr/include/c++/10/ios:40,
+                 from /usr/include/c++/10/ostream:38,
+                 from /usr/include/c++/10/iostream:39,
+                 from ../includes/vector.hpp:4,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+/usr/include/c++/10/bits/stl_iterator.h:525:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> decltype ((__y.base() - __x.base())) std::operator-(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)’
+  525 |     operator-(const reverse_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/10/bits/stl_iterator.h:525:5: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:60:123: note:   ‘std::_List_iterator<ComplexType>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+   60 |     typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_alloct(alloc), _capacity((size_type)(last - first) + 10),
+      |                                                                                                                     ~~~~~~^~~~~~~~
+In file included from /usr/include/c++/10/bits/stl_algobase.h:67,
+                 from /usr/include/c++/10/bits/char_traits.h:39,
+                 from /usr/include/c++/10/ios:40,
+                 from /usr/include/c++/10/ostream:38,
+                 from /usr/include/c++/10/iostream:39,
+                 from ../includes/vector.hpp:4,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+/usr/include/c++/10/bits/stl_iterator.h:1566:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> decltype ((__x.base() - __y.base())) std::operator-(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorR>&)’
+ 1566 |     operator-(const move_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/10/bits/stl_iterator.h:1566:5: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:60:123: note:   ‘std::_List_iterator<ComplexType>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+   60 |     typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_alloct(alloc), _capacity((size_type)(last - first) + 10),
+      |                                                                                                                     ~~~~~~^~~~~~~~
+../includes/vector.hpp:61:64: error: no match for ‘operator-’ (operand types are ‘std::_List_iterator<ComplexType>’ and ‘std::_List_iterator<ComplexType>’)
+   61 |     _data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){
+      |                                                          ~~~~~~^~~~~~~~
+In file included from ../includes/vector.hpp:5,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/reverse_iterator.hpp:143:51: note: candidate: ‘template<class Iter> typename ft::reverse_iterator<Iter>::difference_type ft::operator-(const ft::reverse_iterator<Iter>&, const ft::reverse_iterator<Iter>&)’
+  143 |  typename reverse_iterator<Iter>::difference_type operator-(const reverse_iterator<Iter> & lhs,
+      |                                                   ^~~~~~~~
+../includes/reverse_iterator.hpp:143:51: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:61:64: note:   ‘std::_List_iterator<ComplexType>’ is not derived from ‘const ft::reverse_iterator<Iter>’
+   61 |     _data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){
+      |                                                          ~~~~~~^~~~~~~~
+In file included from /usr/include/c++/10/bits/stl_algobase.h:67,
+                 from /usr/include/c++/10/bits/char_traits.h:39,
+                 from /usr/include/c++/10/ios:40,
+                 from /usr/include/c++/10/ostream:38,
+                 from /usr/include/c++/10/iostream:39,
+                 from ../includes/vector.hpp:4,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+/usr/include/c++/10/bits/stl_iterator.h:525:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> decltype ((__y.base() - __x.base())) std::operator-(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)’
+  525 |     operator-(const reverse_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/10/bits/stl_iterator.h:525:5: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:61:64: note:   ‘std::_List_iterator<ComplexType>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+   61 |     _data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){
+      |                                                          ~~~~~~^~~~~~~~
+In file included from /usr/include/c++/10/bits/stl_algobase.h:67,
+                 from /usr/include/c++/10/bits/char_traits.h:39,
+                 from /usr/include/c++/10/ios:40,
+                 from /usr/include/c++/10/ostream:38,
+                 from /usr/include/c++/10/iostream:39,
+                 from ../includes/vector.hpp:4,
+                 from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+/usr/include/c++/10/bits/stl_iterator.h:1566:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> decltype ((__x.base() - __y.base())) std::operator-(const std::move_iterator<_IteratorL>&, const std::move_iterator<_IteratorR>&)’
+ 1566 |     operator-(const move_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/10/bits/stl_iterator.h:1566:5: note:   template argument deduction/substitution failed:
+In file included from vector/../common.hpp:8,
+                 from vector/03_create_range.cpp:1:
+../includes/vector.hpp:61:64: note:   ‘std::_List_iterator<ComplexType>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+   61 |     _data(_alloct.allocate(_capacity)), _size((size_type)(last - first)){
+      |                                                          ~~~~~~^~~~~~~~

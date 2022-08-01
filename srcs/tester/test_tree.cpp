@@ -181,21 +181,21 @@ void test_tree(){
 	// 	// print_node(t.root->lchild->rchild->rchild->rchild);
 	// }
 
-	{std::cout << "test du constructeur par copie et celui avec une range\n";
-		ft::avl_tree<int, char, std::less<int> >	t1(ft::make_pair(1, 'a'));
-		t1.insert(ft::make_pair(2, 'b'));
-		t1.insert(ft::make_pair(3, 'c'));
-		t1.insert(ft::make_pair(4, 'd'));
-		t1.insert(ft::make_pair(5, 'e'));
-		t1.insert(ft::make_pair(6, 'f'));
-		t1.insert(ft::make_pair(7, 'g'));
-		print_node(t1.root);
-		print_node(t1.root->lchild);
-		print_node(t1.root->lchild->lchild);
-		print_node(t1.root->lchild->rchild);
-		print_node(t1.root->rchild);
-		print_node(t1.root->rchild->lchild);
-		print_node(t1.root->rchild->rchild);
+	// {std::cout << "test du constructeur par copie et celui avec une range\n";
+	// 	ft::avl_tree<int, char, std::less<int> >	t1(ft::make_pair(1, 'a'));
+	// 	t1.insert(ft::make_pair(2, 'b'));
+	// 	t1.insert(ft::make_pair(3, 'c'));
+	// 	t1.insert(ft::make_pair(4, 'd'));
+	// 	t1.insert(ft::make_pair(5, 'e'));
+	// 	t1.insert(ft::make_pair(6, 'f'));
+	// 	t1.insert(ft::make_pair(7, 'g'));
+	// 	print_node(t1.root);
+	// 	print_node(t1.root->lchild);
+	// 	print_node(t1.root->lchild->lchild);
+	// 	print_node(t1.root->lchild->rchild);
+	// 	print_node(t1.root->rchild);
+	// 	print_node(t1.root->rchild->lchild);
+	// 	print_node(t1.root->rchild->rchild);
 		
 		// {std::cout << "test du constructeur par copie\n";
 		// ft::avl_tree<int, char, std::less<int> >	t2(t1);
@@ -214,15 +214,27 @@ void test_tree(){
 		// print_node(t3.root);
 		// print_node(t3.root->rchild->rchild);}
 	
-		{std::cout << "test du constructeur par range\n";
-		ft::avl_tree<int, char, std::less<int> >	t4(t1.begin(), t1.end(), t1.getComp());
-		print_node(t4.root);
-		print_node(t4.root->lchild);
-		print_node(t4.root->lchild->lchild);
-		print_node(t4.root->lchild->rchild);
-		print_node(t4.root->rchild);
-		print_node(t4.root->rchild->lchild);
-		print_node(t4.root->rchild->rchild);}
-	}
+		// {std::cout << "test du constructeur par range\n";
+		// ft::avl_tree<int, char, std::less<int> >	t4(t1.begin(), t1.end(), t1.getComp());
+		// print_node(t4.root);
+		// print_node(t4.root->lchild);
+		// print_node(t4.root->lchild->lchild);
+		// print_node(t4.root->lchild->rchild);
+		// print_node(t4.root->rchild);
+		// print_node(t4.root->rchild->lchild);
+		// print_node(t4.root->rchild->rchild);}
+	// }
+
+	// {
+	// 	ft::avl_tree<int, char, std::less<int> >	t1(ft::make_pair(1, 'a'));
+	// 	t1.insert(ft::make_pair(2, 'b'));
+	// 	t1.insert(ft::make_pair(3, 'c'));
+	// 	t1.insert(ft::make_pair(4, 'd'));
+	// 	t1.insert(ft::make_pair(5, 'e'));
+	// 	t1.insert(ft::make_pair(6, 'f'));
+	// 	t1.insert(ft::make_pair(7, 'g'));
+
+		 
+	// }
 
 }

@@ -1,0 +1,16 @@
+In file included from map/../common.hpp:9,
+                 from map/07_swap.cpp:1:
+../includes/map.hpp: In instantiation of ‘void ft::map<Key, T, Compare, Alloc>::swap(ft::map<Key, T, Compare, Alloc>&) [with Key = int; T = int; Compare = std::less<int>; Alloc = std::allocator<ft::pair<const int, int> >]’:
+../includes/map.hpp:240:78:   required from ‘void ft::swap(ft::map<Key, T, Compare, Alloc>&, ft::map<Key, T, Compare, Alloc>&) [with Key = int; T = int; Compare = std::less<int>; Alloc = std::allocator<ft::pair<const int, int> >]’
+map/07_swap.cpp:18:22:   required from here
+../includes/map.hpp:142:33: error: cannot convert ‘ft::avl_tree<int, int, ft::map<int, int>::value_compare, std::allocator<ft::pair<const int, int> > >::_node*’ {aka ‘ft::node<ft::pair<int, int> >*’} to ‘ft::node<ft::pair<int, int> >&’
+  142 |    this->tree.root->swap(x.tree.root);
+      |                          ~~~~~~~^~~~
+      |                                 |
+      |                                 ft::avl_tree<int, int, ft::map<int, int>::value_compare, std::allocator<ft::pair<const int, int> > >::_node* {aka ft::node<ft::pair<int, int> >*}
+In file included from ../includes/map.hpp:11,
+                 from map/../common.hpp:9,
+                 from map/07_swap.cpp:1:
+../includes/my_avl_tree.hpp:38:21: note:   initializing argument 1 of ‘void ft::node<P>::swap(ft::node<P>&) [with P = ft::pair<int, int>]’
+   38 |    void swap(node & n){
+      |              ~~~~~~~^

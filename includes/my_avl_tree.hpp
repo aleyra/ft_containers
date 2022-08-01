@@ -34,6 +34,12 @@ namespace ft{
 				this->depth = 1;
 			}//:lchild(NULL), rchild(NULL), parent(NULL), data(p), depth(1){} je sais pas pourquoi mais ça marchait pas...
 			virtual ~node(){}
+
+			void	swap(node & n){
+				node	tmp = n;
+				n = this;
+				this = n;
+			}
 		
 		private:
 			node &	operator=(node const &src){
@@ -98,10 +104,10 @@ namespace ft{
 				return (tmp);
 			}
 
-			bool		operator==(avl_iterator &other){
+			bool		operator==(const avl_iterator &other){
 				return (current == other.current);
 			};
-			bool		operator!=(avl_iterator &other){
+			bool		operator!=(const avl_iterator &other){
 				return (current != other.current);
 			};
 
@@ -134,6 +140,98 @@ namespace ft{
 			avl_iterator(node_type* n){current = n;}//fin du tour de magie
 
 			node_type*	base(){return current;}
+			node_type*	base() const {return current;}
+
+	};
+
+	template<class P, class cont>//class cont pour le tour de magie et renvoyer le bon type pour avl_tree::begin et avl_tree::end
+	struct avl_const_iterator{//parce que c'est debile
+		// friend class avl_iterator<P, cont>;//friend class permet d'utiliser les attributs privates et protected
+		
+		public:
+			typedef P													iterator_type;
+			typedef typename std::bidirectional_iterator_tag			iterator_category;
+			typedef typename ft::iterator_traits<P>::value_type			value_type;
+			typedef typename ft::iterator_traits<P>::difference_type	difference_type;
+			typedef typename ft::iterator_traits<P>::pointer			pointer;
+			typedef typename ft::iterator_traits<P>::reference			reference;
+
+		protected:
+			typedef	ft::node<P>*						node;
+			typedef	ft::node<typename cont::value_type>	node_type;//pour le tour de magie et renvoyer le bon type pour avl_tree::begin et avl_tree::end
+			typedef ft::node<value_type>				node_grr;//creation de ca parce que conflit de type avec current pour operator*
+			typedef	avl_iterator<P, cont>				it_normal;
+			node_type*									current;
+
+		public:
+			avl_const_iterator(const avl_const_iterator &src){*this = src;}
+			virtual ~avl_const_iterator(){}
+			avl_const_iterator & operator=(const avl_const_iterator &src){
+				current = src.current;
+				return (*this);
+			}
+			
+			avl_const_iterator	&operator++(){
+				if (current->rchild != NULL){
+					current = current->rchild;
+					while (current->lchild != NULL)
+						current = current->lchild;
+					return (*this);
+				}
+				node_type*	tmp = current;
+				current = current->parent;
+				while (current && current->rchild == tmp){//merci hébriel
+					tmp = current;
+					current = current->parent;
+				}
+				return (*this);
+			}
+			avl_const_iterator	operator++(int){
+				avl_const_iterator	tmp = *this;
+				++(*this);
+				return (tmp);
+			}
+
+			bool		operator==(const avl_const_iterator &other){
+				return (current == other.current);
+			};
+			bool		operator!=(const avl_const_iterator &other){
+				return (current != other.current);
+			};
+
+			value_type		&operator*(){return ((node_grr *)current)->data;}//j'ai du cast en node_grr et creer ce type expres !
+			pointer			operator->(){return &(this->operator*());}
+			
+			avl_const_iterator(){}
+
+			avl_const_iterator &	operator--(){
+				if (current->lchild != NULL){
+					current = current->lchild;
+					while (current->lchild != NULL)
+						current = current->rchild;
+					return (*this);
+				}
+				node_type*	tmp = current;
+				current = current->parent;
+				while (current->lchild == tmp){
+					tmp = current;
+					current = current->parent;
+				}
+				return (*this);
+			}
+			avl_const_iterator	operator--(int){
+				avl_const_iterator	tmp = *this;
+				--(*this);
+				return (tmp);
+			}
+
+			avl_const_iterator(node_type* n){current = n;}//fin du tour de magie
+
+			avl_const_iterator(it_normal const &it){
+				current = it.base();
+			}
+
+			node_type*	base(){return current;}
 	};
 
 	template <class Key, class T, class Compare, class Alloc = std::allocator<T> >
@@ -150,7 +248,7 @@ namespace ft{
 			typedef typename ft::node<value_type>							_node;
 			typedef Alloc													allocator_type;
 			typedef avl_iterator<iter_value_type *, avl_tree>				iterator;//* car tour de magie pour renvoyer le bon type pour begin et end
-			typedef avl_iterator<const iter_value_type *, avl_tree>			const_iterator;//* car tour de magie pour renvoyer le bon type pour begin et end
+			typedef avl_const_iterator<iter_value_type *, avl_tree>			const_iterator;//* car tour de magie pour renvoyer le bon type pour begin et end
 		 	typedef _node*													pointer;
 			typedef const _node*											const_pointer;
 			typedef _node&													reference;
@@ -161,15 +259,15 @@ namespace ft{
 			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 
 	
+		public:
+			Compare				comp;
+			size_type			size;//nb d'elem
+			_node*				root;//a remettre en private
 		private:
 			// _node*				begin;
 			// _node*				end;
 			allocator_type		alloc;//ajuste pour get_allocator
 			node_alloc			nalloc;
-		public:
-			Compare				comp;
-			size_type			size;//nb d'elem
-			_node*				root;//a remettre en private
 
 		public:
 		//member function
@@ -200,7 +298,7 @@ namespace ft{
 				this->size = src.size;
 				this->comp = src.comp;
 				// std::cout << "in =\n";//
-				this->root = copy_tree(src.root, NULL);
+				this->root = src.root;//copy_tree(src.root, NULL);
 				return (*this);
 			}
 
@@ -229,7 +327,7 @@ namespace ft{
 				int	rcd, lcd, max;
 				while (b == false){
 				// std::cout << "tmp.data.f = " << tmp->data.first <<std::endl;//
-					if (comp(data.first, tmp->data.first)){//data < tmp.data
+					if (comp(data, tmp->data)){//data < tmp.data
 						if (tmp->lchild == NULL){
 							tmp->lchild = this->nalloc.allocate(1);
 							this->nalloc.construct(tmp->lchild, data);
@@ -254,7 +352,7 @@ namespace ft{
 						else
 							tmp = tmp->lchild;
 					}
-					else if (comp(tmp->data.first, data.first)){//tmp.data < data
+					else if (comp(tmp->data, data)){//tmp.data < data
 						if (tmp->rchild == NULL){
 							tmp->rchild = this->nalloc.allocate(1);
 							this->nalloc.construct(tmp->rchild, data);
@@ -418,15 +516,16 @@ namespace ft{
 			// }
 
 			size_type	erase(key_type const & k){
-				_node*	tmp = root;
-				bool	b = false;
-				_node*	x = NULL;//will be parent of deallocate node.
+				value_type	kvt = ft::make_pair(k, mapped_type());
+				_node*		tmp = root;
+				bool		b = false;
+				_node*		x = NULL;//will be parent of deallocate node.
 				int	rcd, lcd, max;
 				while (b == false && tmp != NULL){
-					if (comp(k, tmp->data.first) && (tmp->lchild != NULL)){//k < tmp.data.first
+					if (comp(/*k, tmp->data.first*/kvt, tmp->data) && (tmp->lchild != NULL)){//k < tmp.data.first
 						tmp = tmp->lchild;
 					}
-					else if (comp(tmp->data.first, k) && (tmp->rchild != NULL)){//tmp.data.first < k
+					else if (comp(/*tmp->data.first, k*/tmp->data, kvt) && (tmp->rchild != NULL)){//tmp.data.first < k
 						tmp = tmp->rchild;
 					}
 					else{// k = tmp.data.first //tmp est la node a erase
@@ -544,15 +643,15 @@ namespace ft{
 				return NULL;
 			}
 
-		private:
-
-			avl_tree(){};
-
 			void clear(){
 				// std::cout << "in clear()\n";//
 				this->clear(this->root);
 				this->size = 0;
 			}
+
+		private:
+
+			avl_tree(){};
 
 			void clear(_node* n){
 				// std::cout << "in clear(node *)\n";//
@@ -862,7 +961,7 @@ namespace ft{
 				// insert(*last);
 			}
 
-			avl_tree(const Compare & comp, const allocator_type & alloc = allocator_type()):alloc(alloc), nalloc(node_alloc()), size(0), comp(comp){}
+			avl_tree(const Compare & comp, const allocator_type & alloc = allocator_type()):comp(comp), size(0), root(NULL), alloc(alloc), nalloc(node_alloc()){}
 
 			Compare getComp() const{//a mettre en private ?
 				return (this->comp);
@@ -919,13 +1018,14 @@ namespace ft{
 			// value_compare	value_comp() const{}//?
 
 			iterator		find(const key_type & k){
-				_node*	tmp = root;
-				bool	b = false;
+				value_type	kvt = ft::make_pair(k, mapped_type());
+				_node*		tmp = root;
+				bool		b = false;
 				while (b == false && tmp != NULL){
-					if (comp(k, tmp->data.first) && (tmp->lchild != NULL)){//k < tmp.data.first
+					if (comp(/*k, tmp->data.first*/kvt, tmp->data) && (tmp->lchild != NULL)){//k < tmp.data.first
 						tmp = tmp->lchild;
 					}
-					else if (comp(tmp->data.first, k) && (tmp->rchild != NULL)){//tmp.data.first < k
+					else if (comp(/*tmp->data.first, k*/tmp->data, kvt) && (tmp->rchild != NULL)){//tmp.data.first < k
 						tmp = tmp->rchild;
 					}
 					else 
@@ -936,13 +1036,14 @@ namespace ft{
 				return (iterator(tmp));
 			}
 			const_iterator	find(const key_type & k) const{
-				_node*	tmp = root;
-				bool	b = false;
+				value_type	kvt = ft::make_pair(k, mapped_type());
+				_node*		tmp = root;
+				bool		b = false;
 				while (b == false && tmp != NULL){
-					if (comp(k, tmp->data.first) && (tmp->lchild != NULL)){//k < tmp.data.first
+					if (comp(/*k, tmp->data.first*/kvt, tmp->data) && (tmp->lchild != NULL)){//k < tmp.data.first
 						tmp = tmp->lchild;
 					}
-					else if (comp(tmp->data.first, k) && (tmp->rchild != NULL)){//tmp.data.first < k
+					else if (comp(/*tmp->data.first, k*/tmp->data, kvt) && (tmp->rchild != NULL)){//tmp.data.first < k
 						tmp = tmp->rchild;
 					}
 					else 
@@ -955,6 +1056,7 @@ namespace ft{
 
 			allocator_type	get_allocator() const{return this->alloc;}
 	};
+
 }
 
 #endif
