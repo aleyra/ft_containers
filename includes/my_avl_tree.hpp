@@ -394,7 +394,7 @@ namespace ft{
 							this->nalloc.destroy(t);
 							this->nalloc.deallocate(t, 1);
 						}
-						t = NULL;
+						t = NULL;//useless ? t est crée pour cette occasion pour détruit
 						b = true;
 						return (false);
 					}
@@ -724,6 +724,13 @@ namespace ft{
 					return ;
 				delete_node(n->lchild);
 				delete_node(n->lchild);
+				_node*	p = n->parent;
+				if (p != NULL){
+					if (p->lchild == n)
+						p->lchild = NULL;
+					if (p->rchild == n)
+						p->rchild = NULL;
+				}
 				if (n != NULL){
 					this->nalloc.destroy(n);
 					this->nalloc.deallocate(n, 1);
