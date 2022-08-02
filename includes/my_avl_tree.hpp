@@ -409,121 +409,6 @@ namespace ft{
 				return (true);
 			}//?
 
-			// size_type	erase(value_type data){//erase(key_type const & k){
-			// 	_node*	tmp = root;
-			// 	bool	b = false;
-			// 	_node*	x = NULL;//will be parent of deallocate node.
-			// 	int	rcd, lcd, max;
-			// 	while (b == false && tmp != NULL){
-			// 		if (comp(data.first, tmp->data.first) && (tmp->lchild != NULL)){//data < tmp.data
-			// 			tmp = tmp->lchild;
-			// 		}
-			// 		else if (comp(tmp->data.first, data.first) && (tmp->rchild != NULL)){//tmp.data < data
-			// 			tmp = tmp->rchild;
-			// 		}
-			// 		else{// data = tmp.data //tmp est la node a erase
-			// 			if (tmp == this->root && tmp->depth == 1){//cas particulier où on efface la derniere node existante : root
-			// 				clear(tmp);
-			// 				this->root = NULL;
-			// 			}
-			// 			else if (tmp->lchild != NULL && tmp->lchild->depth == 1){//tmp.lc existe et n'a pas d'enfant
-			// 				swap_nodes_data(tmp, tmp->lchild);
-			// 				this->nalloc.destroy(tmp->lchild);
-			// 				this->nalloc.deallocate(tmp->lchild, 1);
-			// 				tmp->lchild = NULL;
-			// 				x = tmp;
-			// 				while (tmp != NULL){//pour adapter la depth
-			// 					// std::cout << "tmp = " << tmp << " rc = " << tmp->rchild << " lc = " << tmp->lchild << std::endl;//
-			// 					rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
-			// 					lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
-			// 					max = std::max(rcd, lcd);
-			// 					// std::cout << "max = "<< max << " et parent.depth = " << tmp->depth << std::endl;
-			// 					if (tmp->depth == max + 1)
-			// 						break ;
-			// 					tmp->depth = max + 1;
-			// 					tmp = tmp->parent;
-			// 				}
-			// 			}
-			// 			else if (tmp->depth == 1){//si tmp n'a pas d'enfants
-			// 				_node*	x = tmp->parent;
-			// 				if (x->rchild == tmp)
-			// 					x->rchild = NULL;
-			// 				if (x->lchild == tmp)
-			// 					x->lchild = NULL;
-			// 				this->clear(tmp);
-			// 				tmp = x;
-			// 				while (tmp != NULL){//pour adapter la depth
-			// 					rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
-			// 					lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
-			// 					max = std::max(rcd, lcd);
-			// 					// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
-			// 					if (tmp->depth == max + 1)
-			// 						break ;
-			// 					tmp->depth = max + 1;
-			// 					tmp = tmp->parent;
-			// 				}
-			// 			}
-			// 			else {//tmp n'a pas de lc ou il a un lc qui a lui meme une descendance
-			// 				// std::cout << "\ttmp = " << tmp << " et tmp.data.first = " << tmp->data.first << std::endl;//
-			// 				_node*	t = tmp->lchild;
-			// 				// std::cout << "\tt = " << t << " et t.data.first = " << t->data.first << std::endl;//
-			// 				while (t != NULL && t->rchild != NULL){
-			// 					t = t->rchild;
-			// 					// std::cout << "\tt = " << t << std::endl;//
-			// 				}
-			// 				if (t != NULL){//petite secu avant les manip
-			// 					x = t;
-			// 					while (t != NULL){
-			// 						// std::cout << "t = " << t << "\tt.data.f = " << t->data.first << std::endl;//
-			// 						swap_nodes_data(t->parent, t);
-			// 						x = t;
-			// 						t = t->lchild;
-			// 					}
-			// 					// std::cout << "x = " << x << " et x.data.first = " << x->data.first << std::endl;//
-			// 					x = x->parent;
-			// 					// std::cout << "x = " << x << " et x.data.first = " << x->data.first << std::endl;//
-			// 					clear(x->lchild);
-			// 					// std::cout << "x.lc = " << x->lchild << std::endl;//
-			// 					tmp = x;
-			// 					while (tmp != NULL){//pour adapter la depth
-			// 						rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
-			// 						lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
-			// 						max = std::max(rcd, lcd);
-			// 						// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
-			// 						if (tmp->depth == max + 1)
-			// 							break ;
-			// 						tmp->depth = max + 1;
-			// 						tmp = tmp->parent;
-			// 					}
-			// 				}
-			// 			}
-			// 			b = true;
-			// 			this->size--;
-			// 		}
-			// 	}
-			// 	// bool isBal = isBalanced();
-			// 	// if (!isBal && this->root->depth == 3){
-			// 	// 	makeBalancedFromRoot();
-			// 	// }
-			// 	// else{
-			// 	// 	while (x != NULL && x->depth < 4)//search for nephew or cousin or brother of deallocate node
-			// 	// 		x = x->parent;
-			// 	// 	while (x != NULL && x->depth != 1){
-			// 	// 		if (x->rchild != NULL && x->rchild->depth == x->depth - 1)
-			// 	// 			x = x->rchild;
-			// 	// 		else
-			// 	// 			x = x->lchild;
-			// 	// 	}//found it
-			// 	// 	if (x != NULL && !isBal)
-			// 	// 		makeBalanced(x);
-			// 	// std::cout << "ds erase\n";//
-			// 		makeBalanced(isBalanced(x));
-			// 	// }
-			// 	if (b == true)
-			// 		return (1);
-			// 	return (0);
-			// }
-
 			size_type	erase(key_type const & k){
 				value_type	kvt = ft::make_pair(k, mapped_type());
 				_node*		tmp = root;
@@ -612,28 +497,6 @@ namespace ft{
 					return (1);
 				return (0);
 			}
-
-			// bool	isBalanced(){
-			// 	if (this->size <= 2)
-			// 		return true;
-			// 	_node*	tmp = getFirst();
-			// 	_node*	last = getLast();
-			// 	// _node*	p;
-			// 	_node*	rc;
-			// 	_node*	lc;
-			// 	while (tmp != last){
-			// 		if (tmp != this->root){
-			// 			// p = tmp->parent;
-			// 		// std::cout << "in isBalanced" << std::endl;
-			// 			rc = tmp->rchild;
-			// 			lc = tmp->lchild;
-			// 			if ((rc != NULL && lc != NULL) && (lc->depth - rc->depth > 1 || lc->depth - rc->depth < -1))
-			// 				return (false);
-			// 		}
-			// 		tmp++;
-			// 	}
-			// 	return (true);
-			// }//?
 
 			_node*	isBalanced(_node* n){//from (new node) or (nephew or cousin or brother of deallocate node)//en mettre en private ?
 				int		rcd, lcd;
@@ -771,26 +634,6 @@ namespace ft{
 				leftRotate(z);
 			}
 
-			// void	makeBalanced(_node* n){//from (new node) or (nephew or cousin or brother of deallocate node)
-			// 	_node*	x = n->parent;
-			// 	if (x == NULL)
-			// 		return ;
-			// 	_node*	y = x->parent;
-			// 	if (y == NULL)
-			// 		return ;
-			// 	_node*	z = y->parent;
-			// 	if (z == NULL)
-			// 		return ;
-			// 	if (z->lchild == y && y->lchild == x)//Left Left Case
-			// 		rightRotate(z);
-			// 	if (z->lchild == y && y->rchild == x)//Left Right Case
-			// 		leftRightRotate(z);
-			// 	if (z->rchild == y && y->rchild == x)//Right Right Case
-			// 		leftRotate(z);
-			// 	if (z->rchild == y && y->lchild == x)//Right Left Case
-			// 		rightLeftRotate(z);
-			// }
-
 			void	makeBalanced(_node* z){
 				if (z == NULL || this->size <= 2){
 					return ;
@@ -836,81 +679,6 @@ namespace ft{
 				}
 			}
 
-			// void	makeBalancedFromRoot(){//fonction degueu
-			// 	if (this->root->depth != 3)
-			// 		return ;
-			// 	_node*	z = this->root;
-			// 	_node*	y = NULL;
-			// 	if (z->lchild != NULL){
-			// 		y = z->lchild;
-			// 		if (y->rchild == NULL)
-			// 			rightRotate(z);
-			// 		else if (y->lchild == NULL){
-			// 			_node*	x = y->rchild;
-			// 			x->lchild = y;
-			// 			y->parent = x;
-			// 			x->rchild = z;
-			// 			z->parent = x;
-			// 			x->parent = NULL;
-			// 			this->root = x;
-			// 			z->lchild = NULL;
-			// 			y->rchild = NULL;
-			// 			x->depth = 2;
-			// 			y->depth = 1;
-			// 			z->depth = 1;
-			// 		}
-			// 		else {//y a deux enfants
-			// 			_node*	x = y->rchild;
-			// 			_node*	t = y->lchild;
-			// 			this->root = y;
-			// 			y->parent = NULL;
-			// 			y->lchild = t;
-			// 			y->rchild = z;
-			// 			y->depth = 3;
-			// 			t->parent = y;
-			// 			t->depth = 1;
-			// 			z->parent = y;
-			// 			z->lchild = x;
-			// 			z->depth = 2;
-			// 			x->parent = x;
-			// 		}
-			// 	}
-			// 	else{
-			// 		y = z->rchild;
-			// 		if (y->lchild == NULL)
-			// 			leftRotate(z);
-			// 		else if (y->rchild == NULL){
-			// 			_node*	x = y->lchild;
-			// 			x->lchild = z;
-			// 			z->parent = x;
-			// 			x->rchild = y;
-			// 			y->parent = x;
-			// 			x->parent = NULL;
-			// 			this->root = x;
-			// 			z->rchild = NULL;
-			// 			y->lchild = NULL;
-			// 			x->depth = 2;
-			// 			z->depth = 1;
-			// 			y->depth = 1;
-			// 		}
-			// 		else {//y a deux enfants
-			// 			_node*	x = y->lchild;
-			// 			_node*	t = y->rchild;
-			// 			y = this->root;
-			// 			y->parent = NULL;
-			// 			y->depth = 3;
-			// 			y->lchild = z;
-			// 			y->rchild = t;
-			// 			t->parent = y;
-			// 			t->depth = 1;
-			// 			z->parent = y;
-			// 			z->rchild = x;
-			// 			z->depth = 2;
-			// 			x->parent = z;
-			// 		}
-			// 	}
-			// }
-		
 			_node*	copy_tree(const _node * src, _node * p){
 				// std::cout << "in copy_tree\n";//
 				_node*	n;
@@ -1008,7 +776,7 @@ namespace ft{
 				// _node*	e = getLast();
 				// return const_iterator(e->parent);
 				_node*	e = NULL;
-				return (const_iterator(e->parent));
+				return (const_iterator(e));
 			}
 
 			reverse_iterator		rbegin(){return (reverse_iterator(end()));}
@@ -1020,22 +788,20 @@ namespace ft{
 			}
 			const_reverse_iterator	rend() const{
 				// return (const_reverse_iterator(begin()));
-				
+				_node*	e = NULL;
+				return (const_reverse_iterator(e));
 			}
 
 			size_type	max_size() const{return this->nalloc.max_size();}
 
-			void	swap(avl_tree &x)
-		{
-			std::swap(this->comp, x.comp);
-			std::swap(this->size, x.size);
-			std::swap(this->root, x.root);
-			std::swap(this->alloc, x.alloc);
-			std::swap(this->nalloc, x.nalloc);
-		}
-			//refaire fonctions pour
-			// value_compare	value_comp() const{}//?
-
+			void	swap(avl_tree &x){
+				std::swap(this->comp, x.comp);
+				std::swap(this->size, x.size);
+				std::swap(this->root, x.root);
+				std::swap(this->alloc, x.alloc);
+				std::swap(this->nalloc, x.nalloc);
+			}
+			
 			iterator		find(const key_type & k){
 				value_type	kvt = ft::make_pair(k, mapped_type());
 				_node*		tmp = root;
