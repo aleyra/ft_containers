@@ -140,7 +140,11 @@ namespace ft{
 			this->tree.swap(x.tree);
 		}
 
-		void	clear(){this->tree.clear();}
+		void    clear(){
+            while (!empty()) {
+                erase(begin());
+            }
+        }
 
 		//member functions: observers
 		key_compare	key_comp() const{return this->comp;}
