@@ -233,6 +233,15 @@ namespace ft{
 			node_type*	base(){return current;}
 	};
 
+	template<class P, class cont>
+	bool	operator==(avl_iterator<P, cont> &lhs, avl_const_iterator<P, cont> &rhs){
+		return (lhs.base() == rhs.base());
+	}
+	template<class P, class cont>
+	bool	operator!=(avl_iterator<P, cont> &lhs, avl_const_iterator<P, cont> &rhs){
+		return (lhs.base() != rhs.base());
+	}
+
 	template <class Key, class T, class Compare, class Alloc = std::allocator<T> >
 	class avl_tree
 	{
