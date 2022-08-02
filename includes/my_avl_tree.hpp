@@ -394,7 +394,7 @@ namespace ft{
 							this->nalloc.destroy(t);
 							this->nalloc.deallocate(t, 1);
 						}
-						t = NULL;//useless ? t est crée pour cette occasion pour détruit
+						t = NULL;//useless ? t est crée pour cette occasion est ensuite détruit
 						b = true;
 						return (false);
 					}
