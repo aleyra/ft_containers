@@ -33,7 +33,7 @@ namespace ft{
 				this->data = p;
 				this->depth = 1;
 			}//:lchild(NULL), rchild(NULL), parent(NULL), data(p), depth(1){} je sais pas pourquoi mais ça marchait pas...
-			virtual ~node(){}
+			~node(){}//virtual enlevé
 
 			void	swap(node & n){
 				node	tmp = n;
@@ -86,7 +86,7 @@ namespace ft{
 			avl_iterator	&operator++(){
 				if (current->rchild != NULL){
 					current = current->rchild;
-					while (current->lchild != NULL)
+					while (current && current->lchild != NULL)
 						current = current->lchild;
 					return (*this);
 				}
@@ -119,7 +119,7 @@ namespace ft{
 			avl_iterator &	operator--(){
 				if (current->lchild != NULL){
 					current = current->lchild;
-					while (current->lchild != NULL)
+					while (current && current->lchild != NULL)
 						current = current->rchild;
 					return (*this);
 				}
@@ -206,13 +206,13 @@ namespace ft{
 			avl_const_iterator &	operator--(){
 				if (current->lchild != NULL){
 					current = current->lchild;
-					while (current->lchild != NULL)
+					while (current && current->lchild != NULL)
 						current = current->rchild;
 					return (*this);
 				}
 				node_type*	tmp = current;
 				current = current->parent;
-				while (current->lchild == tmp){
+				while (current && current->lchild == tmp){
 					tmp = current;
 					current = current->parent;
 				}
@@ -426,7 +426,6 @@ namespace ft{
 						if (tmp == this->root && tmp->depth == 1){//cas particulier où on efface la derniere node existante : root
 							clear(tmp);
 							this->root = NULL;
-				
 						}
 						else if (tmp->lchild != NULL && tmp->lchild->depth == 1){//tmp.lc existe et n'a pas d'enfant
 							swap_nodes_data(tmp, tmp->lchild);
@@ -530,10 +529,14 @@ namespace ft{
 				// std::cout << "n = " << n << " n.lc = " << n->lchild << " n.rc = " << n->rchild << std::endl;//
 				if (n == NULL)
 					return ;
-				if (n->lchild != NULL)
+				if (n->lchild != NULL){
 					clear(n->lchild);
-				if (n->rchild != NULL)
+					n->lchild = NULL;
+				}
+				if (n->rchild != NULL){
 					clear(n->rchild);
+					n->rchild = NULL;
+				}
 				_node*	p = n->parent;
 				if (p != NULL){
 					if (p->lchild == n)
@@ -750,7 +753,7 @@ namespace ft{
 				if (this->size == 0)
 					return NULL;
 				_node*	tmp = root;
-				while (tmp->lchild != NULL)
+				while (tmp && tmp->lchild != NULL)
 					tmp = tmp->lchild;
 				return (tmp);
 			}
@@ -759,7 +762,7 @@ namespace ft{
 				if (this->size == 0)
 					return NULL;
 				_node*	tmp = root;
-				while (tmp->rchild != NULL)
+				while (tmp && tmp->rchild != NULL)
 					tmp = tmp->rchild;
 				return (tmp);
 			}
