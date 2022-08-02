@@ -516,6 +516,7 @@ namespace ft{
 
 			void clear(){
 				// std::cout << "in clear()\n";//
+				std::cout << "root n = " << this->root << " n.data = " << &(this->root->data) << " n.data = (" << this->root->data.first << ", " << this->root->data.second << ")" << std::endl;//
 				this->clear(this->root);
 				this->size = 0;
 			}
@@ -544,7 +545,7 @@ namespace ft{
 					if (p->rchild == n)
 						p->rchild = NULL;
 				}
-				// std::cout << "test n = " << n << " n.data = " << &(n->data) << " n.data = (" << n->data.first << ", " << n->data.second << ")" << std::endl;//
+				std::cout << "test n = " << n << " n.data = " << &(n->data) << " n.data = (" << n->data.first << ", " << n->data.second << ")" << std::endl;//
 				this->nalloc.destroy(n);//segfault ici dans destroy ??????
 				// std::cout << "destroy ok\n";//
 				this->nalloc.deallocate(n, 1);
