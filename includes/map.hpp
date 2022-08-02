@@ -111,8 +111,8 @@ namespace ft{
 		}
 		iterator				insert(iterator position, const value_type & val){
 			(void) position;
-			this.insert(val);
-			return (this.find(val.first));
+			this->insert(val);
+			return (this->find(val.first));
 		}
 		template <class InputIterator>
 		void		insert(InputIterator first, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type last){
