@@ -122,7 +122,7 @@ namespace ft{
 		}
 
 		void		erase(iterator position){
-			this->tree.erase(position->data.first);
+			this->tree.erase(position->first);
 		}
 		size_type	erase(const key_type & k){return (this->tree.erase(k));}
 		void		erase(iterator first, iterator last){
