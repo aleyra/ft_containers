@@ -390,8 +390,11 @@ namespace ft{
 						_node* t = this->nalloc.allocate(1);
 						this->nalloc.construct(t, data);
 						swap_nodes_data(t, tmp);
-						this->nalloc.destroy(t);
-						this->nalloc.deallocate(t, 1);
+						if (t != NULL){
+							this->nalloc.destroy(t);
+							this->nalloc.deallocate(t, 1);
+						}
+						t = NULL;
 						b = true;
 						return (false);
 					}
@@ -429,8 +432,10 @@ namespace ft{
 						}
 						else if (tmp->lchild != NULL && tmp->lchild->depth == 1){//tmp.lc existe et n'a pas d'enfant
 							swap_nodes_data(tmp, tmp->lchild);
-							this->nalloc.destroy(tmp->lchild);
-							this->nalloc.deallocate(tmp->lchild, 1);
+							if (tmp && tmp->lchild != NULL){
+								this->nalloc.destroy(tmp->lchild);
+								this->nalloc.deallocate(tmp->lchild, 1);
+							}
 							tmp->lchild = NULL;
 							x = tmp;
 							while (tmp != NULL){//pour adapter la depth
@@ -516,7 +521,7 @@ namespace ft{
 
 			void clear(){
 				// std::cout << "in clear()\n";//
-				std::cout << "root n = " << this->root << " n.data = " << &(this->root->data) << " n.data = (" << this->root->data.first << ", " << this->root->data.second << ")" << std::endl;//
+				// std::cout << "root n = " << this->root << " n.data = " << &(this->root->data) << " n.data = (" << this->root->data.first << ", " << this->root->data.second << ")" << std::endl;//
 				this->clear(this->root);
 				this->size = 0;
 			}
@@ -545,10 +550,12 @@ namespace ft{
 					if (p->rchild == n)
 						p->rchild = NULL;
 				}
-				std::cout << "test n = " << n << " n.data = " << &(n->data) << " n.data = (" << n->data.first << ", " << n->data.second << ")" << std::endl;//
-				this->nalloc.destroy(n);//segfault ici dans destroy ??????
-				// std::cout << "destroy ok\n";//
-				this->nalloc.deallocate(n, 1);
+				// std::cout << "test n = " << n << " n.data = " << &(n->data) << " n.data = (" << n->data.first << ", " << n->data.second << ")" << std::endl;//
+				if (n != NULL){
+					this->nalloc.destroy(n);//segfault ici dans destroy ??????
+					// std::cout << "destroy ok\n";//
+					this->nalloc.deallocate(n, 1);
+				}
 				n = NULL;
 				// std::cout << "clear(node *) fini\n";//
 			}
@@ -717,8 +724,10 @@ namespace ft{
 					return ;
 				delete_node(n->lchild);
 				delete_node(n->lchild);
-				this->nalloc.destroy(n);
-				this->nalloc.deallocate(n, 1);
+				if (n != NULL){
+					this->nalloc.destroy(n);
+					this->nalloc.deallocate(n, 1);
+				}
 				n = NULL;
 			}
 
