@@ -270,7 +270,7 @@ namespace ft{
 		public:
 			Compare				comp;
 			size_type			size;//nb d'elem
-			_node*				root = NULL;//a remettre en private
+			_node*				root;//a remettre en private
 		private:
 			// _node*				begin;
 			// _node*				end;
@@ -529,7 +529,7 @@ namespace ft{
 				// std::cout << "n = " << n << " n.lc = " << n->lchild << " n.rc = " << n->rchild << std::endl;//
 				if (n == NULL)
 					return ;
-				if (n->lchild != NULL){
+				if (n->lchild != NULL){//segfault la ??????
 					clear(n->lchild);
 					n->lchild = NULL;
 				}
