@@ -125,7 +125,7 @@ namespace ft{
 				}
 				node_type*	tmp = current;
 				current = current->parent;
-				while (current->lchild == tmp){
+				while (current && current->lchild == tmp){//merci hébriel
 					tmp = current;
 					current = current->parent;
 				}
@@ -136,16 +136,15 @@ namespace ft{
 				--(*this);
 				return (tmp);
 			}
-
+			//ajouté pour le besoin
 			avl_iterator(node_type* n){current = n;}//fin du tour de magie
 
 			node_type*	base(){return current;}
 			node_type*	base() const {return current;}
-
 	};
 
-	template<class P, class cont>//class cont pour le tour de magie et renvoyer le bon type pour avl_tree::begin et avl_tree::end
-	struct avl_const_iterator{//parce que c'est debile
+	template<class P, class cont>
+	struct avl_const_iterator{//parce que c'est debile. Créé à partir d'alv_iterator
 		// friend class avl_iterator<P, cont>;//friend class permet d'utiliser les attributs privates et protected
 		
 		public:
@@ -158,8 +157,8 @@ namespace ft{
 
 		protected:
 			typedef	ft::node<P>*						node;
-			typedef	ft::node<typename cont::value_type>	node_type;//pour le tour de magie et renvoyer le bon type pour avl_tree::begin et avl_tree::end
-			typedef ft::node<value_type>				node_grr;//creation de ca parce que conflit de type avec current pour operator*
+			typedef	ft::node<typename cont::value_type>	node_type;
+			typedef ft::node<value_type>				node_grr;
 			typedef	avl_iterator<P, cont>				it_normal;
 			node_type*									current;
 
@@ -180,7 +179,7 @@ namespace ft{
 				}
 				node_type*	tmp = current;
 				current = current->parent;
-				while (current && current->rchild == tmp){//merci hébriel
+				while (current && current->rchild == tmp){//merci hébriel. Leçon du jour - rappel : ne pas oublié de vérifier l'existence avant utilisation
 					tmp = current;
 					current = current->parent;
 				}
@@ -199,7 +198,7 @@ namespace ft{
 				return (current != other.current);
 			};
 
-			value_type		&operator*(){return ((node_grr *)current)->data;}//j'ai du cast en node_grr et creer ce type expres !
+			value_type		&operator*(){return ((node_grr *)current)->data;}
 			pointer			operator->(){return &(this->operator*());}
 			
 			avl_const_iterator(){}
@@ -225,7 +224,7 @@ namespace ft{
 				return (tmp);
 			}
 
-			avl_const_iterator(node_type* n){current = n;}//fin du tour de magie
+			avl_const_iterator(node_type* n){current = n;}
 
 			avl_const_iterator(it_normal const &it){
 				current = it.base();
@@ -237,7 +236,7 @@ namespace ft{
 	template <class Key, class T, class Compare, class Alloc = std::allocator<T> >
 	class avl_tree
 	{
-		typedef typename Alloc::template rebind<node<pair<Key, T> > >::other	node_alloc;//pour avoir une allocator qui genere la place pour une node plutot que la place pour pair.-
+		typedef typename Alloc::template rebind<node<pair<Key, T> > >::other	node_alloc;//pour avoir un allocator qui genere la place pour une node plutot que la place pour pair.-
 
 		public:
 		//attributs
@@ -262,7 +261,7 @@ namespace ft{
 		public:
 			Compare				comp;
 			size_type			size;//nb d'elem
-			_node*				root;//a remettre en private
+			_node*				root = NULL;//a remettre en private
 		private:
 			// _node*				begin;
 			// _node*				end;
@@ -281,13 +280,11 @@ namespace ft{
 				this->size = 1;
 			}
 
-			avl_tree(avl_tree const & src){
-				// std::cout << "in constructor par copie\n";//
-				this->alloc = src.alloc;
-				this->nalloc = src.nalloc;
-				this->size = src.size;
-				this->comp = src.comp;
-				this->root = copy_tree(src.root, NULL);
+			avl_tree(avl_tree const & src):comp(src.comp), size(src.size), root(NULL), alloc(src.alloc), nalloc(src.nalloc){
+				if (src.root != NULL)
+					this->root = copy_tree(src.root, NULL);
+				else
+					this->root = NULL;
 			}
 
 			avl_tree &	operator=(const avl_tree & src){
@@ -298,7 +295,10 @@ namespace ft{
 				this->size = src.size;
 				this->comp = src.comp;
 				// std::cout << "in =\n";//
-				this->root = src.root;//copy_tree(src.root, NULL);
+				if (src.root != NULL)
+					this->root = copy_tree(src.root, NULL);
+				else
+					this->root = NULL;
 				return (*this);
 			}
 
@@ -669,7 +669,9 @@ namespace ft{
 					if (p->rchild == n)
 						p->rchild = NULL;
 				}
-				this->nalloc.destroy(n);
+				// std::cout << "test n = " << n << " n.data = " << &(n->data) << " n.data = (" << n->data.first << ", " << n->data.second << ")" << std::endl;//
+				this->nalloc.destroy(n);//segfault ici dans destroy ??????
+				// std::cout << "destroy ok\n";//
 				this->nalloc.deallocate(n, 1);
 				n = NULL;
 				// std::cout << "clear(node *) fini\n";//
@@ -1014,6 +1016,14 @@ namespace ft{
 
 			size_type	max_size() const{return this->nalloc.max_size();}
 
+			void	swap(avl_tree &x)
+		{
+			std::swap(this->comp, x.comp);
+			std::swap(this->size, x.size);
+			std::swap(this->root, x.root);
+			std::swap(this->alloc, x.alloc);
+			std::swap(this->nalloc, x.nalloc);
+		}
 			//refaire fonctions pour
 			// value_compare	value_comp() const{}//?
 

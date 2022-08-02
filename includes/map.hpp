@@ -136,14 +136,8 @@ namespace ft{
 		}
 
 		void	swap(map & x){
-			node		n = x.tree.root;
-			x.tree.root = this->tree.root;
-			this->tree.root = n;
-			// this->tree.root->swap(x.tree.root);
-
-			size_type	s = x.tree.size;
-			x.tree.size = this->tree.size;
-			this->tree.size = s;
+			std::swap(this->comp, x.comp);
+			this->tree.swap(x.tree);
 		}
 
 		void	clear(){this->tree.clear();}
@@ -163,14 +157,14 @@ namespace ft{
 
 		iterator		lower_bound(const key_type & k){
 			for (iterator it = begin(); it != end(); it++){
-				if (it->data.first >= k)
+				if (it->first >= k)
 					return (it);
 			}
 			return (end());
 		}
 		const_iterator	lower_bound(const key_type & k) const{
 			for (iterator it = begin(); it != end(); it++){
-				if (it->data.first >= k)
+				if (it->first >= k)
 					return (const_iterator(it.base()));//le tour de magie sert ici aussi
 			}
 			return (end());
@@ -178,14 +172,14 @@ namespace ft{
 
 		iterator		upper_bound(const key_type & k){
 			for (iterator it = begin(); it != end(); it++){
-				if (it->data.first > k)
+				if (it->first > k)
 					return (it);
 			}
 			return (end());
 		}
 		const_iterator	upper_bound(const key_type & k) const{
 			for (iterator it = begin(); it != end(); it++){
-				if (it->data.first >= k)
+				if (it->first >= k)
 					return (const_iterator(it.base()));//le tour de magie sert ici aussi
 			}
 			return (end());
