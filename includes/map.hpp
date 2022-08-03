@@ -9,7 +9,6 @@
 # include "is_integral.hpp"
 // # include "birectional_iterator_tag.hpp"
 # include "my_avl_tree.hpp"
-
 namespace ft{
 	template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > >
 	class map{//c'est un genre d'arbre
@@ -40,6 +39,7 @@ namespace ft{
 		typedef ft::node<value_type>											node;
 
 		key_compare	comp;
+		public:
 		map_tree	tree;
 
 		public:
@@ -56,7 +56,7 @@ namespace ft{
 
 		//member functions : canonical form
 		private:
-		// map(){}//?
+		// map(){}
 		public:
 		map(const map & src):comp(src.comp), tree(src.tree){}
 		virtual ~map(){this->clear();}
@@ -67,8 +67,8 @@ namespace ft{
 		}
 
 		//member functions
-		explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()):comp(comp), tree(value_compare(comp), alloc) {}//?
-		template <class InputIterator>//a remettre avec hebriel
+		explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()):comp(comp), tree(value_compare(comp), alloc) {}
+		template <class InputIterator>
 		map (InputIterator first, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type last,
 			const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()):comp(comp), tree(first, last, value_compare(comp), alloc){}
 		
@@ -77,9 +77,11 @@ namespace ft{
 		const_iterator	begin() const{return this->tree.begin();};
 
 		iterator		end(){return (this->tree.end());}
-		const_iterator	end() const{return (this->tree.end());}//?
+		const_iterator	end() const{return (this->tree.end());}
 
-		reverse_iterator		rbegin(){return this->tree.rbegin();}//?
+		reverse_iterator		rbegin(){
+			// std::cout << "dans rbegin\n";//
+			return this->tree.rbegin();}//?
 		const_reverse_iterator	rbegin() const{return this->tree.rbegin();}//?
 
 		reverse_iterator		rend(){return this->tree.rend();}//?
@@ -121,18 +123,30 @@ namespace ft{
 			}
 		}
 
-		void		erase(iterator position){
-			this->tree.erase(position->first);
-		}
+		void		erase(iterator position){this->tree.erase(position->first);}
 		size_type	erase(const key_type & k){return (this->tree.erase(k));}
 		void		erase(iterator first, iterator last){
 			iterator	it = first;
 			iterator	next;
+			// std::cout << "(" << this->tree.root->data.first << ", " << this->tree.root->data.second << ")\n";
+			// 	std::cout << "\tn = " << this->tree.root << std::endl;
+			// 	std::cout << "\tparent = " << this->tree.root->parent << std::endl;
+			// 	std::cout << "\tdepth = " << this->tree.root->depth << std::endl;
+			// 	std::cout << "\tlchild = " << this->tree.root->lchild << std::endl;
+			// 	std::cout << "\trchild = " << this->tree.root->rchild << std::endl;
 			while (it != last){
 				next = ++it;
-				erase(--it);
+				--it;
+				std::cout << "on efface " << it->first << std::endl;//
+				erase(it);
 				it = iterator(next.base());
 			}
+			// std::cout << "(" << this->tree.root->data.first << ", " << this->tree.root->data.second << ")\n";
+			// 	std::cout << "\tn = " << this->tree.root << std::endl;
+			// 	std::cout << "\tparent = " << this->tree.root->parent << std::endl;
+			// 	std::cout << "\tdepth = " << this->tree.root->depth << std::endl;
+			// 	std::cout << "\tlchild = " << this->tree.root->lchild << std::endl;
+			// 	std::cout << "\trchild = " << this->tree.root->rchild << std::endl;
 		}
 
 		void	swap(map & x){
@@ -155,9 +169,7 @@ namespace ft{
 		iterator		find(const key_type & k){return this->tree.find(k);}
 		const_iterator	find(const key_type & k) const{return this->tree.find(k);}
 
-		size_type	count(const key_type & k) const{
-			return ((find(k) != end()) ? 1 : 0);
-		}
+		size_type	count(const key_type & k) const{return ((find(k) != end()) ? 1 : 0);}
 
 		iterator		lower_bound(const key_type & k){
 			for (iterator it = begin(); it != end(); it++){
@@ -205,6 +217,9 @@ namespace ft{
 		//member functions: allocator
 		allocator_type	get_allocator() const{return this->get_allocator();}
 
+		node*	root(){
+			return (this->tree.root);
+		}
 // 		protected:
 
 // 		private:

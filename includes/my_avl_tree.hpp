@@ -266,14 +266,12 @@ namespace ft{
 			typedef size_t													size_type;
 			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 
-	
-		public:
+		private:
 			Compare				comp;
+		public:
 			size_type			size;//nb d'elem
 			_node*				root;//a remettre en private
 		private:
-			// _node*				begin;
-			// _node*				end;
 			allocator_type		alloc;//ajuste pour get_allocator
 			node_alloc			nalloc;
 
@@ -320,7 +318,6 @@ namespace ft{
 
 			bool	insert(const value_type & data){
 				if (this->root == NULL){//cas particulier où meme root est vide
-				// std::cout << "ds insert\n";//
 					this->root = this->nalloc.allocate(1);
 					this->nalloc.construct(this->root, data);
 					this->root->depth = 1;
@@ -335,7 +332,6 @@ namespace ft{
 				_node*	n = NULL;//will be new _node pointer
 				int	rcd, lcd, max;
 				while (b == false){
-				// std::cout << "tmp.data.f = " << tmp->data.first <<std::endl;//
 					if (comp(data, tmp->data)){//data < tmp.data
 						if (tmp->lchild == NULL){
 							tmp->lchild = this->nalloc.allocate(1);
@@ -350,7 +346,6 @@ namespace ft{
 								rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
 								lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
 								max = std::max(rcd, lcd);
-								// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
 								if (tmp->depth == max + 1)
 									break ;
 								tmp->depth = max + 1;
@@ -375,7 +370,6 @@ namespace ft{
 								rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;
 								lcd = (tmp->lchild != NULL) ? tmp->lchild->depth : 0;
 								max = std::max(rcd, lcd);
-								// std::cout << "max = "<< max << "et parent.depth = " << tmp->depth << std::endl;
 								if (tmp->depth == max + 1)
 									break ;
 								tmp->depth = max + 1;
@@ -386,31 +380,13 @@ namespace ft{
 						else
 							tmp = tmp->rchild;
 					}
-					else{// n == tmp
-						_node* t = this->nalloc.allocate(1);
-						this->nalloc.construct(t, data);
-						swap_nodes_data(t, tmp);
-						if (t != NULL){
-							this->nalloc.destroy(t);
-							this->nalloc.deallocate(t, 1);
-						}
-						t = NULL;//useless ? t est crée pour cette occasion est ensuite détruit
-						b = true;
+					else// n == tmp
 						return (false);
-					}
 				}
-				// bool isBal = isBalanced();
-				// std::cout << isBal
-				// if (!isBal && this->root->depth)
-				// 	makeBalancedFromRoot();
-				// else if (n != NULL && !isBal)
-				// 	makeBalanced(n);
 				_node*	isBalN = isBalanced(n);
-				// std::cout << "isBalN = " << isBalN << std::endl;//
 				makeBalanced(isBalN);
-				// std::cout << "sortie de insert\n";//
 				return (true);
-			}//?
+			}
 
 			size_type	erase(key_type const & k){
 				value_type	kvt = ft::make_pair(k, mapped_type());
@@ -467,10 +443,14 @@ namespace ft{
 							}
 						}
 						else {//tmp n'a pas de lc ou il a un lc qui a lui meme une descendance
+					// std::cout << "in erase\n";//
+							// std::cout << "tmp.data.f = " << tmp->data.first << std::endl;//
 							_node*	t = tmp->lchild;
 							while (t != NULL && t->rchild != NULL){
 								t = t->rchild;
 							}
+							// if (tmp->data.first == 5)
+								// std::cout << "t.data.f = " << t->data.first << std::endl;//
 							if (t != NULL){//petite secu avant les manip
 								x = t;
 								while (t != NULL){
@@ -742,13 +722,13 @@ namespace ft{
 		public:
 			template <class InputIter>
 			avl_tree(InputIter first, typename enable_if<!is_integral<InputIter>::value, InputIter>::type last, const Compare & Comp,
-				const allocator_type & alloca = allocator_type()):alloc(alloca), nalloc(node_alloc()), comp(Comp){
+				const allocator_type & alloca = allocator_type()):comp(Comp), alloc(alloca), nalloc(node_alloc()){
 				// this->alloc = alloc;
 				// this->nalloc = node_alloc();
 				// this->comp = comp;
 				this->root = NULL;
 				for (InputIter it = first; it != last; it++){
-					std::cout << (*it).first << std::endl;//
+					// std::cout << (*it).first << std::endl;//
 					// insert(ft::make_pair<key_type, mapped_type>((*it).first, (*it).second));
 					insert(*it);
 					// std::cout << "coucou\n";//
@@ -756,7 +736,7 @@ namespace ft{
 					// std::cout << "\nlast" << (void*)(last.base()) << "\n";//
 					// it--;//
 				}
-				std::cout << "youpi\n";//
+				// std::cout << "youpi\n";//
 				// insert(*last);
 			}
 
@@ -770,8 +750,13 @@ namespace ft{
 				if (this->size == 0)
 					return NULL;
 				_node*	tmp = root;
-				while (tmp && tmp->lchild != NULL)
+				while (tmp && tmp->lchild != NULL){
 					tmp = tmp->lchild;
+				}
+				// if (tmp != NULL){//
+				// 	std::cout << "tmp = " << tmp << std::endl;//
+				// 	std::cout << "tmp.lc = " << tmp->lchild << std::endl;//
+				// }//
 				return (tmp);
 			}
 
@@ -779,8 +764,14 @@ namespace ft{
 				if (this->size == 0)
 					return NULL;
 				_node*	tmp = root;
-				while (tmp && tmp->rchild != NULL)
+				while (tmp && tmp->rchild != NULL){
 					tmp = tmp->rchild;
+				}
+				// if (tmp != NULL){//
+				// 	std::cout << "tmp = " << tmp /*<< std::endl*/;//
+				// 	std::cout << "\ttmp = (" << tmp->data.first << ", " << tmp->data.second << ")" /*<< std::endl*/;
+				// 	std::cout << "\ttmp.rc = " << tmp->rchild << std::endl;//
+				// }//
 				return (tmp);
 			}
 			
@@ -799,8 +790,13 @@ namespace ft{
 				return (const_iterator(e));
 			}
 
-			reverse_iterator		rbegin(){return (reverse_iterator(end()));}
-			const_reverse_iterator	rbegin() const{return (const_reverse_iterator(end()));}
+			reverse_iterator		rbegin(){
+				// std::cout << "ds rbegin d'avl_tree\n";
+				iterator it(getLast());
+				return (reverse_iterator(it));
+				// return (reverse_iterator(getLast()));
+			}
+			const_reverse_iterator	rbegin() const{return (const_reverse_iterator(getLast()));}
 			reverse_iterator		rend(){
 				// return (reverse_iterator(begin()));
 				_node*	e = NULL;
@@ -812,6 +808,7 @@ namespace ft{
 				return (const_reverse_iterator(e));
 			}
 
+			// size_type	size() const{return this->size;}
 			size_type	max_size() const{return this->nalloc.max_size();}
 
 			void	swap(avl_tree &x){
