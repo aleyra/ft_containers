@@ -40,7 +40,7 @@ namespace ft{
 				n = this;
 				this = n;
 			}
-		
+
 		private:
 			node &	operator=(node const &src){
 				this->data = src.data;
@@ -74,15 +74,18 @@ namespace ft{
 			typedef	ft::node<typename cont::value_type>	node_type;//pour le tour de magie et renvoyer le bon type pour avl_tree::begin et avl_tree::end
 			typedef ft::node<value_type>				node_grr;//creation de ca parce que conflit de type avec current pour operator*
 			node_type*									current;
+			node_type*									root;
 
 		public:
 			avl_iterator(const avl_iterator &src){*this = src;}
+			avl_iterator(node_type* root, node_type* current) : current(current), root(root) {}
 			virtual ~avl_iterator(){}
 			avl_iterator & operator=(const avl_iterator &src){
 				current = src.current;
+				root = src.root;
 				return (*this);
 			}
-			
+
 			avl_iterator	&operator++(){
 				if (current->rchild != NULL){
 					current = current->rchild;
@@ -113,10 +116,17 @@ namespace ft{
 
 			value_type		&operator*(){return ((node_grr *)current)->data;}//j'ai du cast en node_grr et creer ce type expres !
 			pointer			operator->(){return &(this->operator*());}
-			
-			avl_iterator(){}
+
+			avl_iterator() : current(NULL), root(NULL) {}
 
 			avl_iterator &	operator--(){
+				if (current == NULL) {
+					current = root;
+					while (current && current->rchild) {
+						current = current->rchild;
+					}
+					return (*this);
+				}
 				if (current->lchild != NULL){
 					current = current->lchild;
 					while (current && current->lchild != NULL)
@@ -136,8 +146,6 @@ namespace ft{
 				--(*this);
 				return (tmp);
 			}
-			//ajouté pour le besoin
-			avl_iterator(node_type* n){current = n;}//fin du tour de magie
 
 			node_type*	base(){return current;}
 			node_type*	base() const {return current;}
@@ -146,7 +154,7 @@ namespace ft{
 	template<class P, class cont>
 	struct avl_const_iterator{//parce que c'est debile. Créé à partir d'alv_iterator
 		// friend class avl_iterator<P, cont>;//friend class permet d'utiliser les attributs privates et protected
-		
+
 		public:
 			typedef P													iterator_type;
 			typedef typename std::bidirectional_iterator_tag			iterator_category;
@@ -161,15 +169,17 @@ namespace ft{
 			typedef ft::node<value_type>				node_grr;
 			typedef	avl_iterator<P, cont>				it_normal;
 			node_type*									current;
+			node_type*									root;
 
 		public:
 			avl_const_iterator(const avl_const_iterator &src){*this = src;}
+			avl_const_iterator(node_type* root, node_type* current) : current(current), root(root) {}
 			virtual ~avl_const_iterator(){}
 			avl_const_iterator & operator=(const avl_const_iterator &src){
 				current = src.current;
 				return (*this);
 			}
-			
+
 			avl_const_iterator	&operator++(){
 				if (current->rchild != NULL){
 					current = current->rchild;
@@ -200,8 +210,8 @@ namespace ft{
 
 			value_type		&operator*(){return ((node_grr *)current)->data;}
 			pointer			operator->(){return &(this->operator*());}
-			
-			avl_const_iterator(){}
+
+			avl_const_iterator() : current(NULL), root(NULL) {}
 
 			avl_const_iterator &	operator--(){
 				if (current->lchild != NULL){
@@ -745,10 +755,6 @@ namespace ft{
 				while (tmp && tmp->lchild != NULL){
 					tmp = tmp->lchild;
 				}
-				// if (tmp != NULL){//
-				// 	std::cout << "tmp = " << tmp << std::endl;//
-				// 	std::cout << "tmp.lc = " << tmp->lchild << std::endl;//
-				// }//
 				return (tmp);
 			}
 
@@ -759,50 +765,28 @@ namespace ft{
 				while (tmp && tmp->rchild != NULL){
 					tmp = tmp->rchild;
 				}
-				// if (tmp != NULL){//
-				// 	std::cout << "tmp = " << tmp /*<< std::endl*/;//
-				// 	std::cout << "\ttmp = (" << tmp->data.first << ", " << tmp->data.second << ")" /*<< std::endl*/;
-				// 	std::cout << "\ttmp.rc = " << tmp->rchild << std::endl;//
-				// }//
 				return (tmp);
 			}
-			
-			iterator		begin(){return (iterator(getFirst()));}
-			const_iterator	begin() const{return (const_iterator(getFirst()));}
+
+			iterator		begin(){return (iterator(root, getFirst()));}
+			const_iterator	begin() const{return (const_iterator(root, getFirst()));}
 			iterator		end(){
-				// _node*	e = getLast();
-				// return iterator(e->parent);
-				_node*	e = NULL;
-				return (iterator(e));
+				return (iterator(root, NULL));
 			}
 			const_iterator	end() const{
-				// _node*	e = getLast();
-				// return const_iterator(e->parent);
-				_node*	e = NULL;
-				return (const_iterator(e));
+				return (const_iterator(root, NULL));
 			}
 
 			reverse_iterator		rbegin(){
-				// std::cout << "ds rbegin d'avl_tree\n";
-				_node*	n = getLast();
-				if (n != NULL)
-					std::cout << "(" << n->data.first << ", " << n->data.second << ")\n";
-				iterator it(n);
-				if (n != NULL)
-					std::cout << "(" << it->first << ", " << it->second << ")\n";
+				iterator it(root, NULL);
 				return (reverse_iterator(it));
-				// return (reverse_iterator(getLast()));
 			}
-			const_reverse_iterator	rbegin() const{return (const_reverse_iterator(getLast()));}
+			const_reverse_iterator	rbegin() const{return (const_reverse_iterator(root, NULL));}
 			reverse_iterator		rend(){
-				// return (reverse_iterator(begin()));
-				_node*	e = NULL;
-				return (reverse_iterator(e));
+				return (reverse_iterator(begin()));
 			}
 			const_reverse_iterator	rend() const{
-				// return (const_reverse_iterator(begin()));
-				_node*	e = NULL;
-				return (const_reverse_iterator(e));
+				return (const_reverse_iterator(begin()));
 			}
 
 			// size_type	size() const{return this->size;}
@@ -815,7 +799,7 @@ namespace ft{
 				std::swap(this->alloc, x.alloc);
 				std::swap(this->nalloc, x.nalloc);
 			}
-			
+
 			iterator		find(const key_type & k){
 				value_type	kvt = ft::make_pair(k, mapped_type());
 				_node*		tmp = root;
@@ -829,13 +813,13 @@ namespace ft{
 					else if (comp(/*tmp->data.first, k*/tmp->data, kvt)){//tmp.data.first < k
 						tmp = tmp->rchild;
 					}
-					else 
+					else
 						b = true;
 				}
 				// std::cout << "tmp final = " << tmp << std::endl;//
 				if (tmp == NULL)
 					return (end());
-				return (iterator(tmp));
+				return (iterator(root, tmp));
 			}
 			const_iterator	find(const key_type & k) const{
 				value_type	kvt = ft::make_pair(k, mapped_type());
@@ -848,12 +832,12 @@ namespace ft{
 					else if (comp(/*tmp->data.first, k*/tmp->data, kvt)){//tmp.data.first < k
 						tmp = tmp->rchild;
 					}
-					else 
+					else
 						b = true;
 				}
 				if (tmp == NULL)
 					return (end());
-				return (const_iterator(tmp));
+				return (const_iterator(root, tmp));
 			}
 
 	};

@@ -28,9 +28,9 @@ void test_map(){
 		{
 			// std::cout << "\t\toperateur [] pour la recuperation de la value\n";
 			// std::cout << "m1[1] = " << m1[1] << std::endl;
-			// std::cout << "m1[2] = " << m1[2] << std::endl; 
-			// std::cout << "m1[3] = " << m1[3] << std::endl; 
-			// std::cout << "m1[4] = " << m1[4] << std::endl; 
+			// std::cout << "m1[2] = " << m1[2] << std::endl;
+			// std::cout << "m1[3] = " << m1[3] << std::endl;
+			// std::cout << "m1[4] = " << m1[4] << std::endl;
 
 			// std::cout << "\t\tassignation par copie\n";
 			// ft::map<int, char> m2;
@@ -56,16 +56,16 @@ void test_map(){
 			std::cout << "\n\ttests de rbegin, rend, const begin\n";
 			std::cout << "\t\trbegin et rend\n";
 			ft::map<int, char>::reverse_iterator it = m1.rbegin();//pb
-			std::cout << "m1[" << it->first << "] = " << it->second << std::endl;// -> m[3] = c au lieu de m[4] = d
-			// it++;
-			// std::cout << "m[" << it->first << "] = " << it->second << std::endl;
+			std::cout << "m[" << it->first << "] = " << it->second << std::endl;// -> m[3] = c au lieu de m[4] = d
+			it++;
+			std::cout << "m[" << it->first << "] = " << it->second << std::endl;
 
-			// for (ft::map<int, char>::reverse_iterator it = m1.rbegin(); it != m1.rend(); it++){
-			// 	std::cout << "m[" << it->first << "] = " << it->second << std::endl;
-			// }
-			// std::cout << "\t\tversion const de begin\t";
-			// ft::map<int, char>::const_iterator citb = m1.begin();
-			// std::cout << "m[" << citb->first << "] = " << citb->second << std::endl;
+			for (ft::map<int, char>::reverse_iterator it = m1.rbegin(); it != m1.rend(); it++){
+				std::cout << "m[" << it->first << "] = " << it->second << std::endl;
+			}
+			std::cout << "\t\tversion const de begin\t";
+			ft::map<int, char>::const_iterator citb = m1.begin();
+			std::cout << "m[" << citb->first << "] = " << citb->second << std::endl;
 		}
 		{
 			// std::cout << "\n\ttests de size et max_size\n";
@@ -188,7 +188,7 @@ void test_map(){
 		// 	std::cout << "pas de clé == 0\n";
 		// it = m7.find(1);
 		// std::cout << "m7[" << it->first << "] = " << it->second << std::endl;
-		
+
 		// {//pb avec find donc ver const aussi
 		// 	std::cout << "\t\tfind version const_iterator\n";
 		// 	ft::map<int, char>::const_iterator cit = m7.find(0);
@@ -218,7 +218,7 @@ void test_map(){
 		// p = m7.equal_range(6);
 		// if (p.first == low && p.second == up)
 		// 	std::cout << "equal_range fonctionne comme prevu\n";
-		
+
 		// low = m7.lower_bound(1);
 		// std::cout << "lower_bound de 1 : "<< "m7[" << low->first << "] = " << low->second << std::endl;
 		// up = m7.upper_bound(1);
@@ -226,7 +226,7 @@ void test_map(){
 		// p = m7.equal_range(1);
 		// if (p.first == low && p.second == up)
 		// 	std::cout << "equal_range fonctionne comme prevu\n";
-		
+
 		// low = m7.lower_bound(3);
 		// std::cout << "lower_bound de 3 : "<< "m7[" << low->first << "] = " << low->second << std::endl;
 		// up = m7.upper_bound(3);
@@ -234,7 +234,7 @@ void test_map(){
 		// p = m7.equal_range(3);
 		// if (p.first == low && p.second == up)
 		// 	std::cout << "equal_range fonctionne comme prevu\n";
-		
+
 		// low = m7.lower_bound(0);
 		// std::cout << "lower_bound de 0 : "<< "m7[" << low->first << "] = " << low->second << std::endl;
 		// up = m7.upper_bound(0);
@@ -242,7 +242,7 @@ void test_map(){
 		// p = m7.equal_range(0);
 		// if (p.first == low && p.second == up)
 		// 	std::cout << "equal_range fonctionne comme prevu\n";
-		
+
 		// std::cout << "\t\tlower_bound, upper_bound et equal_range version const\n";
 		// {
 		// 	ft::map<int, char>::const_iterator ce = m7.end();
