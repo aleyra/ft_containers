@@ -201,19 +201,19 @@ namespace ft{
 			return (end());
 		}
 
-		pair<const_iterator, const_iterator>	equal_range(const key_type & k) const{
-			iterator	low = lower_bound(k);
-			iterator	up = upper_bound(k);
-
-			return (ft::make_pair(low, up));
-		}
 		pair<iterator, iterator>				equal_range(const key_type & k){
 			const_iterator	low = lower_bound(k);
 			const_iterator	up = upper_bound(k);
 
 			return (ft::make_pair(low, up));
 		}
+		pair<const_iterator, const_iterator>	equal_range(const key_type & k) const{
+			iterator	low = lower_bound(k);
+			iterator	up = upper_bound(k);
 
+			return (ft::make_pair(low, up));
+		}
+		
 		//member functions: allocator
 		allocator_type	get_allocator() const{return this->get_allocator();}
 
