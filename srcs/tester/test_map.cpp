@@ -1,5 +1,5 @@
 #include <map>//
-#if 1 //1 = original 0 = perso
+#if 0 //1 = original 0 = perso
 	# include <map>
 	namespace ft = std;
 #else
@@ -284,18 +284,18 @@ void test_map(){
 		// }
 	}
 	{
-		std::cout << "\ttest de get_allocator\n";
-		int psize;
-		ft::map<int,char> m8;
-		ft::pair<const int,char>* p;
+		// std::cout << "\ttest de get_allocator\n";
+		// int psize;
+		// ft::map<int,char> m8;
+		// ft::pair<const int,char>* p;
 
-		p=m8.get_allocator().allocate(5);
+		// p=m8.get_allocator().allocate(5);
 
-		psize = sizeof(std::map<char,int>::value_type)*5;
+		// psize = sizeof(std::map<char,int>::value_type)*5;
 
-		std::cout << "on a reussi une allocation de taille " << psize << " bytes.\n";
+		// std::cout << "on a reussi une allocation de taille " << psize << " bytes.\n";
 
-		m8.get_allocator().deallocate(p,5);
+		// m8.get_allocator().deallocate(p,5);
 
 	}
 	{

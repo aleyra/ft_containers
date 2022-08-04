@@ -859,7 +859,6 @@ namespace ft{
 				return (const_iterator(tmp));
 			}
 
-			allocator_type	get_allocator() const{return this->alloc;}
 	};
 
 }

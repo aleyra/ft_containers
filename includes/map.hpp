@@ -222,7 +222,7 @@ namespace ft{
 		}
 		
 		//member functions: allocator
-		allocator_type	get_allocator() const{return this->get_allocator();}
+		allocator_type	get_allocator() const{return pair_alloc();}
 
 // 		protected:
 
