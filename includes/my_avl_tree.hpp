@@ -453,13 +453,14 @@ namespace ft{
 								// std::cout << "t.data.f = " << t->data.first << std::endl;//
 							if (t != NULL){//petite secu avant les manip
 								x = t;
-								while (t != NULL){
-									swap_nodes_data(t->parent, t);
-									x = t;
-									t = t->lchild;
-								}
-								x = x->parent;
-								clear(x->lchild);
+								// while (t != NULL){
+								// 	swap_nodes_data(t->parent, t);
+								//	 x = t;
+								// 	t = t->lchild;
+								// }
+								swap_nodes_data(tmp, t);
+								x = t->parent;
+								clear(x->rchild);
 								tmp = x;
 								while (tmp != NULL){//pour adapter la depth
 									rcd = (tmp->rchild != NULL) ? tmp->rchild->depth : 0;

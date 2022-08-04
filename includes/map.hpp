@@ -138,7 +138,7 @@ namespace ft{
 				next = ++it;
 				--it;
 				std::cout << "on efface " << it->first << std::endl;//
-				erase(it);
+				this->tree.erase(it->first);
 				it = iterator(next.base());
 			}
 			// std::cout << "(" << this->tree.root->data.first << ", " << this->tree.root->data.second << ")\n";
