@@ -395,10 +395,10 @@ namespace ft{
 				_node*		x = NULL;//will be parent of deallocate node.
 				int	rcd, lcd, max;
 				while (b == false && tmp != NULL){
-					if (comp(/*k, tmp->data.first*/kvt, tmp->data) || (tmp->lchild != NULL)){//k < tmp.data.first
+					if (comp(/*k, tmp->data.first*/kvt, tmp->data)){//k < tmp.data.first
 						tmp = tmp->lchild;
 					}
-					else if (comp(/*tmp->data.first, k*/tmp->data, kvt) || (tmp->rchild != NULL)){//tmp.data.first < k
+					else if (comp(/*tmp->data.first, k*/tmp->data, kvt)){//tmp.data.first < k
 						tmp = tmp->rchild;
 					}
 					else{// k = tmp.data.first //tmp est la node a erase
@@ -825,11 +825,11 @@ namespace ft{
 				bool		b = false;
 				while (b == false && tmp != NULL){//mon comp est pété ? pourquoi je vais pas dans le 1e if une deuxieme fois ?
 					// std::cout << "tmp.data.f = " << tmp->data.first << " et k = " << kvt.first << std::endl;//
-					if (comp(/*k, tmp->data.first*/kvt, tmp->data) || (tmp->lchild != NULL)){//k < tmp.data.first
+					if (comp(/*k, tmp->data.first*/kvt, tmp->data)){//k < tmp.data.first
 						// std::cout << "tmp.lc = " << tmp->lchild << std::endl;//
 						tmp = tmp->lchild;
 					}
-					else if (comp(/*tmp->data.first, k*/tmp->data, kvt) || (tmp->rchild != NULL)){//tmp.data.first < k
+					else if (comp(/*tmp->data.first, k*/tmp->data, kvt)){//tmp.data.first < k
 						tmp = tmp->rchild;
 					}
 					else 
@@ -845,10 +845,10 @@ namespace ft{
 				_node*		tmp = root;
 				bool		b = false;
 				while (b == false && tmp != NULL){
-					if (comp(/*k, tmp->data.first*/kvt, tmp->data) || (tmp->lchild != NULL)){//k < tmp.data.first
+					if (comp(/*k, tmp->data.first*/kvt, tmp->data)){//k < tmp.data.first
 						tmp = tmp->lchild;
 					}
-					else if (comp(/*tmp->data.first, k*/tmp->data, kvt) || (tmp->rchild != NULL)){//tmp.data.first < k
+					else if (comp(/*tmp->data.first, k*/tmp->data, kvt)){//tmp.data.first < k
 						tmp = tmp->rchild;
 					}
 					else 

@@ -186,23 +186,23 @@ void test_map(){
 		it = m7.find(0);//pb
 		if (it == m7.end())
 			std::cout << "pas de clé == 0\n";
-		// it = m7.find(1);
-		// std::cout << "m7[" << it->first << "] = " << it->second << std::endl;
+		it = m7.find(1);
+		std::cout << "m7[" << it->first << "] = " << it->second << std::endl;
 		
-		// {//pb avec find donc ver const aussi
-		// 	std::cout << "\t\tfind version const_iterator\n";
-		// 	ft::map<int, char>::const_iterator cit = m7.find(0);
-		// 	if (cit == m7.end())
-		// 		std::cout << "pas de clé == 0\n";
-		// }
-		// {
-		// 	ft::map<int, char>::const_iterator cit = m7.find(1);
-		// 	std::cout << "m7[" << cit->first << "] = " << cit->second << std::endl;
-		// }
+		{//pb avec find donc ver const aussi
+			std::cout << "\t\tfind version const_iterator\n";
+			ft::map<int, char>::const_iterator cit = m7.find(0);
+			if (cit == m7.end())
+				std::cout << "pas de clé == 0\n";
+		}
+		{
+			ft::map<int, char>::const_iterator cit = m7.find(1);
+			std::cout << "m7[" << cit->first << "] = " << cit->second << std::endl;
+		}
 
-		// std::cout << "\t\tcount\n";
-		// std::cout << "il y a " << m7.count(0) << " element avec la clé 0\n";//comme find pb, count aussi
-		// std::cout << "il y a " << m7.count(1) << " element avec la clé 1\n";
+		std::cout << "\t\tcount\n";
+		std::cout << "il y a " << m7.count(0) << " element avec la clé 0\n";//comme find pb, count aussi
+		std::cout << "il y a " << m7.count(1) << " element avec la clé 1\n";
 	// }
 	// {
 		// std::cout << "\t\tlower_bound, upper_bound et equal_range\n";
