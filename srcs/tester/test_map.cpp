@@ -169,86 +169,88 @@ void test_map(){
 		// if (m6.empty() == true)
 		// 	std::cout << "m6 est vide\n";
 	}
+	{//pb
+		// std::cout << "\ttests de find, count, lower et upper bound et equal_range\n";
+		// ft::map<int, char>m7;
+		// m7[1] = 'a';
+		// m7[2] = 'b';
+		// m7[4] = 'd';
+		// m7[5] = 'e';
+		// for (ft::map<int, char>::iterator it5 = m7.begin(); it5 != m7.end(); it5++){
+		// 	std::cout << "m7[" << it5->first << "] = " << it5->second << std::endl;
+		// }
+		// std::cout << "\t\tfind\n";
+		// ft::map<int, char>::iterator it;
+		// it = m7.find(0);//pb
+		// if (it == m7.end())
+		// 	std::cout << "pas de clé == 0\n";
+		// it = m7.find(1);
+		// std::cout << "m7[" << it->first << "] = " << it->second << std::endl;
+		
+		// {//pb avec find donc ver const aussi
+		// 	std::cout << "\t\tfind version const_iterator\n";
+		// 	ft::map<int, char>::const_iterator cit = m7.find(0);
+		// 	if (cit == m7.end())
+		// 		std::cout << "pas de clé == 0\n";
+		// }
+		// {
+		// 	ft::map<int, char>::const_iterator cit = m7.find(1);
+		// 	std::cout << "m7[" << cit->first << "] = " << cit->second << std::endl;
+		// }
+
+		// std::cout << "\t\tcount\n";
+		// std::cout << "il y a " << m7.count(0) << " element avec la clé 0\n";//comme find pb, count aussi
+		// std::cout << "il y a " << m7.count(1) << " element avec la clé 1\n";
+	}
 	{
-		std::cout << "\ttests de find, count, lower et upper bound et equal_range\n";
-		ft::map<int, char>m7;
-		m7[1] = 'a';
-		m7[2] = 'b';
-		m7[4] = 'd';
-		m7[5] = 'e';
-		for (ft::map<int, char>::iterator it5 = m7.begin(); it5 != m7.end(); it5++){
-			std::cout << "m7[" << it5->first << "] = " << it5->second << std::endl;
-		}
-		std::cout << "\t\tfind\n";
-		ft::map<int, char>::iterator it;
-		it = m7.find(0);
-		if (it == m7.end())
-			std::cout << "pas de clé == 0\n";
-		it = m7.find(1);
-		std::cout << "m7[" << it->first << "] = " << it->second << std::endl;
+		// std::cout << "\t\tlower_bound, upper_bound et equal_range\n";
+		// ft::map<int, char>::iterator low;
+		// ft::map<int, char>::iterator up;
+		// ft::pair<ft::map<int, char>::iterator, ft::map<int, char>::iterator> p;
+		// low = m7.lower_bound(6);
+		// if (low == m7.end())
+		// 	std::cout << "pas de lower_bound pour 6\n";
+		// up = m7.upper_bound(6);
+		// if (up == m7.end())
+		// 	std::cout << "pas de upper_bound pour 6\n";
+		// p = m7.equal_range(6);
+		// if (p.first == low && p.second == up)
+		// 	std::cout << "equal_range fonctionne comme prevu\n";
 		
-		{
-			std::cout << "\t\tfind version const_iterator\n";
-			ft::map<int, char>::const_iterator cit = m7.find(0);
-			if (cit == m7.end())
-				std::cout << "pas de clé == 0\n";
-		}
-		{
-			ft::map<int, char>::const_iterator cit = m7.find(1);
-			std::cout << "m7[" << cit->first << "] = " << cit->second << std::endl;
-		}
-
-		std::cout << "\t\tcount\n";
-		std::cout << "il y a " << m7.count(0) << " element avec la clé 0\n";
-		std::cout << "il y a " << m7.count(1) << " element avec la clé 1\n";
-
-		std::cout << "\t\tlower_bound, upper_bound et equal_range\n";
-		ft::map<int, char>::iterator low;
-		ft::map<int, char>::iterator up;
-		ft::pair<ft::map<int, char>::iterator, ft::map<int, char>::iterator> p;
-		low = m7.lower_bound(6);
-		if (low == m7.end())
-			std::cout << "pas de lower_bound pour 6\n";
-		up = m7.upper_bound(6);
-		if (up == m7.end())
-			std::cout << "pas de upper_bound pour 6\n";
-		p = m7.equal_range(6);
-		if (p.first == low && p.second == up)
-			std::cout << "equal_range fonctionne comme prevu\n";
+		// low = m7.lower_bound(1);
+		// std::cout << "lower_bound de 1 : "<< "m7[" << low->first << "] = " << low->second << std::endl;
+		// up = m7.upper_bound(1);
+		// std::cout << "upper_bound de 1 : "<< "m7[" << up->first << "] = " << up->second << std::endl;
+		// p = m7.equal_range(1);
+		// if (p.first == low && p.second == up)
+		// 	std::cout << "equal_range fonctionne comme prevu\n";
 		
-		low = m7.lower_bound(1);
-		std::cout << "lower_bound de 1 : "<< "m7[" << low->first << "] = " << low->second << std::endl;
-		up = m7.upper_bound(1);
-		std::cout << "upper_bound de 1 : "<< "m7[" << up->first << "] = " << up->second << std::endl;
-		p = m7.equal_range(1);
-		if (p.first == low && p.second == up)
-			std::cout << "equal_range fonctionne comme prevu\n";
+		// low = m7.lower_bound(3);
+		// std::cout << "lower_bound de 3 : "<< "m7[" << low->first << "] = " << low->second << std::endl;
+		// up = m7.upper_bound(3);
+		// std::cout << "upper_bound de 3 : "<< "m7[" << up->first << "] = " << up->second << std::endl;
+		// p = m7.equal_range(3);
+		// if (p.first == low && p.second == up)
+		// 	std::cout << "equal_range fonctionne comme prevu\n";
 		
-		low = m7.lower_bound(3);
-		std::cout << "lower_bound de 3 : "<< "m7[" << low->first << "] = " << low->second << std::endl;
-		up = m7.upper_bound(3);
-		std::cout << "upper_bound de 3 : "<< "m7[" << up->first << "] = " << up->second << std::endl;
-		p = m7.equal_range(3);
-		if (p.first == low && p.second == up)
-			std::cout << "equal_range fonctionne comme prevu\n";
-		
-		low = m7.lower_bound(0);
-		std::cout << "lower_bound de 0 : "<< "m7[" << low->first << "] = " << low->second << std::endl;
-		up = m7.upper_bound(0);
-		std::cout << "upper_bound de 0 : "<< "m7[" << up->first << "] = " << up->second << std::endl;
-		p = m7.equal_range(0);
-		if (p.first == low && p.second == up)
-			std::cout << "equal_range fonctionne comme prevu\n";
+		// low = m7.lower_bound(0);
+		// std::cout << "lower_bound de 0 : "<< "m7[" << low->first << "] = " << low->second << std::endl;
+		// up = m7.upper_bound(0);
+		// std::cout << "upper_bound de 0 : "<< "m7[" << up->first << "] = " << up->second << std::endl;
+		// p = m7.equal_range(0);
+		// if (p.first == low && p.second == up)
+		// 	std::cout << "equal_range fonctionne comme prevu\n";
 		
 		// std::cout << "\t\tlower_bound, upper_bound et equal_range version const\n";
 		// {
-		// 	ft::map<int, char>::const_iterator low = m7.lower_bound(0);
-		// 	ft::map<int, char>::const_iterator up = m7.upper_bound(0);
-		// 	ft::pair<ft::map<int, char>::const_iterator, ft::map<int, char>::const_iterator> p = m7.equal_range(0);
-		// 	if (low == m7.end())
-		// 		std::cout << "pas de lower_bound pour 0\n";
+		// 	ft::map<int, char>::const_iterator ce = m7.end();
+		// 	ft::map<int, char>::const_iterator low = m7.lower_bound(6);
+		// 	ft::map<int, char>::const_iterator up = m7.upper_bound(6);
+		// 	ft::pair<ft::map<int, char>::const_iterator, ft::map<int, char>::const_iterator> p = m7.equal_range(6);
+		// 	if (low == ce)
+		// 		std::cout << "pas de lower_bound pour 6\n";
 		// 	if (up == m7.end())
-		// 		std::cout << "pas de upper_bound pour 0\n";
+		// 		std::cout << "pas de upper_bound pour 6\n";
 		// 	if (p.first == low && p.second == up)
 		// 		std::cout << "equal_range fonctionne comme prevu\n";
 		// }
@@ -267,6 +269,16 @@ void test_map(){
 		// 	ft::pair<ft::map<int, char>::const_iterator, ft::map<int, char>::const_iterator> p = m7.equal_range(3);
 		// 	std::cout << "lower_bound de 3 : "<< "m7[" << low->first << "] = " << low->second << std::endl;
 		// 	std::cout << "upper_bound de 3 : "<< "m7[" << up->first << "] = " << up->second << std::endl;
+		// 	if (p.first == low && p.second == up)
+		// 		std::cout << "equal_range fonctionne comme prevu\n";
+		// }
+		// {
+		// 	// ft::map<int, char>::const_iterator ce = m7.end();
+		// 	ft::map<int, char>::const_iterator low = m7.lower_bound(0);
+		// 	ft::map<int, char>::const_iterator up = m7.upper_bound(0);
+		// 	ft::pair<ft::map<int, char>::const_iterator, ft::map<int, char>::const_iterator> p = m7.equal_range(0);
+		// 	std::cout << "lower_bound de 0 : "<< "m7[" << low->first << "] = " << low->second << std::endl;
+		// 	std::cout << "upper_bound de 0 : "<< "m7[" << up->first << "] = " << up->second << std::endl;
 		// 	if (p.first == low && p.second == up)
 		// 		std::cout << "equal_range fonctionne comme prevu\n";
 		// }

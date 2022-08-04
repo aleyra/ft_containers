@@ -166,10 +166,17 @@ namespace ft{
 		// value_compare	value_comp() const{}//?
 
 		//member functions: operations
-		iterator		find(const key_type & k){return this->tree.find(k);}
-		const_iterator	find(const key_type & k) const{return this->tree.find(k);}
+		iterator		find(const key_type & k){
+			iterator it = this->tree.find(k);
+			if (it != this->tree.end()){
+				// std::cout << "(" << it->first << ", " << it->second << ")\n";
+				return it;
+			}
+			return end();
+		}//?
+		const_iterator	find(const key_type & k) const{return this->tree.find(k);}//?
 
-		size_type	count(const key_type & k) const{return ((find(k) != end()) ? 1 : 0);}
+		size_type	count(const key_type & k) const{return ((find(k) != end()) ? 1 : 0);}//?
 
 		iterator		lower_bound(const key_type & k){
 			for (iterator it = begin(); it != end(); it++){
@@ -202,8 +209,8 @@ namespace ft{
 		}
 
 		pair<iterator, iterator>				equal_range(const key_type & k){
-			const_iterator	low = lower_bound(k);
-			const_iterator	up = upper_bound(k);
+			iterator	low = lower_bound(k);
+			iterator	up = upper_bound(k);
 
 			return (ft::make_pair(low, up));
 		}
@@ -217,9 +224,6 @@ namespace ft{
 		//member functions: allocator
 		allocator_type	get_allocator() const{return this->get_allocator();}
 
-		node*	root(){
-			return (this->tree.root);
-		}
 // 		protected:
 
 // 		private:

@@ -823,8 +823,10 @@ namespace ft{
 				value_type	kvt = ft::make_pair(k, mapped_type());
 				_node*		tmp = root;
 				bool		b = false;
-				while (b == false && tmp != NULL){
+				while (b == false && tmp != NULL){//mon comp est pété ? pourquoi je vais pas dans le 1e if une deuxieme fois ?
+					// std::cout << "tmp.data.f = " << tmp->data.first << " et k = " << kvt.first << std::endl;//
 					if (comp(/*k, tmp->data.first*/kvt, tmp->data) && (tmp->lchild != NULL)){//k < tmp.data.first
+						// std::cout << "tmp.lc = " << tmp->lchild << std::endl;//
 						tmp = tmp->lchild;
 					}
 					else if (comp(/*tmp->data.first, k*/tmp->data, kvt) && (tmp->rchild != NULL)){//tmp.data.first < k
@@ -833,6 +835,7 @@ namespace ft{
 					else 
 						b = true;
 				}
+				// std::cout << "tmp final = " << tmp << std::endl;//
 				if (tmp == NULL)
 					return (end());
 				return (iterator(tmp));
