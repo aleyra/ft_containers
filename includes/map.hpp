@@ -71,7 +71,7 @@ namespace ft{
 		template <class InputIterator>
 		map (InputIterator first, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type last,
 			const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()):comp(comp), tree(first, last, value_compare(comp), alloc){}
-		
+
 		//member functions: iterators
 		iterator		begin(){return this->tree.begin();}
 		const_iterator	begin() const{return this->tree.begin();};
@@ -102,7 +102,7 @@ namespace ft{
 		mapped_type &	operator[](const key_type & k){
 			value_type				kvt = ft::make_pair(k, mapped_type());
 			pair<iterator, bool>	res = insert(kvt);
-			return ((res.first)->second);			
+			return ((res.first)->second);
 		}
 
 // 		//member functions: modifiers
@@ -220,7 +220,7 @@ namespace ft{
 
 			return (ft::make_pair(low, up));
 		}
-		
+
 		//member functions: allocator
 		allocator_type	get_allocator() const{return pair_alloc();}
 
