@@ -405,10 +405,10 @@ namespace ft{
 				_node*		x = NULL;//will be parent of deallocate node.
 				int	rcd, lcd, max;
 				while (b == false && tmp != NULL){
-					if (comp(/*k, tmp->data.first*/kvt, tmp->data)){//k < tmp.data.first
+					if (comp(kvt, tmp->data)){//k < tmp.data.first
 						tmp = tmp->lchild;
 					}
-					else if (comp(/*tmp->data.first, k*/tmp->data, kvt)){//tmp.data.first < k
+					else if (comp(tmp->data, kvt)){//tmp.data.first < k
 						tmp = tmp->rchild;
 					}
 					else{// k = tmp.data.first //tmp est la node a erase
@@ -453,21 +453,12 @@ namespace ft{
 							}
 						}
 						else {//tmp n'a pas de lc ou il a un lc qui a lui meme une descendance
-					// std::cout << "in erase\n";//
-							// std::cout << "tmp.data.f = " << tmp->data.first << std::endl;//
 							_node*	t = tmp->lchild;
 							while (t != NULL && t->rchild != NULL){
 								t = t->rchild;
 							}
-							// if (tmp->data.first == 5)
-								// std::cout << "t.data.f = " << t->data.first << std::endl;//
 							if (t != NULL){//petite secu avant les manip
 								x = t;
-								// while (t != NULL){
-								// 	swap_nodes_data(t->parent, t);
-								//	 x = t;
-								// 	t = t->lchild;
-								// }
 								swap_nodes_data(tmp, t);
 								x = t->parent;
 								clear(x->rchild);

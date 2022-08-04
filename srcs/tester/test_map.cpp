@@ -22,9 +22,9 @@ void test_map(){
 		// 	std::cout << "m1 n'est plus vide\n";
 
 		// std::cout << "\t\tbegin() et end()\n";
-		// for (ft::map<int, char>::iterator it = m1.begin(); it != m1.end(); it++){
-		// 	std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
-		// }
+		for (ft::map<int, char>::iterator it = m1.begin(); it != m1.end(); it++){
+			std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
+		}
 		{
 			// std::cout << "\t\toperateur [] pour la recuperation de la value\n";
 			// std::cout << "m1[1] = " << m1[1] << std::endl;
