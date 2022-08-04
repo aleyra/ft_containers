@@ -128,12 +128,6 @@ namespace ft{
 		void		erase(iterator first, iterator last){
 			iterator	it = first;
 			iterator	next;
-			// std::cout << "(" << this->tree.root->data.first << ", " << this->tree.root->data.second << ")\n";
-			// 	std::cout << "\tn = " << this->tree.root << std::endl;
-			// 	std::cout << "\tparent = " << this->tree.root->parent << std::endl;
-			// 	std::cout << "\tdepth = " << this->tree.root->depth << std::endl;
-			// 	std::cout << "\tlchild = " << this->tree.root->lchild << std::endl;
-			// 	std::cout << "\trchild = " << this->tree.root->rchild << std::endl;
 			while (it != last){
 				next = ++it;
 				--it;
@@ -141,12 +135,6 @@ namespace ft{
 				this->tree.erase(it->first);
 				it = iterator(next.base());
 			}
-			// std::cout << "(" << this->tree.root->data.first << ", " << this->tree.root->data.second << ")\n";
-			// 	std::cout << "\tn = " << this->tree.root << std::endl;
-			// 	std::cout << "\tparent = " << this->tree.root->parent << std::endl;
-			// 	std::cout << "\tdepth = " << this->tree.root->depth << std::endl;
-			// 	std::cout << "\tlchild = " << this->tree.root->lchild << std::endl;
-			// 	std::cout << "\trchild = " << this->tree.root->rchild << std::endl;
 		}
 
 		void	swap(map & x){

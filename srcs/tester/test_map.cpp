@@ -22,9 +22,9 @@ void test_map(){
 		// 	std::cout << "m1 n'est plus vide\n";
 
 		// std::cout << "\t\tbegin() et end()\n";
-		// for (ft::map<int, char>::iterator it = m1.begin(); it != m1.end(); it++){
-		// 	std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
-		// }
+		for (ft::map<int, char>::iterator it = m1.begin(); it != m1.end(); it++){
+			std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
+		}
 		{
 			// std::cout << "\t\toperateur [] pour la recuperation de la value\n";
 			// std::cout << "m1[1] = " << m1[1] << std::endl;
@@ -56,7 +56,7 @@ void test_map(){
 			std::cout << "\n\ttests de rbegin, rend, const begin\n";
 			std::cout << "\t\trbegin et rend\n";
 			ft::map<int, char>::reverse_iterator it = m1.rbegin();//pb
-			std::cout << "m[" << it->first << "] = " << it->second << std::endl;// -> m[3] = c au lieu de m[4] = d
+			std::cout << "m1[" << it->first << "] = " << it->second << std::endl;// -> m[3] = c au lieu de m[4] = d
 			// it++;
 			// std::cout << "m[" << it->first << "] = " << it->second << std::endl;
 
