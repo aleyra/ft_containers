@@ -53,76 +53,76 @@ void test_map(){
 			////tester (begin--)++ et end--//
 		}
 		{//pb
-			std::cout << "\n\ttests de rbegin, rend, const begin et end\n";
-			std::cout << "\t\trbegin et rend\n";
-			ft::map<int, char>::reverse_iterator it = m1.rbegin();//pb
-			std::cout << "m[" << it->first << "] = " << it->second << std::endl;// -> m[3] = c au lieu de m[4] = d
-			it++;
-			std::cout << "m[" << it->first << "] = " << it->second << std::endl;
+			// std::cout << "\n\ttests de rbegin, rend, const begin et end\n";
+			// std::cout << "\t\trbegin et rend\n";
+			// ft::map<int, char>::reverse_iterator it = m1.rbegin();//pb
+			// std::cout << "m[" << it->first << "] = " << it->second << std::endl;// -> m[3] = c au lieu de m[4] = d
+			// it++;
+			// std::cout << "m[" << it->first << "] = " << it->second << std::endl;
 
-			for (ft::map<int, char>::reverse_iterator it = m1.rbegin(); it != m1.rend(); it++){
-				std::cout << "m[" << it->first << "] = " << it->second << std::endl;
-			}
-			std::cout << "\t\tversion const de begin\t";
-			ft::map<int, char>::const_iterator citb = m1.begin();
-			std::cout << "m[" << citb->first << "] = " << citb->second << std::endl;
-			std::cout << "\t\tversion const de --end\t" << std::flush;
-			ft::map<int, char>::const_iterator cite = m1.end();
-			--cite;
-			std::cout << "m[" << cite->first << "] = " << cite->second << std::endl;
-			std::cout << "\t\tversion const de rbegin\t";
-			ft::map<int, char>::const_iterator critb = m1.begin();
-			std::cout << "m[" << critb->first << "] = " << critb->second << std::endl;
-			std::cout << "\t\tversion const de end--\t";
-			ft::map<int, char>::const_iterator crite = m1.end();
-			cite--;
-			std::cout << "m[" << crite->first << "] = " << crite->second << std::endl;
+			// for (ft::map<int, char>::reverse_iterator it = m1.rbegin(); it != m1.rend(); it++){
+			// 	std::cout << "m[" << it->first << "] = " << it->second << std::endl;
+			// }
+			// std::cout << "\t\tversion const de begin\t";
+			// ft::map<int, char>::const_iterator citb = m1.begin();
+			// std::cout << "m[" << citb->first << "] = " << citb->second << std::endl;
+			// std::cout << "\t\tversion const de --end\t" << std::flush;
+			// ft::map<int, char>::const_iterator cite = m1.end();
+			// --cite;
+			// std::cout << "m[" << cite->first << "] = " << cite->second << std::endl;
+			// std::cout << "\t\tversion const de rbegin\t";
+			// ft::map<int, char>::const_iterator critb = m1.begin();
+			// std::cout << "m[" << critb->first << "] = " << critb->second << std::endl;
+			// std::cout << "\t\tversion const de end--\t";
+			// ft::map<int, char>::const_iterator crite = m1.end();
+			// cite--;
+			// std::cout << "m[" << crite->first << "] = " << crite->second << std::endl;
 		}
 		{
 			// std::cout << "\n\ttests de size et max_size\n";
 			// std::cout << "size = " << m1.size() << "\tmax_size = " << m1.max_size() << std::endl;
 		}
 		{
-			// std::cout << "\n\ttest des inserts\n";
-			// ft::map<int, char> m5;
+			std::cout << "\n\ttest des inserts\n";
+			ft::map<int, char> m5;
 			// std::cout << "\t\tinsert de val dans m5 (vide)\n";
-			// ft::pair<ft::map<int, char>::iterator, bool> p = m5.insert(ft::make_pair(0, 'z'));
+			ft::pair<ft::map<int, char>::iterator, bool> p = m5.insert(ft::make_pair(0, 'z'));
 			// if (p.second == true)
 			// 	std::cout << "insert de (0, z) reussi\n";
 			// std::cout << "m5[" << p.first->first << "] = " << p.first->second << std::endl;
-			// p = m5.insert(ft::make_pair(0, 'A'));
+			p = m5.insert(ft::make_pair(0, 'A'));
 			// if (p.second == false)
 			// 	std::cout << "insert de (0, A) echec\n";
 			// std::cout << "m5[" << p.first->first << "] = " << p.first->second << std::endl;
-			// m5[5] = 'e';
-			// m5[7] = 'g';
-			// ft::map<int, char>::iterator it = m5.begin();
-			// it++;
+			m5[5] = 'e';
+			m5[7] = 'g';
+			ft::map<int, char>::iterator it = m5.begin();
+			it++;
 			// std::cout << "\t\tinsert depuis une position\n";
 			// std::cout << "selection d'un iterator\n";
 			// std::cout << "m5[" << it->first << "] = " << it->second << std::endl;
-			// it = m5.insert(it, ft::make_pair(6, 'f'));
+			it = m5.insert(it, ft::make_pair(6, 'f'));
 			// std::cout << "nouvel elem : ";
 			// std::cout << "m5[" << it->first << "] = " << it->second << std::endl;
 			// std::cout << "\t\tinsert par range de m5 dans m1\n";
-			// m1.insert(m5.begin(), m5.end());
-			// for (ft::map<int, char>::iterator it = m1.begin(); it != m1.end(); it++){
-			// 	std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
-			// }
+			m1.insert(m5.begin(), m5.end());
+			for (ft::map<int, char>::iterator it = m1.begin(); it != m1.end(); it++){
+				std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
+			}
 		}
 		{
-			// std::cout << "\n\ttests des erases\n";
-			// std::cout << "\t\terase par position\n";
-			// std::cout << "choix d'une position\n";
-			// ft::map<int, char>::iterator it = m1.begin();
-			// it++;
-			// std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
-			// m1.erase(it);
-			// std::cout << "contenu de m1 apres erase : \n";
-			// std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
-			// for (ft::map<int, char>::iterator it2 = m1.begin(); it2 != m1.end(); it2++){
-			// 	std::cout << "m1[" << it2->first << "] = " << it2->second << std::endl;
-			// }
+			std::cout << "\n\ttests des erases\n";
+			std::cout << "\t\terase par position\n";
+			std::cout << "choix d'une position\n";
+			ft::map<int, char>::iterator it = m1.begin();
+			it++;
+			std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
+			m1.erase(it);
+			std::cout << "contenu de m1 apres erase : \n";
+			std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
+			for (ft::map<int, char>::iterator it2 = m1.begin(); it2 != m1.end(); it2++){
+				std::cout << "m1[" << it2->first << "] = " << it2->second << std::endl;
+			}
 			// if (m1.erase(2) == 1)
 			// 	std::cout << "erase fait\n";
 			// std::cout << "contenu de m1 apres erase de 2 : \n";
@@ -144,7 +144,6 @@ void test_map(){
 			// for (ft::map<int, char>::iterator it3 = m1.begin(); it3 != m1.end(); it3++){
 			// 	std::cout << "m1[" << it3->first << "] = " << it3->second << std::endl;
 			// }
-			// ft::print_node(m1.root());
 		}
 		{
 			// std::cout << "\ttest de swap et clear\n";
