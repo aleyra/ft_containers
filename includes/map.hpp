@@ -131,7 +131,6 @@ namespace ft{
 			while (it != last){
 				next = ++it;
 				--it;
-				std::cout << "on efface " << it->first << std::endl;//
 				this->tree.erase(it->first);
 				it = iterator(next.base());
 			}
