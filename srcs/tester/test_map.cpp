@@ -53,7 +53,7 @@ void test_map(){
 			////tester (begin--)++ et end--//
 		}
 		{//pb
-			std::cout << "\n\ttests de rbegin, rend, const begin\n";
+			std::cout << "\n\ttests de rbegin, rend, const begin et end\n";
 			std::cout << "\t\trbegin et rend\n";
 			ft::map<int, char>::reverse_iterator it = m1.rbegin();//pb
 			std::cout << "m[" << it->first << "] = " << it->second << std::endl;// -> m[3] = c au lieu de m[4] = d
@@ -66,6 +66,17 @@ void test_map(){
 			std::cout << "\t\tversion const de begin\t";
 			ft::map<int, char>::const_iterator citb = m1.begin();
 			std::cout << "m[" << citb->first << "] = " << citb->second << std::endl;
+			std::cout << "\t\tversion const de --end\t" << std::flush;
+			ft::map<int, char>::const_iterator cite = m1.end();
+			--cite;
+			std::cout << "m[" << cite->first << "] = " << cite->second << std::endl;
+			std::cout << "\t\tversion const de rbegin\t";
+			ft::map<int, char>::const_iterator critb = m1.begin();
+			std::cout << "m[" << critb->first << "] = " << critb->second << std::endl;
+			std::cout << "\t\tversion const de end--\t";
+			ft::map<int, char>::const_iterator crite = m1.end();
+			cite--;
+			std::cout << "m[" << crite->first << "] = " << crite->second << std::endl;
 		}
 		{
 			// std::cout << "\n\ttests de size et max_size\n";

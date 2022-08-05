@@ -78,7 +78,6 @@ namespace ft{
 
 		public:
 			avl_iterator(const avl_iterator &src){*this = src;}
-			avl_iterator(node_type* root, node_type* current) : current(current), root(root) {}
 			virtual ~avl_iterator(){}
 			avl_iterator & operator=(const avl_iterator &src){
 				current = src.current;
@@ -147,6 +146,7 @@ namespace ft{
 				return (tmp);
 			}
 
+			avl_iterator(node_type* root, node_type* current) : current(current), root(root) {}
 			node_type*	base(){return current;}
 			node_type*	base() const {return current;}
 	};
@@ -173,7 +173,6 @@ namespace ft{
 
 		public:
 			avl_const_iterator(const avl_const_iterator &src){*this = src;}
-			avl_const_iterator(node_type* root, node_type* current) : current(current), root(root) {}
 			virtual ~avl_const_iterator(){}
 			avl_const_iterator & operator=(const avl_const_iterator &src){
 				current = src.current;
@@ -214,6 +213,13 @@ namespace ft{
 			avl_const_iterator() : current(NULL), root(NULL) {}
 
 			avl_const_iterator &	operator--(){
+				if (current == NULL) {
+					current = root;
+					while (current != NULL && current->rchild != NULL) {
+						current = current->rchild;
+					}
+					return (*this);
+				}
 				if (current->lchild != NULL){
 					current = current->lchild;
 					while (current && current->lchild != NULL)
@@ -240,6 +246,7 @@ namespace ft{
 				current = it.base();
 			}
 
+			avl_const_iterator(node_type* root, node_type* current) : current(current), root(root) {}
 			node_type*	base(){return current;}
 	};
 
@@ -770,12 +777,8 @@ namespace ft{
 
 			iterator		begin(){return (iterator(root, getFirst()));}
 			const_iterator	begin() const{return (const_iterator(root, getFirst()));}
-			iterator		end(){
-				return (iterator(root, NULL));
-			}
-			const_iterator	end() const{
-				return (const_iterator(root, NULL));
-			}
+			iterator		end(){return (iterator(root, NULL));}
+			const_iterator	end() const{return (const_iterator(root, NULL));}
 
 			reverse_iterator		rbegin(){
 				iterator it(root, NULL);
