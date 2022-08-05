@@ -36,7 +36,7 @@ namespace ft{
 		#pragma region Canonical Form
 		private:
 			// vector():_alloct(allocator_type()), _capacity(0), _data(pointer()), _size(0){}
-		public:	
+		public:
 			vector(const vector & src){*this = src;}
 			virtual ~vector(){this->clear();}
 
@@ -47,7 +47,7 @@ namespace ft{
 				return (*this);
 			}
 		#pragma endregion Canonical Form
-		
+
 		#pragma region Member functions : Other constructors
 			explicit	vector(const allocator_type & alloc = allocator_type()):_alloct(alloc), _capacity(0), _data(pointer()), _size(0){}
 			explicit	vector(size_type n, const value_type & val = value_type(), const allocator_type & alloc = allocator_type()): _alloct(alloc), _data(pointer()), _size(0), _capacity(0){
@@ -74,7 +74,7 @@ namespace ft{
 			reverse_iterator		rend(){return reverse_iterator(this->begin());}
 			const_reverse_iterator	rend() const {return (const_reverse_iterator)this->begin();}
 		#pragma endregion Member functions : iterators
-		
+
 		#pragma region Member functions : capacity
 			size_type	size() const{return this->_size;}
 
@@ -128,8 +128,8 @@ namespace ft{
 			reference		front(){return (*this->_data);}
 			const_reference	front() const{return (*this->_data);}
 
-			reference		back(){return (*(this.end() - 1));}
-			const_reference	back() const{return (*(this.end() - 1));}
+			reference		back(){return (*(this->end() - 1));}
+			const_reference	back() const{return (*(this->end() - 1));}
 
 			value_type			*data(){return (this->_data);};
 			value_type const	*data() const{return (this->_data);};
@@ -189,25 +189,26 @@ namespace ft{
 			}
 			template <class InputIterator>
 			void		insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0){
-				size_type	i = position - this->_data;
-				size_type	d = std::distance(first, last);
+				size_type idx = position - _data;
+				size_type cnt = std::distance(first, last);
 
-				this->reserve(this->_size + d);
-				for (size_type j = 0; j < d; j++){//d'abord on prevoit la place pour les elem de la range
-					this->_alloct.construct(&(this->_data[this->_size + j]), *first);
+				this->reserve(_size + cnt);
+
+				for (size_type i = 0; i < cnt; ++i) {
+					_alloct.construct(_data + _size + i, *first);
 				}
-				for (difference_type j = this->_size - 1; i >= 0 && i >= (difference_type)i; --j){//on decale
-					this->_data[j + d] = this->_data[i];
+				for (difference_type i = _size - 1; i >= 0 && i >= (difference_type)idx; --i) {
+					_data[i + cnt] = _data[i];
 				}
-				for (size_type j = i; j < i + d; j++, first++){//on assigne les bonnes valeurs de la range au bon endroit
-					this->_data[j] = *first;
+				for (size_type i = idx; i < idx + cnt; ++i) {
+					_data[i] = *first++;
 				}
-				this->_size = d;
+				_size += cnt;
 			}
 
 			iterator	erase(iterator position){
 				if (position + 1 != this->end()){//on decale
-					std::copy(position + 1, this.end(), position);
+					std::copy(position + 1, this->end(), position);
 				}
 				this->_size--;
 				this->_alloct.destroy(&(this->_data[this->_size]));
@@ -215,10 +216,10 @@ namespace ft{
 			}
 			iterator	erase(iterator first, iterator last){
 				if (first != last){
-					if (last != this.end()){
-						std::copy(last, this.end(), first);
+					if (last != this->end()){
+						std::copy(last, this->end(), first);
 					}
-					this->destroy_from(first + (this.end() - last));
+					this->destroy_from(first + (this->end() - last));
 				}
 				return first;
 			}
@@ -241,7 +242,7 @@ namespace ft{
 		#pragma endregion Member functions : modifiers
 			//member functions: allocator
 			allocator_type get_alloct() const{return (this->_alloct);}
-			
+
 		protected:
 
 		#pragma region Tools
