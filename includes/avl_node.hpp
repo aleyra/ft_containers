@@ -38,14 +38,14 @@ class avl_node
 
 	private:
 		pair_type	_data;
-		size_type	_height;
+		size_type	_depth;
 		node_ptr 	left;
 		node_ptr 	right;
 		Compare	key_compare;
 
 	public:
 		avl_node(pair_type data)
-			: _data(data), _height(1), left(NULL), right(NULL)
+			: _data(data), _depth(1), left(NULL), right(NULL)
 		{	}
 
 		const key_type& key() const
@@ -63,12 +63,12 @@ class avl_node
 			return this->_data;
 		}
 
-		static size_type height(node *n)
+		static size_type depth(node *n)
 		{
 			if (n == NULL) {
 				return 0;
 			}
-			return n->_height;
+			return n->_depth;
 		}
 
 		static balance_type balance(node_ptr n)
@@ -76,7 +76,7 @@ class avl_node
 			if (n == NULL) {
 				return 0;
 			}
-			return height(n->left) - height(n->right);
+			return depth(n->left) - depth(n->right);
 		}
 
 		static node_ptr right_rotate(node_ptr y)
@@ -88,13 +88,13 @@ class avl_node
 			x->right = y;
 			y->left = t2;
 
-			y->_height =	std::max(
-								height(y->left),
-								height(y->right)
+			y->_depth =	std::max(
+								depth(y->left),
+								depth(y->right)
 								) + 1;
-			x->_height =	std::max(
-								height(x->left),
-								height(x->right)
+			x->_depth =	std::max(
+								depth(x->left),
+								depth(x->right)
 							) + 1;
 
 			return x;
@@ -109,13 +109,13 @@ class avl_node
 			y->left = x;
 			x->right = t2;
 
-			x->_height =	std::max(
-								height(x->left),
-								height(x->right)
+			x->_depth =	std::max(
+								depth(x->left),
+								depth(x->right)
 							) + 1;
-			y->_height =	std::max(
-								height(y->left),
-								height(y->right)
+			y->_depth =	std::max(
+								depth(y->left),
+								depth(y->right)
 							) + 1;
 
 			return y;
@@ -158,9 +158,9 @@ class avl_node
 				return node;
 			}
 
-			node->_height = 1 + std::max(
-									height(node->left),
-									height(node->right)
+			node->_depth = 1 + std::max(
+									depth(node->left),
+									depth(node->right)
 								);
 
 			int bal = balance(node);
@@ -252,9 +252,9 @@ class avl_node
 				return root;
 			}
 
-			root->_height =	std::max(
-									height(root->left),
-									height(root->right)
+			root->_depth =	std::max(
+									depth(root->left),
+									depth(root->right)
 							) + 1;
 
 			int bal = balance(root);
