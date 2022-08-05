@@ -138,13 +138,13 @@ namespace ft{
 		#pragma region Member functions : modifiers
 			template<class InputIterator>
 			void	assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0){
-				this->clear();//en premier pour que reserve ne copie rien
+				this->clear();
 				for (; first != last; ++first){
 					this->push_back(*first);
 				}
 			}
 			void	assign(size_type n, const value_type & val){
-				this->clear();
+				this->clear();//en premier pour que reserve ne copie rien
 				this->reserve(n);
 				for (size_type i = 0; i < n; i++)
 					this->_alloct.construct(&this->_data[i], val);
