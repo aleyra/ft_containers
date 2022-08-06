@@ -68,8 +68,7 @@ namespace ft{
 				return x;
 			}
 
-			static node_ptr left_rotate(node_ptr x)
-			{
+			static node_ptr left_rotate(node_ptr x){
 				node_ptr y = x->right;
 				avl_node *t2 = y->left;
 
@@ -77,14 +76,9 @@ namespace ft{
 				y->left = x;
 				x->right = t2;
 
-				x->_depth =	std::max(
-									depth(x->left),
-									depth(x->right)
-								) + 1;
-				y->_depth =	std::max(
-									depth(y->left),
-									depth(y->right)
-								) + 1;
+				//adapt depth
+				x->_depth =	std::max(depth(x->left), depth(x->right)) + 1;
+				y->_depth =	std::max(depth(y->left), depth(y->right)) + 1;
 
 				return y;
 			}
