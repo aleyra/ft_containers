@@ -129,10 +129,10 @@ namespace ft{
 			}
 		}
 
-		void erase(iterator pos){
-			this->_tree.erase(pos->first);
+		void erase(iterator position){
+			this->_tree.erase(position->first);
 		}
-		size_type erase(const Key& key){
+		size_type erase(const key_type& key){
 			size_type ret = (_tree.find_node(key) != NULL);
 			this->_tree.erase(key);
 			return ret;
