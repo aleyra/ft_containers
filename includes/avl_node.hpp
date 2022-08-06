@@ -117,17 +117,15 @@ namespace ft{
 
 				int bal = balance(node);
 
+				//Make balanced
 				if (bal > 1 && data.first < node->left->key())// Left Left case
 					return right_rotate(node);
-
 				else if (bal < -1 && data.first > node->right->key())// Right Right case
 					return left_rotate(node);
-
 				else if (bal > 1 && data.first > node->left->key()){// Left Right case
 					node->left = left_rotate(node->left);
 					return right_rotate(node);
 				}
-
 				else if (bal < -1 && data.first < node->right->key()){// Right Left case
 					node->right = right_rotate(node->right);
 					return left_rotate(node);
@@ -138,7 +136,7 @@ namespace ft{
 			static node_ptr min(node_ptr node){
 				node_ptr	current = node;
 
-				while (current->left != NULL) {
+				while (current->left != NULL){
 					current = current->left;
 				}
 				return current;
@@ -147,7 +145,7 @@ namespace ft{
 			static node_ptr max(node_ptr node){
 				node_ptr	current = node;
 
-				while (current->right != NULL) {
+				while (current->right != NULL){
 					current = current->right;
 				}
 				return current;
