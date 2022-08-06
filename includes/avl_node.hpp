@@ -95,57 +95,43 @@ namespace ft{
 				return NULL;
 			}
 
-			static node_ptr new_node(pair_type data, node_allocator& alloc)
-			{
+			static node_ptr new_node(pair_type data, node_allocator& alloc){
 				node_ptr node = alloc.allocate(1);
 				alloc.construct(node, data);
 				return node;
 			}
 
-			static node_ptr insert(node_ptr node, pair_type data, node_allocator& alloc)
-			{
-				if (node == NULL) {
+			static node_ptr insert(node_ptr node, pair_type data, node_allocator& alloc){
+				if (node == NULL)
 					return(new_node(data, alloc));
-				}
-				if (data.first < node->key()) {
+				
+				//search for where to create
+				if (data.first < node->key())
 					node->left = insert(node->left, data, alloc);
-				}
-				else if (data.first > node->key()) {
+				else if (data.first > node->key())
 					node->right = insert(node->right, data, alloc);
-				}
-				else { // Duplicate keys are not allowed
+				else// Duplicate keys are not allowed
 					return node;
-				}
 
-				node->_depth = 1 + std::max(
-										depth(node->left),
-										depth(node->right)
-									);
+				node->_depth = 1 + std::max(depth(node->left), depth(node->right));
 
 				int bal = balance(node);
 
-				// Left Left
-				if (bal > 1 && data.first < node->left->key()) {
+				if (bal > 1 && data.first < node->left->key())// Left Left case
 					return right_rotate(node);
-				}
 
-				// Right Right
-				if (bal < -1 && data.first > node->right->key()) {
+				if (bal < -1 && data.first > node->right->key())// Right Right case
 					return left_rotate(node);
-				}
 
-				// Left Right
-				if (bal > 1 && data.first > node->left->key()) {
+				if (bal > 1 && data.first > node->left->key()){// Left Right case
 					node->left = left_rotate(node->left);
 					return right_rotate(node);
 				}
 
-				// Right Left
-				if (bal < -1 && data.first < node->right->key()) {
+				if (bal < -1 && data.first < node->right->key()){// Right Left case
 					node->right = right_rotate(node->right);
 					return left_rotate(node);
 				}
-
 				return node;
 			}
 
