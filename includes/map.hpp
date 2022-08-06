@@ -145,7 +145,7 @@ namespace ft{
 			}
 		}
 
-		void swap(map& other){this->_tree.swap(other._tree);}
+		void swap(map& x){this->_tree.swap(x._tree);}
 
 		void clear(){this->_tree.clear();}
 	#pragma endregion modifiers
