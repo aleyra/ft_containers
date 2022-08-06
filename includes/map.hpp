@@ -175,11 +175,11 @@ namespace ft{
 			return v;
 		}
 
-		iterator upper_bound(const Key& key){return iterator(this->_tree.root(), this->_tree.upper(key));}
-		const_iterator upper_bound(const Key& key) const{return const_iterator(this->_tree.root(), this->_tree.upper(key));}
+		iterator upper_bound(const key_type& k){return iterator(this->_tree.root(), this->_tree.upper(k));}
+		const_iterator upper_bound(const key_type& k) const{return const_iterator(this->_tree.root(), this->_tree.upper(k));}
 
-		ft::pair<iterator,iterator> equal_range(const Key& key){return ft::make_pair(lower_bound(key), upper_bound(key));}
-		ft::pair<const_iterator,const_iterator> equal_range(const Key& key) const{return ft::make_pair(lower_bound(key), upper_bound(key));}
+		ft::pair<iterator,iterator> equal_range(const key_type& k){return ft::make_pair(lower_bound(k), upper_bound(k));}
+		ft::pair<const_iterator,const_iterator> equal_range(const key_type& k) const{return ft::make_pair(lower_bound(k), upper_bound(k));}
 	#pragma endregion operations
 
 		allocator_type get_allocator() const{return allocator_type();}
