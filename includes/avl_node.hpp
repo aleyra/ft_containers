@@ -54,8 +54,8 @@ namespace ft{
 			}
 
 			static node_ptr right_rotate(node_ptr y){
-				node_ptr x = y->left;
-				node_ptr t2 = x->right;
+				node_ptr	x = y->left;
+				node_ptr	t2 = x->right;
 
 				// perform rotation
 				x->right = y;
@@ -69,8 +69,8 @@ namespace ft{
 			}
 
 			static node_ptr left_rotate(node_ptr x){
-				node_ptr y = x->right;
-				avl_node *t2 = y->left;
+				node_ptr	y = x->right;
+				avl_node	*t2 = y->left;
 
 				// perform rotation
 				y->left = x;
@@ -83,17 +83,14 @@ namespace ft{
 				return y;
 			}
 
-			static node_ptr find(node_ptr node, key_type key)
-			{
+			static node_ptr find(node_ptr node, key_type key){
 				while (node != NULL) {
-					if (node->key() == key) {
+					if (node->key() == key)
 						return node;
-					}
-					if (node->key_compare(key, node->key())) {
+					if (node->key_compare(key, node->key()))
 						node = node->left;
-					} else if (key > node->key()) {
+					else if (key > node->key())
 						node = node->right;
-					}
 				}
 				return NULL;
 			}
