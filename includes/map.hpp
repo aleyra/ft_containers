@@ -107,8 +107,8 @@ namespace ft{
 			return this->_tree.find(key).second;
 		}
 
-		mapped_type& at(const Key& key){return this->_tree.find(key).second;}
-		const mapped_type& at(const Key& key) const{return this->_tree.find(key).second;}
+		mapped_type& at(const key_type& key){return this->_tree.find(key).second;}
+		const mapped_type& at(const key_type& key) const{return this->_tree.find(key).second;}
 	#pragma endregion element access
 
 	#pragma region modifiers
