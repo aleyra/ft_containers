@@ -135,31 +135,25 @@ namespace ft{
 				return node;
 			}
 
-			static node_ptr min(node_ptr node)
-			{
-				node_ptr current = node;
+			static node_ptr min(node_ptr node){
+				node_ptr	current = node;
 
 				while (current->left != NULL) {
 					current = current->left;
 				}
-
 				return current;
 			}
 
-			static node_ptr max(node_ptr node)
-			{
-				node_ptr current = node;
+			static node_ptr max(node_ptr node){
+				node_ptr	current = node;
 
 				while (current->right != NULL) {
 					current = current->right;
 				}
-
 				return current;
 			}
 
-			// returns root of modified subtree
-			static node_ptr del_node(node_ptr root, key_type key, node_allocator& alloc)
-			{
+			static node_ptr del_node(node_ptr root, key_type key, node_allocator& alloc){// returns root of modified subtree
 				if (root == NULL) {
 					return root;
 				}
