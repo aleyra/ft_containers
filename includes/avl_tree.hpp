@@ -38,12 +38,20 @@ namespace ft{
 
 		#pragma region iterators
 			iterator begin(){
-				if (this->_size == 0) {
+				if (this->_size == 0)
 					return this->end();
-				}
 				return iterator(this->_root, this->min());
 			}
+			const_iterator begin() const{
+				if (this->_size == 0)
+					return this->end();
+				return const_iterator(this->_root, this->min());
+			}
+			
 			iterator end(){return iterator(this->_root, NULL);}
+			const_iterator end() const{
+				return const_iterator(this->_root, NULL);
+			}
 
 		#pragma endregion iterators
 
@@ -70,18 +78,6 @@ namespace ft{
 			
 			node_ptr root(){return _root;}
 			
-			const_iterator begin() const
-			{
-				if (this->_size == 0) {
-					return this->end();
-				}
-				return const_iterator(this->_root, this->min());
-			}
-
-			const_iterator end() const
-			{
-				return const_iterator(this->_root, NULL);
-			}
 			
 			bool insert(pair_type data)
 			{
