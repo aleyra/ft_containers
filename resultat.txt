@@ -1,3 +1,0 @@
-frame #0: 0x0000555555556252 12_count.ft`ft::avl_tree<int, int, ft::map<int, int, std::less<int>, 
-      std::allocator<ft::pair<int const, int> > >::value_compare, std::allocator<ft::pair<int const, int> > >::end(this=0x00007fffffffde10) const 
-      at my_avl_tree.hpp:779:38
