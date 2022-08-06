@@ -68,7 +68,7 @@ namespace ft{
 	#pragma endregion canonical form
 
 	#pragma region other constructor
-		explicit map(const /*key_compare*/Compare& comp/* = key_compare()*/, const Allocator& alloc = Allocator()): _tree(tree_type(alloc)){(void)comp;}
+		explicit map(const /*key_compare*/Compare& comp/* = key_compare()*/, const allocator_type& alloc = allocator_type()): _tree(tree_type(alloc)){(void)comp;}
 		template<class InputIt>
 		map(InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator()): _tree(tree_type(alloc)){
 			(void)comp;
