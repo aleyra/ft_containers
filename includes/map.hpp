@@ -7,13 +7,13 @@
 
 namespace ft{
 
-	template <typename Key, typename _Tp, typename Compare = std::less<Key>,
-		typename Allocator = std::allocator< ft::pair<const Key, _Tp> > >
+	template <typename Key, typename T, typename Compare = std::less<Key>,
+		typename Allocator = std::allocator< ft::pair<const Key, T> > >
 	class map{
 	public:
 		typedef Key																	key_type;
-		typedef _Tp																	mapped_type;
-		typedef ft::pair<const Key, _Tp>											value_type;
+		typedef T																	mapped_type;
+		typedef ft::pair<const Key, T>												value_type;
 		typedef Compare																key_compare;
 		typedef Allocator															allocator_type;
 		typedef std::size_t															size_type;
@@ -22,8 +22,8 @@ namespace ft{
 		typedef const value_type&													const_reference;
 		typedef value_type*															pointer;
 		typedef const value_type*													const_pointer;
-		typedef typename ft::avl_tree<Key, _Tp, Compare, Allocator>::iterator		iterator;
-		typedef typename ft::avl_tree<Key, _Tp, Compare, Allocator>::const_iterator	const_iterator;
+		typedef typename ft::avl_tree<Key, T, Compare, Allocator>::iterator		iterator;
+		typedef typename ft::avl_tree<Key, T, Compare, Allocator>::const_iterator	const_iterator;
 		typedef ft::reverse_iterator<iterator>										reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 		
@@ -43,7 +43,7 @@ namespace ft{
 		};
 
 	private:
-		typedef	ft::avl_tree<Key, _Tp, Compare, Allocator>	tree_type;
+		typedef	ft::avl_tree<Key, T, Compare, Allocator>	tree_type;
 
 	private:
 		tree_type	_tree;
