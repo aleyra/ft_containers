@@ -162,9 +162,7 @@ namespace ft{
 				else {//found it
 					if ((root->left == NULL) || (root->right == NULL)) {
 						node_ptr temp = root->left ? root->left : root->right;
-
-						// node has no child
-						if (temp == NULL) {
+						if (temp == NULL){// node has no child
 							temp = root;
 							root = NULL;
 						} else// node has one child
@@ -172,8 +170,7 @@ namespace ft{
 						alloc.destroy(temp);
 						alloc.deallocate(temp, 1);
 					}
-					else // node has 2 children
-					{
+					else{// node has 2 children
 						node_ptr temp = min(root->right);
 						root->_data = temp->_data;
 
@@ -182,33 +179,26 @@ namespace ft{
 					}
 				}
 
-				// if the tree had only one node then return
-				if (root == NULL) {
+				if (root == NULL)// if the tree had only one node then return
 					return root;
-				}
-
-				root->_depth =	std::max(
-										depth(root->left),
-										depth(root->right)
-								) + 1;
+				root->_depth =	std::max(depth(root->left),	depth(root->right)) + 1;
 
 				int bal = balance(root);
-				// Left Left
-				if (bal > 1 && balance(root->left) >= 0) {
+
+				//Make Balanced
+				if (bal > 1 && balance(root->left) >= 0)// Left Left case
 					return right_rotate(root);
-				}
-				// Left Right
-				if (bal > 1 && balance(root->left) < 0) {
+				
+				if (bal > 1 && balance(root->left) < 0) {// Left Right case
 					root->left = left_rotate(root->left);
 					return right_rotate(root);
 				}
-				// Right Right
-				if (bal < -1 && balance(root->right) <= 0) {
+				
+				if (bal < -1 && balance(root->right) <= 0)// Right Right case
 					return left_rotate(root);
-				}
-
-				// Right Left
-				if (bal < -1 && balance(root->right) > 0) {
+		
+				
+				if (bal < -1 && balance(root->right) > 0) {// Right Left case
 					root->right = right_rotate(root->right);
 					return left_rotate(root);
 				}
