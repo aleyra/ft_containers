@@ -103,7 +103,7 @@ class avl_tree {
 			if (node::find(this->_root, key) == NULL) {
 				return ;
 			}
-			this->_root = node::del_node(this->_root, key, _allocator);////node::del_node fait aussi un makeBalanced
+			this->_root = node::erase(this->_root, key, _allocator);////node::erase fait aussi un makeBalanced
 			this->_size--;
 		}
 

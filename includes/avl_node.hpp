@@ -101,6 +101,8 @@ namespace ft{
 				return node;
 			}
 
+			#pragma region needed : insert - erase
+
 			static node_ptr insert(node_ptr node, pair_type data, node_allocator& alloc){
 				if (node == NULL)
 					return(new_node(data, alloc));
@@ -133,14 +135,14 @@ namespace ft{
 				return node;
 			}
 
-			static node_ptr del_node(node_ptr root, key_type key, node_allocator& alloc){// returns root of modified subtree
+			static node_ptr erase(node_ptr root, key_type key, node_allocator& alloc){// returns root of modified subtree
 				if (root == NULL)
 					return root;
 
 				if (key < root->key())//search which node to del
-					root->left = del_node(root->left, key, alloc);
+					root->left = erase(root->left, key, alloc);
 				else if (key > root->key())
-					root->right = del_node(root->right, key, alloc);
+					root->right = erase(root->right, key, alloc);
 				else {//found it
 					if ((root->left == NULL) || (root->right == NULL)) {
 						node_ptr temp = root->left ? root->left : root->right;
@@ -157,7 +159,7 @@ namespace ft{
 						root->_data = temp->_data;
 
 						// delete inorder successor
-						root->right = del_node(root->right, temp->key(), alloc);
+						root->right = erase(root->right, temp->key(), alloc);
 					}
 				}
 
