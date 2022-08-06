@@ -133,24 +133,6 @@ namespace ft{
 				return node;
 			}
 
-			static node_ptr min(node_ptr node){
-				node_ptr	current = node;
-
-				while (current->left != NULL){
-					current = current->left;
-				}
-				return current;
-			}
-
-			static node_ptr max(node_ptr node){
-				node_ptr	current = node;
-
-				while (current->right != NULL){
-					current = current->right;
-				}
-				return current;
-			}
-
 			static node_ptr del_node(node_ptr root, key_type key, node_allocator& alloc){// returns root of modified subtree
 				if (root == NULL)
 					return root;
@@ -220,6 +202,24 @@ namespace ft{
 			#pragma endregion needed : navigate
 
 			#pragma region tools : navigate
+			static node_ptr min(node_ptr node){
+				node_ptr	current = node;
+
+				while (current->left != NULL){
+					current = current->left;
+				}
+				return current;
+			}
+
+			static node_ptr max(node_ptr node){
+				node_ptr	current = node;
+
+				while (current->right != NULL){
+					current = current->right;
+				}
+				return current;
+			}
+			
 			static node_ptr upper(node_ptr root, key_type key){//dans le cas ou la node suivant n'est pas dans un sous arbre //c'est ce qui permet de se passer de parent
 				node_ptr	current = root;
 				node_ptr	last_valid = NULL;
