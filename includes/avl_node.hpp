@@ -186,19 +186,15 @@ namespace ft{
 				int bal = balance(root);
 
 				//Make Balanced
-				if (bal > 1 && balance(root->left) >= 0)// Left Left case
+				if (bal > 1 && balance(root->left) >= 0)//Left Left case
 					return right_rotate(root);
-				
-				if (bal > 1 && balance(root->left) < 0) {// Left Right case
+				else if (bal > 1 && balance(root->left) < 0){//Left Right case
 					root->left = left_rotate(root->left);
 					return right_rotate(root);
 				}
-				
-				if (bal < -1 && balance(root->right) <= 0)// Right Right case
+				else if (bal < -1 && balance(root->right) <= 0)//Right Right case
 					return left_rotate(root);
-		
-				
-				if (bal < -1 && balance(root->right) > 0) {// Right Left case
+				else if (bal < -1 && balance(root->right) > 0){//Right Left case
 					root->right = right_rotate(root->right);
 					return left_rotate(root);
 				}
