@@ -274,7 +274,7 @@ namespace ft{
 
 	template<class Key, class _Tp, class Compare = std::less<Key>,
 		class Allocator = std::allocator< ft::pair<const Key, _Tp> > >
-	class avl_tree_iterator{
+	struct avl_tree_iterator{
 		friend class avl_tree_const_iterator<Key, _Tp, Compare, Allocator>;//friend permet d'avoir acces aux elem prive du friend
 		public:
 			typedef ft::pair<const Key, _Tp>		value_type;
@@ -295,7 +295,6 @@ namespace ft{
 			node_ptr	_current;
 
 		public:
-		#pragma region canonical form
 			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
 
 			avl_tree_iterator(const avl_tree_iterator& other): _root(other._root), _current(other._current){}
@@ -308,7 +307,6 @@ namespace ft{
 				return *this;
 			}
 
-		#pragma endregion canonical form
 
 			reference operator*() const{
 				return *reinterpret_cast<const_pair_type*>(&_current->key_value_pair());//tour de magie
