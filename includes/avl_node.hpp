@@ -47,16 +47,13 @@ namespace ft{
 				return n->_depth;
 			}
 
-			static balance_type balance(node_ptr n)
-			{
-				if (n == NULL) {
+			static balance_type balance(node_ptr n){
+				if (n == NULL)
 					return 0;
-				}
 				return depth(n->left) - depth(n->right);
 			}
 
-			static node_ptr right_rotate(node_ptr y)
-			{
+			static node_ptr right_rotate(node_ptr y){
 				node_ptr x = y->left;
 				node_ptr t2 = x->right;
 
@@ -64,14 +61,9 @@ namespace ft{
 				x->right = y;
 				y->left = t2;
 
-				y->_depth =	std::max(
-									depth(y->left),
-									depth(y->right)
-									) + 1;
-				x->_depth =	std::max(
-									depth(x->left),
-									depth(x->right)
-								) + 1;
+				//adapt depth
+				y->_depth =	std::max(depth(y->left), depth(y->right)) + 1;
+				x->_depth =	std::max(depth(x->left), depth(x->right)) + 1;
 
 				return x;
 			}
