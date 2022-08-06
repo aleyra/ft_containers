@@ -478,22 +478,6 @@ namespace ft{
 			}
 		#pragma endregion needed
 			
-
-			// avl_tree_const_iterator operator+(difference_type n) const{
-			// 	avl_tree_const_iterator ret(this->_root, this->_current);
-			// 	while (n--) {
-			// 		++ret;
-			// 	}
-			// 	return ret;
-			// }
-
-			// avl_tree_const_iterator& operator+=(difference_type n){
-			// 	while (n--) {
-			// 		operator++();
-			// 	}
-			// 	return *this;
-			// }
-
 			avl_tree_const_iterator operator-(difference_type n) const{
 				avl_tree_const_iterator ret(this->_root, this->_current);
 				while (n--) {
@@ -501,23 +485,6 @@ namespace ft{
 				}
 				return ret;
 			}
-
-			// avl_tree_const_iterator& operator-=(difference_type n){
-			// 	while (n--) {
-			// 		operator--();
-			// 	}
-			// 	return *this;
-			// }
-
-			// reference operator[](difference_type n) const{
-			// 	avl_tree_const_iterator it(this->_root, this->_current);
-			// 	while (n--) {
-			// 		++it;
-			// 	}
-			// 	return *it;
-			// }
-			
-
 	};
 
 }
