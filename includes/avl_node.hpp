@@ -295,6 +295,7 @@ namespace ft{
 			node_ptr	_current;
 
 		public:
+		#pragma region bidirectionnal
 			avl_tree_iterator(const avl_tree_iterator& src): _root(src._root), _current(src._current){}
 
 			~avl_tree_iterator(){}
@@ -309,22 +310,29 @@ namespace ft{
 				_current = node::next(this->_current, this->_root);
 				return *this;
 			}
-
 			avl_tree_iterator operator++(int){
 				node_ptr ret = _current;
 				_current = node::next(this->_current, this->_root);
 				return avl_tree_iterator(this->_root, ret);
 			}
 
-			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
-
+			bool operator==(const avl_tree_iterator& other){
+				return (this->_root == other._root) && (this->_current == other._current);
+			}
+			bool operator!=(const avl_tree_iterator& other){
+				return (this->_root != other._root) || (this->_current != other._current);
+			}
+			
 			reference operator*() const{
 				return *reinterpret_cast<const_pair_type*>(&_current->key_value_pair());//tour de magie
 			}
+			pointer operator->() const{return &(operator*());}
+		
+		#pragma endregion bidirectionnal
 
-			pointer operator->() const{
-				return &(operator*());
-			}
+			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
+
+			
 
 
 			avl_tree_iterator& operator--(){
@@ -381,20 +389,13 @@ namespace ft{
 				return *it;
 			}
 
-			bool operator==(const avl_tree_iterator& other)
-			{
-				return (this->_root == other._root) && (this->_current == other._current);
-			}
 			
-			bool operator==(const avl_tree_const_iterator<Key, _Tp, Compare, Allocator>& other)
-			{
+
+			bool operator==(const avl_tree_const_iterator<Key, _Tp, Compare, Allocator>& other){
 				return (this->_root == other._root) && (this->_current == other._current);
 			}
 
-			bool operator!=(const avl_tree_iterator& other)
-			{
-				return (this->_root != other._root) || (this->_current != other._current);
-			}
+			
 	};
 
 	template<

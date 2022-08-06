@@ -101,10 +101,10 @@ namespace ft{
 
 			bool		operator==(const avl_iterator &other){
 				return (current == other.current);
-			};
+			}
 			bool		operator!=(const avl_iterator &other){
 				return (current != other.current);
-			};
+			}
 
 			value_type		&operator*(){return ((node_grr *)current)->data;}//j'ai du cast en node_grr et creer ce type expres !
 			pointer			operator->(){return &(this->operator*());}
