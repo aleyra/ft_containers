@@ -190,10 +190,10 @@ public:
 
 	void erase(iterator first, iterator last)
 	{
-		while (first != iterator(this->_tree.root(), last.current_node())) {
+		while (first != iterator(this->_tree.root(), last.base())) {
 			iterator next = first + 1;
 			this->erase(first);
-			first = iterator(this->_tree.root(), next.current_node());
+			first = iterator(this->_tree.root(), next.base());
 		}
 	}
 	

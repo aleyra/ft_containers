@@ -309,45 +309,38 @@ namespace ft{
 			}
 
 		#pragma endregion canonical form
-		
-			reference operator*() const
-			{
+
+			reference operator*() const{
 				return *reinterpret_cast<const_pair_type*>(&_current->key_value_pair());//tour de magie
 			}
 
-			pointer operator->() const
-			{
+			pointer operator->() const{
 				return &(operator*());
 			}
 
-			avl_tree_iterator& operator++()
-			{
+			avl_tree_iterator& operator++(){
 				_current = node::next(this->_current, this->_root);
 				return *this;
 			}
 
-			avl_tree_iterator operator++(int)
-			{
+			avl_tree_iterator operator++(int){
 				node_ptr ret = _current;
 				_current = node::next(this->_current, this->_root);
 				return avl_tree_iterator(this->_root, ret);
 			}
 
-			avl_tree_iterator& operator--()
-			{
+			avl_tree_iterator& operator--(){
 				_current = node::prev(this->_current, this->_root);
 				return *this;
 			}
 
-			avl_tree_iterator operator--(int)
-			{
+			avl_tree_iterator operator--(int){
 				node_ptr ret = _current;
 				_current = node::prev(this->_current, this->_root);
 				return avl_tree_iterator(this->_root, ret);
 			}
 
-			avl_tree_iterator operator+(difference_type n) const
-			{
+			avl_tree_iterator operator+(difference_type n) const{
 				avl_tree_iterator ret(this->_root, this->_current);
 				while (n--) {
 					++ret;
@@ -355,16 +348,14 @@ namespace ft{
 				return ret;
 			}
 
-			avl_tree_iterator& operator+=(difference_type n)
-			{
+			avl_tree_iterator& operator+=(difference_type n){
 				while (n--) {
 					operator++();
 				}
 				return *this;
 			}
 
-			avl_tree_iterator operator-(difference_type n) const//parce que faire ++ puis -- c'est nul
-			{
+			avl_tree_iterator operator-(difference_type n) const{//parce que faire ++ puis -- c'est nul
 				avl_tree_iterator ret(this->_root, this->_current);
 				while (n--) {
 					--ret;
@@ -372,16 +363,14 @@ namespace ft{
 				return ret;
 			}
 
-			avl_tree_iterator& operator-=(difference_type n)
-			{
+			avl_tree_iterator& operator-=(difference_type n){//parce flemme des fois
 				while (n--) {
 					operator--();
 				}
 				return *this;
 			}
 
-			node_ptr current_node()
-			{
+			node_ptr base(){
 				return _current;
 			}
 
@@ -529,7 +518,7 @@ namespace ft{
 				return *this;
 			}
 
-			node_ptr current_node()
+			node_ptr base()
 			{
 				return _current;
 			}
