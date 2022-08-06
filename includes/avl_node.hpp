@@ -41,18 +41,13 @@ namespace ft{
 
 			pair_type& key_value_pair(){return this->_data;}
 
-			static size_type depth(node *n){
+			static size_type depth(node *n){//gere le cas ou la node n'existe pas
 				if (n == NULL)
 					return 0;
 				return n->_depth;
 			}
-
-			static balance_type balance(node_ptr n){
-				if (n == NULL)
-					return 0;
-				return depth(n->left) - depth(n->right);
-			}
-
+			
+			#pragma region Make balanced
 			static node_ptr right_rotate(node_ptr y){
 				node_ptr	x = y->left;
 				node_ptr	t2 = x->right;
@@ -82,24 +77,7 @@ namespace ft{
 
 				return y;
 			}
-
-			static node_ptr find(node_ptr node, key_type key){
-				while (node != NULL) {
-					if (node->key() == key)
-						return node;
-					if (node->key_compare(key, node->key()))
-						node = node->left;
-					else if (key > node->key())
-						node = node->right;
-				}
-				return NULL;
-			}
-
-			static node_ptr new_node(pair_type data, node_allocator& alloc){
-				node_ptr node = alloc.allocate(1);
-				alloc.construct(node, data);
-				return node;
-			}
+			#pragma endregion Make balanced
 
 			#pragma region needed : insert - erase
 
@@ -185,6 +163,22 @@ namespace ft{
 
 				return root;
 			}
+			#pragma endregion needed : insert - erase
+
+			#pragma region tools : insert - erase
+			static balance_type balance(node_ptr n){
+				if (n == NULL)
+					return 0;
+				return depth(n->left) - depth(n->right);
+			}
+
+			static node_ptr new_node(pair_type data, node_allocator& alloc){
+				node_ptr node = alloc.allocate(1);
+				alloc.construct(node, data);
+				return node;
+			}
+
+			#pragma endregion tools : insert - erase
 
 			#pragma region needed : navigate
 			static node_ptr next(node_ptr node, node_ptr root){
@@ -261,6 +255,18 @@ namespace ft{
 			}
 
 			#pragma endregion tools : navigate
+
+			static node_ptr find(node_ptr node, key_type key){
+				while (node != NULL) {
+					if (node->key() == key)
+						return node;
+					if (node->key_compare(key, node->key()))
+						node = node->left;
+					else if (key > node->key())
+						node = node->right;
+				}
+				return NULL;
+			}
 	};
 
 	template<class K, class V, class C, class A>
