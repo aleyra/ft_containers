@@ -295,17 +295,17 @@ namespace ft{
 			node_ptr	_current;
 
 		public:
-			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
-
-			avl_tree_iterator(const avl_tree_iterator& other): _root(other._root), _current(other._current){}
+			avl_tree_iterator(const avl_tree_iterator& src): _root(src._root), _current(src._current){}
 
 			~avl_tree_iterator(){}
 
-			avl_tree_iterator& operator=(const avl_tree_iterator& other){
-				_root = other._root;
-				_current = other._current;
+			avl_tree_iterator& operator=(const avl_tree_iterator& src){
+				_root = src._root;
+				_current = src._current;
 				return *this;
 			}
+
+			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
 
 
 			reference operator*() const{
