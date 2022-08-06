@@ -295,6 +295,7 @@ namespace ft{
 			node_ptr	_current;
 
 		public:
+		#pragma region canonical form
 			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
 
 			avl_tree_iterator(const avl_tree_iterator& other): _root(other._root), _current(other._current){}
@@ -307,6 +308,8 @@ namespace ft{
 				return *this;
 			}
 
+		#pragma endregion canonical form
+		
 			reference operator*() const
 			{
 				return *reinterpret_cast<const_pair_type*>(&_current->key_value_pair());//tour de magie
