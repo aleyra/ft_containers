@@ -208,5 +208,5 @@ namespace ft{
 	bool operator>=(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs){return !(lhs < rhs);}
 
 	template<class Key, class T, class Compare, class Alloc>
-	void swap( ft::map<Key, T, Compare, Alloc>& x, ft::map<Key, T, Compare, Alloc>& y ){x.swap(y);}
+	void swap(ft::map<Key, T, Compare, Alloc>& x, ft::map<Key, T, Compare, Alloc>& y ){x.swap(y);}
 }
