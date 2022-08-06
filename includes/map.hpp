@@ -102,7 +102,7 @@ namespace ft{
 	#pragma endregion capacity
 
 	#pragma region element access
-		mapped_type& operator[](const Key& key){
+		mapped_type& operator[](const key_type& key){
 			this->_tree.insert(key, mapped_type()); // Will do nothing if key is already mapped
 			return this->_tree.find(key).second;
 		}
