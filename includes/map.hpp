@@ -160,7 +160,7 @@ namespace ft{
 		iterator find(const key_type& k){return iterator(this->_tree.root(), this->_tree.find_node(k));}
 		const_iterator find(const key_type& k) const{return const_iterator(this->_tree.root(), this->_tree.find_node(k));}
 
-		size_type count(const Key& key) const{return this->_tree.find_node(key) ? 1 : 0;}
+		size_type count(const key_type& k) const{return this->_tree.find_node(k) ? 1 : 0;}
 
 		iterator lower_bound(const Key& key){
 			iterator v = this->find(key);
