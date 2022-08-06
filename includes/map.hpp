@@ -117,13 +117,13 @@ namespace ft{
 			iterator it = iterator(_tree.root(), this->_tree.find_node(value.first));
 			return ft::make_pair(it, result);
 		}
-		iterator insert(iterator hint, const value_type& value){
-			(void)hint;
+		iterator insert(iterator position, const value_type& value){//position est un indice
+			(void)position;
 			this->_tree.insert(value);
 			return iterator(_tree.root(), this->_tree.find_node(value.first));
 		}
-		template<class InputIt>
-		void insert(InputIt first, InputIt last){
+		template<class InputIterator>
+		void insert(InputIterator first, InputIterator last){
 			while (first != last){
 				this->_tree.insert(*first++);
 			}
