@@ -33,29 +33,17 @@ namespace ft{
 			Compare		key_compare;
 
 		public:
-			avl_node(pair_type data): _data(data), _depth(1), left(NULL), right(NULL)
-			{	}
+			avl_node(pair_type data): _data(data), _depth(1), left(NULL), right(NULL){}
 
-			const key_type& key() const
-			{
-				return this->_data.first;
-			}
+			const key_type& key() const{return this->_data.first;}
 
-			value_type& value()
-			{
-				return this->_data.second;
-			}
+			value_type& value(){return this->_data.second;}
 
-			pair_type& key_value_pair()
-			{
-				return this->_data;
-			}
+			pair_type& key_value_pair(){return this->_data;}
 
-			static size_type depth(node *n)
-			{
-				if (n == NULL) {
+			static size_type depth(node *n){
+				if (n == NULL)
 					return 0;
-				}
 				return n->_depth;
 			}
 
