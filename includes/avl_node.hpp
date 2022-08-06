@@ -355,6 +355,14 @@ namespace ft{
 
 		#pragma endregion needed
 
+			avl_tree_iterator operator-(difference_type n) const{//parce que faire ++ puis -- c'est nul
+				avl_tree_iterator ret(this->_root, this->_current);
+				while (n--) {
+					--ret;
+				}
+				return ret;
+			}
+
 			// avl_tree_iterator operator+(difference_type n) const{
 			// 	avl_tree_iterator ret(this->_root, this->_current);
 			// 	while (n--) {
@@ -370,15 +378,7 @@ namespace ft{
 			// 	return *this;
 			// }
 
-			avl_tree_iterator operator-(difference_type n) const{//parce que faire ++ puis -- c'est nul
-				avl_tree_iterator ret(this->_root, this->_current);
-				while (n--) {
-					--ret;
-				}
-				return ret;
-			}
-
-			// avl_tree_iterator& operator-=(difference_type n){//parce flemme des fois
+			// avl_tree_iterator& operator-=(difference_type n){
 			// 	while (n--) {
 			// 		operator--();
 			// 	}
@@ -393,17 +393,11 @@ namespace ft{
 			// 	}
 			// 	return *it;
 			// }
-
 	};
 
-	template<
-		class Key,
-		class _Tp,
-		class Compare = std::less<Key>,
-		class Allocator = std::allocator< ft::pair<const Key, _Tp> >
-	>
-	class avl_tree_const_iterator
-	{
+	template<class Key, class _Tp, class Compare = std::less<Key>,
+		class Allocator = std::allocator< ft::pair<const Key, _Tp> > >
+	struct avl_tree_const_iterator{
 		friend class avl_tree_iterator<Key, _Tp, Compare, Allocator>;
 		public:
 			typedef ft::pair<const Key, _Tp>		value_type;
@@ -424,65 +418,61 @@ namespace ft{
 			node_ptr	_current;
 
 		public:
-			avl_tree_const_iterator(node_ptr root, node_ptr current)
-				: _root(root), _current(current)
-			{	}
-
-			avl_tree_const_iterator(const avl_tree_const_iterator& other)
-				: _root(other._root), _current(other._current)
-			{	}
+		#pragma region bidirectionnal
+			avl_tree_const_iterator(const avl_tree_const_iterator& src): _root(src._root), _current(src._current){}
 			
-			avl_tree_const_iterator(const avl_tree_iterator<Key, _Tp, Compare, Allocator>& non_const)
-				: _root(non_const._root), _current(non_const._current)
-			{	}
-
-			~avl_tree_const_iterator() {}
-
-			avl_tree_const_iterator& operator=(const avl_tree_const_iterator& other)
-			{
-				_root = other._root;
-				_current = other._current;
+			~avl_tree_const_iterator(){}
+		
+			avl_tree_const_iterator& operator=(const avl_tree_const_iterator& src){
+				_root = src._root;
+				_current = src._current;
 				return *this;
 			}
 
-			const_reference operator*() const
-			{
+			avl_tree_const_iterator& operator++(){
+				_current = node::next(this->_current, this->_root);
+				return *this;
+			}
+			avl_tree_const_iterator operator++(int){
+				node_ptr ret = _current;
+				_current = node::next(this->_current, this->_root);
+				return avl_tree_const_iterator(this->_root, ret);
+			}
+
+			bool operator==(const avl_tree_iterator<Key, _Tp, Compare, Allocator>& other){
+				return (this->_root == other._root) && (this->_current == other._current);
+			}
+			bool operator!=(const avl_tree_const_iterator& other){
+				return (this->_root != other._root) || (this->_current != other._current);
+			}
+
+			const_reference operator*() const{
 				return *reinterpret_cast<const_pair_type*>(&_current->key_value_pair());
 			}
+			const_pointer operator->() const{return &(operator*());}
 
-			const_pointer operator->() const
-			{
-				return &(operator*());
-			}
+			avl_tree_const_iterator(): _root(NULL), _current(NULL){}
 
-			avl_tree_const_iterator& operator++()
-			{
-				_current = node::next(this->_current, this->_root);
-				return *this;
-			}
+		#pragma endregion bidirectionnal
 
-			avl_tree_const_iterator operator++(int)
-			{
-				node_ptr ret = _current;
-				_current = node::next(this->_current, this->_root);
-				return avl_tree_const_iterator(this->_root, ret);
-			}
+		#pragma region needed
+			avl_tree_const_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
 
-			avl_tree_const_iterator& operator--()
-			{
+			avl_tree_const_iterator(const avl_tree_iterator<Key, _Tp, Compare, Allocator>& non_const): _root(non_const._root), _current(non_const._current){}
+		
+		#pragma endregion needed
+			
+			avl_tree_const_iterator& operator--(){
 				_current = node::prev(this->_current, this->_root);
 				return *this;
 			}
-
-			avl_tree_const_iterator operator--(int)
-			{
+			avl_tree_const_iterator operator--(int){
 				node_ptr ret = _current;
 				_current = node::prev(this->_current, this->_root);
 				return avl_tree_const_iterator(this->_root, ret);
 			}
 
-			avl_tree_const_iterator operator+(difference_type n) const
-			{
+			avl_tree_const_iterator operator+(difference_type n) const{
 				avl_tree_const_iterator ret(this->_root, this->_current);
 				while (n--) {
 					++ret;
@@ -490,16 +480,14 @@ namespace ft{
 				return ret;
 			}
 
-			avl_tree_const_iterator& operator+=(difference_type n)
-			{
+			avl_tree_const_iterator& operator+=(difference_type n){
 				while (n--) {
 					operator++();
 				}
 				return *this;
 			}
 
-			avl_tree_const_iterator operator-(difference_type n) const
-			{
+			avl_tree_const_iterator operator-(difference_type n) const{
 				avl_tree_const_iterator ret(this->_root, this->_current);
 				while (n--) {
 					--ret;
@@ -507,21 +495,18 @@ namespace ft{
 				return ret;
 			}
 
-			avl_tree_const_iterator& operator-=(difference_type n)
-			{
+			avl_tree_const_iterator& operator-=(difference_type n){
 				while (n--) {
 					operator--();
 				}
 				return *this;
 			}
 
-			node_ptr base()
-			{
+			node_ptr base(){
 				return _current;
 			}
 
-			reference operator[](difference_type n) const
-			{
+			reference operator[](difference_type n) const{
 				avl_tree_const_iterator it(this->_root, this->_current);
 				while (n--) {
 					++it;
@@ -529,19 +514,9 @@ namespace ft{
 				return *it;
 			}
 			
-			bool operator==(const avl_tree_iterator<Key, _Tp, Compare, Allocator>& other)
-			{
-				return (this->_root == other._root) && (this->_current == other._current);
-			}
 
-			bool operator==(const avl_tree_const_iterator& other)
-			{
+			bool operator==(const avl_tree_const_iterator& other){
 				return (this->_root == other._root) && (this->_current == other._current);
-			}
-
-			bool operator!=(const avl_tree_const_iterator& other)
-			{
-				return (this->_root != other._root) || (this->_current != other._current);
 			}
 	};
 
