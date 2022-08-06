@@ -62,6 +62,22 @@ namespace ft{
 		#pragma endregion element access
 
 		#pragma region modifiers
+			bool insert(pair_type data){
+				if (node::find(this->_root, data.first) != NULL)
+					return false;
+				this->_root = node::insert(this->_root, data, _allocator);//node::insert fait aussi un makeBalanced
+				this->_size++;
+				return true;
+			}
+			bool insert(key_type key, value_type value){return insert(ft::make_pair(key, value));}
+
+			void erase(const key_type& key){
+				if (node::find(this->_root, key) == NULL)
+					return ;
+				this->_root = node::erase(this->_root, key, _allocator);////node::erase fait aussi un makeBalanced
+				this->_size--;
+			}
+
 			void swap(avl_tree& other){
 				std::swap(this->_allocator, other._allocator);
 				std::swap(this->_root, other._root);
@@ -77,36 +93,8 @@ namespace ft{
 		#pragma endregion operations
 			
 			node_ptr root(){return _root;}
-			
-			
-			bool insert(pair_type data)
-			{
-				if (node::find(this->_root, data.first) != NULL) {
-					return false;
-				}
-				this->_root = node::insert(this->_root, data, _allocator);//node::insert fait aussi un makeBalanced
-				this->_size++;
-				return true;
-			}
 
-			bool insert(key_type key, value_type value)
-			{
-				return insert(ft::make_pair(key, value));
-			}
-
-			void erase(const key_type& key)
-			{
-				if (node::find(this->_root, key) == NULL) {
-					return ;
-				}
-				this->_root = node::erase(this->_root, key, _allocator);////node::erase fait aussi un makeBalanced
-				this->_size--;
-			}
-
-			size_type size() const
-			{
-				return this->_size;
-			}
+			size_type size() const{return this->_size;}
 
 			node_ptr min() const
 			{
