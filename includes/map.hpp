@@ -69,8 +69,8 @@ namespace ft{
 
 	#pragma region other constructor
 		explicit map(const /*key_compare*/Compare& comp/* = key_compare()*/, const allocator_type& alloc = allocator_type()): _tree(tree_type(alloc)){(void)comp;}
-		template<class InputIt>
-		map(InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator()): _tree(tree_type(alloc)){
+		template<class InputIterator>
+		map(InputIterator first, InputIterator last, const /*key_compare*/Compare& comp = /*key_compare*/Compare(), const allocator_type& alloc = allocator_type()): _tree(tree_type(alloc)){
 			(void)comp;
 			while (first != last) {
 				this->_tree.insert(*first++);
