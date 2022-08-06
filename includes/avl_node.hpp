@@ -120,15 +120,15 @@ namespace ft{
 				if (bal > 1 && data.first < node->left->key())// Left Left case
 					return right_rotate(node);
 
-				if (bal < -1 && data.first > node->right->key())// Right Right case
+				else if (bal < -1 && data.first > node->right->key())// Right Right case
 					return left_rotate(node);
 
-				if (bal > 1 && data.first > node->left->key()){// Left Right case
+				else if (bal > 1 && data.first > node->left->key()){// Left Right case
 					node->left = left_rotate(node->left);
 					return right_rotate(node);
 				}
 
-				if (bal < -1 && data.first < node->right->key()){// Right Left case
+				else if (bal < -1 && data.first < node->right->key()){// Right Left case
 					node->right = right_rotate(node->right);
 					return left_rotate(node);
 				}
