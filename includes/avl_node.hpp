@@ -240,22 +240,17 @@ namespace ft{
 				return (last_valid);
 			}
 
-			static node_ptr next(node_ptr node, node_ptr root)
-			{
-				if (node->right) {
+			static node_ptr next(node_ptr node, node_ptr root){
+				if (node->right)
 					return min(node->right);
-				}
 				return upper(root, node->key());
 			}
 
-			static node_ptr prev(node_ptr node, node_ptr root)
-			{
-				if (node == NULL) {//pour gerer le end()
+			static node_ptr prev(node_ptr node, node_ptr root){
+				if (node == NULL)//pour gerer le end()
 					return max(root);
-				}
-				if (node->left) {
+				if (node->left)
 					return max(node->left);
-				}
 				return lower(root, node->key());
 			}
 	};
