@@ -355,20 +355,20 @@ namespace ft{
 
 		#pragma endregion needed
 
-			avl_tree_iterator operator+(difference_type n) const{
-				avl_tree_iterator ret(this->_root, this->_current);
-				while (n--) {
-					++ret;
-				}
-				return ret;
-			}
+			// avl_tree_iterator operator+(difference_type n) const{
+			// 	avl_tree_iterator ret(this->_root, this->_current);
+			// 	while (n--) {
+			// 		++ret;
+			// 	}
+			// 	return ret;
+			// }
 
-			avl_tree_iterator& operator+=(difference_type n){
-				while (n--) {
-					operator++();
-				}
-				return *this;
-			}
+			// avl_tree_iterator& operator+=(difference_type n){
+			// 	while (n--) {
+			// 		operator++();
+			// 	}
+			// 	return *this;
+			// }
 
 			avl_tree_iterator operator-(difference_type n) const{//parce que faire ++ puis -- c'est nul
 				avl_tree_iterator ret(this->_root, this->_current);
@@ -378,21 +378,21 @@ namespace ft{
 				return ret;
 			}
 
-			avl_tree_iterator& operator-=(difference_type n){//parce flemme des fois
-				while (n--) {
-					operator--();
-				}
-				return *this;
-			}
+			// avl_tree_iterator& operator-=(difference_type n){//parce flemme des fois
+			// 	while (n--) {
+			// 		operator--();
+			// 	}
+			// 	return *this;
+			// }
 
-			reference operator[](difference_type n) const
-			{
-				avl_tree_iterator it(this->_root, this->_current);
-				while (n--) {
-					++it;
-				}
-				return *it;
-			}
+			// reference operator[](difference_type n) const
+			// {
+			// 	avl_tree_iterator it(this->_root, this->_current);
+			// 	while (n--) {
+			// 		++it;
+			// 	}
+			// 	return *it;
+			// }
 
 	};
 
