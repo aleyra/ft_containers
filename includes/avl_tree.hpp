@@ -56,6 +56,8 @@ namespace ft{
 		#pragma endregion iterators
 
 		#pragma region capacity
+			size_type size() const{return this->_size;}
+
 		#pragma endregion capacity
 
 		#pragma region element access
@@ -84,46 +86,46 @@ namespace ft{
 				std::swap(this->_size, other._size);
 			}
 
+			void clear(){//violent
+				size_type size_before = _size;
+				for (size_type i = 0; i < size_before; ++i) {
+					erase(_root->key());
+				}
+			}
+			
 		#pragma endregion modifiers
 
 		#pragma region observers
 		#pragma endregion observers
 
 		#pragma region operations
-		#pragma endregion operations
-			
-			node_ptr root(){return _root;}
-
-			size_type size() const{return this->_size;}
-
-			node_ptr min() const
-			{
-				if (this->_root == NULL) {//propre
-					throw std::out_of_range("Map is empty");
-				}
-				return node::min(this->_root);
-			}
-
-			node_ptr max() const
-			{
-				if (this->_root == NULL) {//propre
-					throw std::out_of_range("Map is empty");
-				}
-				return node::max(this->_root);
-			}
-
-			node_ptr upper(const key_type& key) const
-			{
-				return node::upper(this->_root, key);
-			}
-
-			const_pair_type& find(const key_type& key) const
-			{
+			const_pair_type& find(const key_type& key) const{
 				node_ptr node = node::find(this->_root, key);
 				if (node == NULL) {//propre
 					throw std::out_of_range("Key not found in map");
 				}
 				return reinterpret_cast<const_pair_type&>(node->key_value_pair());//tour de magie
+			}
+
+		#pragma endregion operations
+			
+		#pragma region tools
+			node_ptr root(){return _root;}
+
+			node_ptr min() const{
+				if (this->_root == NULL)//propre
+					throw std::out_of_range("Map is empty");
+				return node::min(this->_root);
+			}
+
+			node_ptr max() const{
+				if (this->_root == NULL)//propre
+					throw std::out_of_range("Map is empty");
+				return node::max(this->_root);
+			}
+
+			node_ptr upper(const key_type& key) const{
+				return node::upper(this->_root, key);
 			}
 
 			node_ptr find_node(const key_type& key) const
@@ -132,13 +134,8 @@ namespace ft{
 				return node;
 			}
 
-			void clear()//violent
-			{
-				size_type size_before = _size;
-				for (size_type i = 0; i < size_before; ++i) {
-					erase(_root->key());
-				}
-			}
+		#pragma endregion tools
+
 
 			node_ptr next(node_ptr node)
 			{
