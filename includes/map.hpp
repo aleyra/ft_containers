@@ -185,28 +185,28 @@ namespace ft{
 		allocator_type get_allocator() const{return allocator_type();}
 	};
 
-	template<class K, class V, class C, class A>
-	bool operator==(const ft::map<K, V, C, A>& lhs, const ft::map<K, V, C, A>& rhs){
+	template<class Key, class V, class C, class A>
+	bool operator==(const ft::map<Key, V, C, A>& lhs, const ft::map<Key, V, C, A>& rhs){
 		if (lhs.size() != rhs.size())
 			return false;
 		return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 	}
-	template<class K, class V, class C, class A>
-	bool operator!=(const ft::map<K, V, C, A>& lhs, const ft::map<K, V, C, A>& rhs){return !(lhs == rhs);}
+	template<class Key, class V, class C, class A>
+	bool operator!=(const ft::map<Key, V, C, A>& lhs, const ft::map<Key, V, C, A>& rhs){return !(lhs == rhs);}
 
-	template<class K, class V, class C, class A>
-	bool operator<(const ft::map<K, V, C, A>& lhs, const ft::map<K, V, C, A>& rhs){
+	template<class Key, class V, class C, class A>
+	bool operator<(const ft::map<Key, V, C, A>& lhs, const ft::map<Key, V, C, A>& rhs){
 		return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 	}
-	template<class K, class V, class C, class A>
-	bool operator<=(const ft::map<K, V, C, A>& lhs, const ft::map<K, V, C, A>& rhs){return !(lhs > rhs);}
+	template<class Key, class V, class C, class A>
+	bool operator<=(const ft::map<Key, V, C, A>& lhs, const ft::map<Key, V, C, A>& rhs){return !(lhs > rhs);}
 
-	template<class K, class V, class C, class A>
-	bool operator>(const ft::map<K, V, C, A>& lhs, const ft::map<K, V, C, A>& rhs){return (rhs < lhs);}
+	template<class Key, class V, class C, class A>
+	bool operator>(const ft::map<Key, V, C, A>& lhs, const ft::map<Key, V, C, A>& rhs){return (rhs < lhs);}
 
-	template<class K, class V, class C, class A>
-	bool operator>=(const ft::map<K, V, C, A>& lhs, const ft::map<K, V, C, A>& rhs){return !(lhs < rhs);}
+	template<class Key, class V, class C, class A>
+	bool operator>=(const ft::map<Key, V, C, A>& lhs, const ft::map<Key, V, C, A>& rhs){return !(lhs < rhs);}
 
-	template<class K, class V, class C, class A>
-	void swap( ft::map<K, V, C, A>& lhs, ft::map<K, V, C, A>& rhs ){lhs.swap(rhs);}
+	template<class Key, class V, class C, class A>
+	void swap( ft::map<Key, V, C, A>& lhs, ft::map<Key, V, C, A>& rhs ){lhs.swap(rhs);}
 }
