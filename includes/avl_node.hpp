@@ -330,20 +330,30 @@ namespace ft{
 
 			avl_tree_iterator(): _root(NULL), _current(NULL){}
 		
-		#pragma endregion bidirectionnal
-
-			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
-
 			avl_tree_iterator& operator--(){
 				_current = node::prev(this->_current, this->_root);
 				return *this;
 			}
-
 			avl_tree_iterator operator--(int){
 				node_ptr ret = _current;
 				_current = node::prev(this->_current, this->_root);
 				return avl_tree_iterator(this->_root, ret);
 			}
+
+		#pragma endregion bidirectionnal
+
+		#pragma region needed
+			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
+
+			bool operator==(const avl_tree_const_iterator<Key, _Tp, Compare, Allocator>& other){
+				return (this->_root == other._root) && (this->_current == other._current);
+			}
+
+			node_ptr base(){
+				return _current;
+			}
+
+		#pragma endregion needed
 
 			avl_tree_iterator operator+(difference_type n) const{
 				avl_tree_iterator ret(this->_root, this->_current);
@@ -375,10 +385,6 @@ namespace ft{
 				return *this;
 			}
 
-			node_ptr base(){
-				return _current;
-			}
-
 			reference operator[](difference_type n) const
 			{
 				avl_tree_iterator it(this->_root, this->_current);
@@ -388,13 +394,6 @@ namespace ft{
 				return *it;
 			}
 
-			
-
-			bool operator==(const avl_tree_const_iterator<Key, _Tp, Compare, Allocator>& other){
-				return (this->_root == other._root) && (this->_current == other._current);
-			}
-
-			
 	};
 
 	template<
