@@ -79,35 +79,15 @@ namespace ft{
 			return *this;
 		}
 		
-		allocator_type get_allocator() const
-		{
-			return allocator_type();
-		}
+		allocator_type get_allocator() const{return allocator_type();}
 
-		iterator begin()
-		{
-			return _tree.begin();
-		}
+		iterator begin(){return _tree.begin();}
+		const_iterator begin() const{return _tree.begin();}
 
-		iterator end()
-		{
-			return _tree.end();
-		}
+		iterator end(){return _tree.end();}
+		const_iterator end() const{return _tree.end();}
 		
-		const_iterator begin() const
-		{
-			return _tree.begin();
-		}
-
-		const_iterator end() const
-		{
-			return _tree.end();
-		}
-
-		reverse_iterator rbegin()
-		{
-			return reverse_iterator(this->end());
-		}
+		reverse_iterator rbegin(){return reverse_iterator(this->end());}
 
 		reverse_iterator rend()
 		{
