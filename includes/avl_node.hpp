@@ -207,9 +207,8 @@ namespace ft{
 				node_ptr	last_valid = NULL;
 				while (current){
 					if (key == current->key()){
-						if (current->right) {
+						if (current->right)
 							return min(current->right);
-						}
 						break ;
 					}
 					if (root->key_compare(key, current->key())){
@@ -222,20 +221,18 @@ namespace ft{
 				return (last_valid);
 			}
 
-			static node_ptr lower(node_ptr root, key_type key)//dans le cas ou la node precedente n'est pas dans un sous arbre
-			{//c'est ce qui permet de se passer de parent
-				node_ptr current = root;
-				node_ptr last_valid = NULL;
+			static node_ptr lower(node_ptr root, key_type key){//idem que pour upper
+				node_ptr	current = root;
+				node_ptr	last_valid = NULL;
 				while (current) {
-					if (key == current->key()) {
-						if (current->left) {
+					if (key == current->key()){
+						if (current->left)
 							return max(current->left);
-						}
 						break ;
 					}
-					if (root->key_compare(key, current->key())) {
+					if (root->key_compare(key, current->key()))
 						current = current->left;
-					} else {
+					else {
 						last_valid = current;
 						current = current->right;
 					}
