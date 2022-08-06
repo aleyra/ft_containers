@@ -152,15 +152,14 @@ namespace ft{
 			}
 
 			static node_ptr del_node(node_ptr root, key_type key, node_allocator& alloc){// returns root of modified subtree
-				if (root == NULL) {
+				if (root == NULL)
 					return root;
-				}
 
-				if (key < root->key()) {
+				if (key < root->key())//search which node to del
 					root->left = del_node(root->left, key, alloc);
-				} else if (key > root->key()) {
+				else if (key > root->key())
 					root->right = del_node(root->right, key, alloc);
-				} else {
+				else {//found it
 					if ((root->left == NULL) || (root->right == NULL)) {
 						node_ptr temp = root->left ? root->left : root->right;
 
@@ -168,9 +167,8 @@ namespace ft{
 						if (temp == NULL) {
 							temp = root;
 							root = NULL;
-						} else { // node has one child
+						} else// node has one child
 							*root = *temp; // Copy the contents of
-						}
 						alloc.destroy(temp);
 						alloc.deallocate(temp, 1);
 					}
