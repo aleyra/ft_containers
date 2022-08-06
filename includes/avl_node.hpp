@@ -11,7 +11,7 @@
 namespace ft{
 
 	template<class Key, class _Tp, class Compare, class Allocator>
-	class avl_node{
+	struct avl_node{
 		public:
 			typedef avl_node<Key, _Tp, Compare, Allocator>	node;
 			typedef node*									node_ptr;
