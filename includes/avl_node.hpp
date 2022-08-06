@@ -10,25 +10,17 @@
 
 namespace ft{
 
-	template<
-		class Key,
-		class _Tp,
-		class Compare,
-		class Allocator
-	>
-	class avl_node
-	{
+	template<class Key, class _Tp, class Compare, class Allocator>
+	class avl_node{
 		public:
-			typedef avl_node<Key, _Tp, Compare, Allocator>		node;
-			typedef node*										node_ptr;
-			typedef Key											key_type;
-			typedef _Tp											value_type;
-			typedef ft::pair<Key, _Tp>							pair_type;
-			typedef size_t										size_type;
-			typedef ssize_t										balance_type;
-			typedef Allocator									allocator_type;
-
-			//friend class avl_tree_iterator<Key, _Tp, Compare, Allocator>;
+			typedef avl_node<Key, _Tp, Compare, Allocator>	node;
+			typedef node*									node_ptr;
+			typedef Key										key_type;
+			typedef _Tp										value_type;
+			typedef ft::pair<Key, _Tp>						pair_type;
+			typedef size_t									size_type;
+			typedef ssize_t									balance_type;
+			typedef Allocator								allocator_type;
 
 		private:
 			typedef typename allocator_type::template rebind<node>::other node_allocator;
@@ -38,11 +30,10 @@ namespace ft{
 			size_type	_depth;
 			node_ptr 	left;
 			node_ptr 	right;
-			Compare	key_compare;
+			Compare		key_compare;
 
 		public:
-			avl_node(pair_type data)
-				: _data(data), _depth(1), left(NULL), right(NULL)
+			avl_node(pair_type data): _data(data), _depth(1), left(NULL), right(NULL)
 			{	}
 
 			const key_type& key() const
