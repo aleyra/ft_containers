@@ -327,13 +327,12 @@ namespace ft{
 				return *reinterpret_cast<const_pair_type*>(&_current->key_value_pair());//tour de magie
 			}
 			pointer operator->() const{return &(operator*());}
+
+			avl_tree_iterator(): _root(NULL), _current(NULL){}
 		
 		#pragma endregion bidirectionnal
 
 			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
-
-			
-
 
 			avl_tree_iterator& operator--(){
 				_current = node::prev(this->_current, this->_root);
