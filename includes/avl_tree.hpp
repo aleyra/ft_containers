@@ -6,7 +6,7 @@ namespace ft{
 
 	template<class Key, class _Tp, class Compare = std::less<Key>,
 		class Allocator = std::allocator< ft::pair<const Key, _Tp> > >
-	class avl_tree {
+	struct avl_tree {
 		public:
 			typedef avl_node<Key, _Tp, Compare, Allocator>						node;
 			typedef node*														node_ptr;
@@ -29,12 +29,9 @@ namespace ft{
 			size_type		_size;
 
 		public:
-		#pragma region canonical form
 			avl_tree(allocator_type alloc = allocator_type()) : _allocator(alloc), _root(NULL), _size(0){}
 
 			~avl_tree(){this->clear();}
-
-		#pragma endregion canonical form
 
 		#pragma region iterators
 			iterator begin(){
@@ -58,10 +55,11 @@ namespace ft{
 		#pragma region capacity
 			size_type size() const{return this->_size;}
 
-		#pragma endregion capacity
+			size_type max_size() const{//on gere les cas chelou ou on utilise des allocator de type dont le max est plus petit genre char
+				return std::min(_allocator.max_size(), static_cast<size_type>(std::numeric_limits<difference_type>::max()));
+			}
 
-		#pragma region element access
-		#pragma endregion element access
+		#pragma endregion capacity
 
 		#pragma region modifiers
 			bool insert(pair_type data){
@@ -92,11 +90,8 @@ namespace ft{
 					erase(_root->key());
 				}
 			}
-			
-		#pragma endregion modifiers
 
-		#pragma region observers
-		#pragma endregion observers
+		#pragma endregion modifiers
 
 		#pragma region operations
 			const_pair_type& find(const key_type& key) const{
@@ -128,34 +123,23 @@ namespace ft{
 				return node::upper(this->_root, key);
 			}
 
-			node_ptr find_node(const key_type& key) const
-			{
+			node_ptr find_node(const key_type& key) const{
 				node_ptr node = node::find(this->_root, key);
 				return node;
 			}
 
+			node_ptr next(node_ptr node){return node::next(node, _root);}
+
 		#pragma endregion tools
 
-
-			node_ptr next(node_ptr node)
-			{
-				return node::next(node, _root);
-			}
-
-			size_type max_size() const
-			{
-				return std::min(_allocator.max_size(), static_cast<size_type>(std::numeric_limits<difference_type>::max()));
-			}
-
-			/*std::string viz()
-			{
-				std::string ret = "digraph bintree {\ngraph [ordering=\"out\"];\nnodesep=0.4;\nranksep=3;\n";
-				if (_root) {
-					ret += node::viz(_root, true);
-				}
-				ret += "}\n";
-				return ret;
-			}*/
+			// std::string viz(){
+			// 	std::string ret = "digraph bintree {\ngraph [ordering=\"out\"];\nnodesep=0.4;\nranksep=3;\n";
+			// 	if (_root) {
+			// 		ret += node::viz(_root, true);
+			// 	}
+			// 	ret += "}\n";
+			// 	return ret;
+			// }
 	};
 
 }
