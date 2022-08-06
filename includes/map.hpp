@@ -27,19 +27,16 @@ namespace ft{
 		typedef ft::reverse_iterator<iterator>										reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 		
-		class value_compare {
+		class value_compare{
 			friend class map;
+			protected:
+				key_compare comp;
+				value_compare(const key_compare& c) : comp (c) { }
 			public:
 				typedef bool		result_type;
 				typedef value_type	first_argument_type;
 				typedef value_type	second_argument_type;
-			protected:
-				key_compare comp;
-
-			public:
-				bool operator()(const value_type& x, const value_type& y) const{
-					return key_compare()(x.first, y.first);
-				}
+				bool operator()(const value_type& x, const value_type& y) const{return key_compare()(x.first, y.first);}
 		};
 
 	private:
