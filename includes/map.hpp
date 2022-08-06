@@ -185,28 +185,28 @@ namespace ft{
 		allocator_type get_allocator() const{return allocator_type();}
 	};
 
-	template<class Key, class T, class Compare, class A>
-	bool operator==(const ft::map<Key, T, Compare, A>& lhs, const ft::map<Key, T, Compare, A>& rhs){
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator==(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs){
 		if (lhs.size() != rhs.size())
 			return false;
 		return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 	}
-	template<class Key, class T, class Compare, class A>
-	bool operator!=(const ft::map<Key, T, Compare, A>& lhs, const ft::map<Key, T, Compare, A>& rhs){return !(lhs == rhs);}
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator!=(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs){return !(lhs == rhs);}
 
-	template<class Key, class T, class Compare, class A>
-	bool operator<(const ft::map<Key, T, Compare, A>& lhs, const ft::map<Key, T, Compare, A>& rhs){
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator<(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs){
 		return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 	}
-	template<class Key, class T, class Compare, class A>
-	bool operator<=(const ft::map<Key, T, Compare, A>& lhs, const ft::map<Key, T, Compare, A>& rhs){return !(lhs > rhs);}
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator<=(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs){return !(lhs > rhs);}
 
-	template<class Key, class T, class Compare, class A>
-	bool operator>(const ft::map<Key, T, Compare, A>& lhs, const ft::map<Key, T, Compare, A>& rhs){return (rhs < lhs);}
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator>(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs){return (rhs < lhs);}
 
-	template<class Key, class T, class Compare, class A>
-	bool operator>=(const ft::map<Key, T, Compare, A>& lhs, const ft::map<Key, T, Compare, A>& rhs){return !(lhs < rhs);}
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator>=(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs){return !(lhs < rhs);}
 
-	template<class Key, class T, class Compare, class A>
-	void swap( ft::map<Key, T, Compare, A>& x, ft::map<Key, T, Compare, A>& y ){x.swap(y);}
+	template<class Key, class T, class Compare, class Alloc>
+	void swap( ft::map<Key, T, Compare, Alloc>& x, ft::map<Key, T, Compare, Alloc>& y ){x.swap(y);}
 }
