@@ -305,17 +305,6 @@ namespace ft{
 				return *this;
 			}
 
-			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
-
-
-			reference operator*() const{
-				return *reinterpret_cast<const_pair_type*>(&_current->key_value_pair());//tour de magie
-			}
-
-			pointer operator->() const{
-				return &(operator*());
-			}
-
 			avl_tree_iterator& operator++(){
 				_current = node::next(this->_current, this->_root);
 				return *this;
@@ -326,6 +315,17 @@ namespace ft{
 				_current = node::next(this->_current, this->_root);
 				return avl_tree_iterator(this->_root, ret);
 			}
+
+			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
+
+			reference operator*() const{
+				return *reinterpret_cast<const_pair_type*>(&_current->key_value_pair());//tour de magie
+			}
+
+			pointer operator->() const{
+				return &(operator*());
+			}
+
 
 			avl_tree_iterator& operator--(){
 				_current = node::prev(this->_current, this->_root);
