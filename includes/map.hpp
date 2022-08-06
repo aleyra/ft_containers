@@ -162,16 +162,16 @@ namespace ft{
 
 		size_type count(const key_type& k) const{return this->_tree.find_node(k) ? 1 : 0;}
 
-		iterator lower_bound(const Key& key){
-			iterator v = this->find(key);
+		iterator lower_bound(const key_type& k){
+			iterator v = this->find(k);
 			if (v == this->end())
-				return iterator(this->_tree.root(), this->_tree.upper(key));
+				return iterator(this->_tree.root(), this->_tree.upper(k));
 			return v;
 		}
-		const_iterator lower_bound(const Key& key) const{
-			const_iterator v = this->find(key);
+		const_iterator lower_bound(const key_type& k) const{
+			const_iterator v = this->find(k);
 			if (v == this->end())
-				return const_iterator(this->_tree.root(), this->_tree.upper(key));
+				return const_iterator(this->_tree.root(), this->_tree.upper(k));
 			return v;
 		}
 
