@@ -202,6 +202,24 @@ namespace ft{
 				return root;
 			}
 
+			#pragma region needed : navigate
+			static node_ptr next(node_ptr node, node_ptr root){
+				if (node->right)
+					return min(node->right);
+				return upper(root, node->key());
+			}
+
+			static node_ptr prev(node_ptr node, node_ptr root){
+				if (node == NULL)//pour gerer le end()
+					return max(root);
+				if (node->left)
+					return max(node->left);
+				return lower(root, node->key());
+			}
+
+			#pragma endregion needed : navigate
+
+			#pragma region tools : navigate
 			static node_ptr upper(node_ptr root, key_type key){//dans le cas ou la node suivant n'est pas dans un sous arbre //c'est ce qui permet de se passer de parent
 				node_ptr	current = root;
 				node_ptr	last_valid = NULL;
@@ -240,19 +258,7 @@ namespace ft{
 				return (last_valid);
 			}
 
-			static node_ptr next(node_ptr node, node_ptr root){
-				if (node->right)
-					return min(node->right);
-				return upper(root, node->key());
-			}
-
-			static node_ptr prev(node_ptr node, node_ptr root){
-				if (node == NULL)//pour gerer le end()
-					return max(root);
-				if (node->left)
-					return max(node->left);
-				return lower(root, node->key());
-			}
+			#pragma endregion tools : navigate
 	};
 
 	template<class K, class V, class C, class A>
