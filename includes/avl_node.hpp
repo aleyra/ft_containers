@@ -270,12 +270,12 @@ namespace ft{
 	};
 
 	template<class K, class V, class C, class A>
-	class avl_tree_const_iterator;
+	struct avl_tree_const_iterator;
 
 	template<class Key, class _Tp, class Compare = std::less<Key>,
 		class Allocator = std::allocator< ft::pair<const Key, _Tp> > >
 	struct avl_tree_iterator{
-		friend class avl_tree_const_iterator<Key, _Tp, Compare, Allocator>;//friend permet d'avoir acces aux elem prive du friend
+		friend struct avl_tree_const_iterator<Key, _Tp, Compare, Allocator>;//friend permet d'avoir acces aux elem prive du friend
 		public:
 			typedef ft::pair<const Key, _Tp>		value_type;
 			typedef ptrdiff_t						difference_type;
@@ -355,21 +355,21 @@ namespace ft{
 
 		#pragma endregion needed
 
-			avl_tree_iterator operator-(difference_type n) const{//parce que faire ++ puis -- c'est nul
-				avl_tree_iterator ret(this->_root, this->_current);
-				while (n--) {
-					--ret;
-				}
-				return ret;
-			}
-
-			// avl_tree_iterator operator+(difference_type n) const{
+			// avl_tree_iterator operator-(difference_type n) const{//parce que faire ++ puis -- c'est nul
 			// 	avl_tree_iterator ret(this->_root, this->_current);
 			// 	while (n--) {
-			// 		++ret;
+			// 		--ret;
 			// 	}
 			// 	return ret;
 			// }
+
+			avl_tree_iterator operator+(difference_type n) const{
+				avl_tree_iterator ret(this->_root, this->_current);
+				while (n--) {
+					++ret;
+				}
+				return ret;
+			}
 
 			// avl_tree_iterator& operator+=(difference_type n){
 			// 	while (n--) {
@@ -398,7 +398,7 @@ namespace ft{
 	template<class Key, class _Tp, class Compare = std::less<Key>,
 		class Allocator = std::allocator< ft::pair<const Key, _Tp> > >
 	struct avl_tree_const_iterator{
-		friend class avl_tree_iterator<Key, _Tp, Compare, Allocator>;
+		friend struct avl_tree_iterator<Key, _Tp, Compare, Allocator>;
 		public:
 			typedef ft::pair<const Key, _Tp>		value_type;
 			typedef ptrdiff_t						difference_type;
@@ -478,10 +478,18 @@ namespace ft{
 			}
 		#pragma endregion needed
 			
-			avl_tree_const_iterator operator-(difference_type n) const{
+			// avl_tree_const_iterator operator-(difference_type n) const{
+			// 	avl_tree_const_iterator ret(this->_root, this->_current);
+			// 	while (n--) {
+			// 		--ret;
+			// 	}
+			// 	return ret;
+			// }
+
+			avl_tree_const_iterator operator+(difference_type n) const{
 				avl_tree_const_iterator ret(this->_root, this->_current);
 				while (n--) {
-					--ret;
+					++ret;
 				}
 				return ret;
 			}

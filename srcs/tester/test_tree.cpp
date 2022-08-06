@@ -1,21 +1,21 @@
 #include <iostream>
 # include <map>//
-#include "my_avl_tree.hpp"
+#include "avl_tree.hpp"
 #include "my_tests.hpp"
 
 void	display_pair_int_char(const ft::pair<int, char> & p){
 	std::cout << "(" << p.first << ", " << p.second << ")" << std::endl;
 }
 
-void	print_node(ft::node<ft::pair<int,char> > *n){
-	std::cout << "data de la node : ";
-	display_pair_int_char(n->data);
-	std::cout << "\tadresse de la node : " << n
-		<< "\n\tdepth de la node : " << n->depth
-		<< "\n\tadresse du parent : " << n->parent
-		<< "\n\tadresse de lchild : " << n->lchild 
-		<< "\n\tadresse de rchild : " << n->rchild << std::endl;
-}
+// void	print_node(ft::node<ft::pair<int,char> > *n){
+// 	std::cout << "data de la node : ";
+// 	display_pair_int_char(n->data);
+// 	std::cout << "\tadresse de la node : " << n
+// 		<< "\n\tdepth de la node : " << n->depth
+// 		<< "\n\tadresse du parent : " << n->parent
+// 		<< "\n\tadresse de lchild : " << n->lchild 
+// 		<< "\n\tadresse de rchild : " << n->rchild << std::endl;
+// }
 
 void test_tree(){
 	// {ft::avl_tree<int, char, std::less<int> >	t(ft::make_pair(10, 'a'));
