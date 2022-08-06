@@ -453,15 +453,6 @@ namespace ft{
 
 			avl_tree_const_iterator(): _root(NULL), _current(NULL){}
 
-		#pragma endregion bidirectionnal
-
-		#pragma region needed
-			avl_tree_const_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
-
-			avl_tree_const_iterator(const avl_tree_iterator<Key, _Tp, Compare, Allocator>& non_const): _root(non_const._root), _current(non_const._current){}
-		
-		#pragma endregion needed
-			
 			avl_tree_const_iterator& operator--(){
 				_current = node::prev(this->_current, this->_root);
 				return *this;
@@ -471,21 +462,37 @@ namespace ft{
 				_current = node::prev(this->_current, this->_root);
 				return avl_tree_const_iterator(this->_root, ret);
 			}
+		#pragma endregion bidirectionnal
 
-			avl_tree_const_iterator operator+(difference_type n) const{
-				avl_tree_const_iterator ret(this->_root, this->_current);
-				while (n--) {
-					++ret;
-				}
-				return ret;
+		#pragma region needed
+			avl_tree_const_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
+
+			avl_tree_const_iterator(const avl_tree_iterator<Key, _Tp, Compare, Allocator>& non_const): _root(non_const._root), _current(non_const._current){}
+		
+			bool operator==(const avl_tree_const_iterator& other){
+				return (this->_root == other._root) && (this->_current == other._current);
 			}
 
-			avl_tree_const_iterator& operator+=(difference_type n){
-				while (n--) {
-					operator++();
-				}
-				return *this;
+			node_ptr base(){
+				return _current;
 			}
+		#pragma endregion needed
+			
+
+			// avl_tree_const_iterator operator+(difference_type n) const{
+			// 	avl_tree_const_iterator ret(this->_root, this->_current);
+			// 	while (n--) {
+			// 		++ret;
+			// 	}
+			// 	return ret;
+			// }
+
+			// avl_tree_const_iterator& operator+=(difference_type n){
+			// 	while (n--) {
+			// 		operator++();
+			// 	}
+			// 	return *this;
+			// }
 
 			avl_tree_const_iterator operator-(difference_type n) const{
 				avl_tree_const_iterator ret(this->_root, this->_current);
@@ -495,29 +502,22 @@ namespace ft{
 				return ret;
 			}
 
-			avl_tree_const_iterator& operator-=(difference_type n){
-				while (n--) {
-					operator--();
-				}
-				return *this;
-			}
+			// avl_tree_const_iterator& operator-=(difference_type n){
+			// 	while (n--) {
+			// 		operator--();
+			// 	}
+			// 	return *this;
+			// }
 
-			node_ptr base(){
-				return _current;
-			}
-
-			reference operator[](difference_type n) const{
-				avl_tree_const_iterator it(this->_root, this->_current);
-				while (n--) {
-					++it;
-				}
-				return *it;
-			}
+			// reference operator[](difference_type n) const{
+			// 	avl_tree_const_iterator it(this->_root, this->_current);
+			// 	while (n--) {
+			// 		++it;
+			// 	}
+			// 	return *it;
+			// }
 			
 
-			bool operator==(const avl_tree_const_iterator& other){
-				return (this->_root == other._root) && (this->_current == other._current);
-			}
 	};
 
 }
