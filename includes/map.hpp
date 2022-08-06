@@ -157,8 +157,8 @@ namespace ft{
 	#pragma endregion observers
 
 	#pragma region operations
-		iterator find(const Key& key){return iterator(this->_tree.root(), this->_tree.find_node(key));}
-		const_iterator find(const Key& key) const{return const_iterator(this->_tree.root(), this->_tree.find_node(key));}
+		iterator find(const key_type& k){return iterator(this->_tree.root(), this->_tree.find_node(k));}
+		const_iterator find(const key_type& k) const{return const_iterator(this->_tree.root(), this->_tree.find_node(k));}
 
 		size_type count(const Key& key) const{return this->_tree.find_node(key) ? 1 : 0;}
 
