@@ -297,14 +297,11 @@ namespace ft{
 		public:
 			avl_tree_iterator(node_ptr root, node_ptr current): _root(root), _current(current){}
 
-			avl_tree_iterator(const avl_tree_iterator& other)
-				: _root(other._root), _current(other._current)
-			{	}
+			avl_tree_iterator(const avl_tree_iterator& other): _root(other._root), _current(other._current){}
 
-			~avl_tree_iterator() {}
+			~avl_tree_iterator(){}
 
-			avl_tree_iterator& operator=(const avl_tree_iterator& other)
-			{
+			avl_tree_iterator& operator=(const avl_tree_iterator& other){
 				_root = other._root;
 				_current = other._current;
 				return *this;
