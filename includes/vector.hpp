@@ -50,13 +50,13 @@ namespace ft{
 
 		#pragma region Member functions : Other constructors
 			explicit	vector(const allocator_type & alloc = allocator_type()):_alloct(alloc), _capacity(0), _data(pointer()), _size(0){}
-			explicit	vector(size_type n, const value_type & val = value_type(), const allocator_type & alloc = allocator_type()): _alloct(alloc), _data(pointer()), _size(0), _capacity(0){
+			explicit	vector(size_type n, const value_type & val = value_type(), const allocator_type & alloc = allocator_type()): _alloct(alloc), _capacity(0), _data(pointer()), _size(0){
 				this->assign(n, val);
 			}
 			template<class InputIterator>
 			explicit vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value >::type* = 0)
-				: _alloct(alloc), _data(pointer()), _size(0), _capacity(0){
+				: _alloct(alloc), _capacity(0), _data(pointer()), _size(0){
 				this->assign(first, last);
 			}
 		#pragma endregion Member functions : Other constructors
@@ -240,8 +240,8 @@ namespace ft{
 				this->_size = 0;
 			}
 		#pragma endregion Member functions : modifiers
-			//member functions: allocator
-			allocator_type get_alloct() const{return (this->_alloct);}
+
+			allocator_type get_allocator() const{return (this->_alloct);}
 
 		protected:
 

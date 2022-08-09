@@ -103,7 +103,6 @@ void test_map(){
 			std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
 			m1.erase(it);
 			std::cout << "contenu de m1 apres erase : \n";
-			std::cout << "m1[" << it->first << "] = " << it->second << std::endl;
 			for (ft::map<int, char>::iterator it2 = m1.begin(); it2 != m1.end(); it2++){
 				std::cout << "m1[" << it2->first << "] = " << it2->second << std::endl;
 			}
